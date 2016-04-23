@@ -101,4 +101,24 @@
         <item name="android:windowEnterAnimation">@anim/popu_bottom_show</item>
         <item name="android:windowExitAnimation">@anim/popu_bottom_diss</item>
     </style>
+
+    <!-- 评价等级样式 -->
+    <style name="customRatingBarLarge" parent="@android:style/Widget.RatingBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/custom_ratingbar_large</item>
+        <item name="android:indeterminateDrawable">@drawable/custom_ratingbar_large</item>
+        <item name="android:minHeight">35dp</item>
+        <item name="android:maxHeight">35dp</item>
+        <item name="android:thumb">@null</item>
+        <item name="android:isIndicator">false</item>
+    </style>
+    <style name="CustomRatingBarSmall" parent="@android:style/Widget.RatingBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/custom_ratingbar_small</item>
+        <item name="android:indeterminateDrawable">@drawable/custom_ratingbar_small</item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
+        <item name="android:thumb">@null</item>
+        <item name="android:isIndicator">true</item>
+    </style>
 </resources>

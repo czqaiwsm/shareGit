@@ -131,11 +131,6 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
         requestData();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
 
     @Override
     protected void requestData() {

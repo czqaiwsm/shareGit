@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.share.learn.R;
 import com.share.learn.adapter.MsgAdpter;
 import com.share.learn.adapter.WeeksAdpter;
@@ -25,9 +26,10 @@ import java.util.List;
 public class WeeksFragment extends BaseFragment {
 
     private CustomListView customListView = null;
-    private List<CourseInfo> list = new ArrayList<CourseInfo>();
+    private ArrayList<CourseInfo> list = new ArrayList<CourseInfo>();
     private WeeksAdpter adapter;
     private int position;
+    private TextView noData ;
 
     private String weeks[] = new String[]{"周一","周二","周三","周四","周五","周六","周日"};
 
@@ -44,8 +46,8 @@ public class WeeksFragment extends BaseFragment {
 
         Bundle bundle = getArguments();
 
-        if(bundle != null){
-            AppLog.Logi(">>>>>>>>",bundle.getInt("position")+"");
+        if(bundle != null ){
+            list = (ArrayList<CourseInfo>) bundle.getSerializable("courList");
         }
     }
 
@@ -65,23 +67,18 @@ public class WeeksFragment extends BaseFragment {
     private void initView(View view){
 
         customListView = (CustomListView)view.findViewById(R.id.callListView);
-
-        CourseInfo message = null;
-        for(int i=0;i<5;i++){
-//            message = new CourseInfo();
-//            message.setTime("上午(09.30-11.30)");
-//            message.setTeacherName("王老师"+i);
-//            message.setCourseName("小学语文");
-            list.add(message);
-        }
-        customListView.setCanLoadMore(true);
-        customListView.setCanRefresh(true);
+        noData = (TextView)view.findViewById(R.id.noData);
+        customListView.setCanLoadMore(false);
+        customListView.setCanRefresh(false);
         adapter = new WeeksAdpter(mActivity, list);
         customListView.setAdapter(adapter);
+
+        customListView.setVisibility(View.VISIBLE);
+        noData.setVisibility(View.GONE);
+        if(list == null || list.size()==0){
+            customListView.setVisibility(View.GONE);
+            noData.setVisibility(View.VISIBLE);
+        }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 }

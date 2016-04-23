@@ -9,12 +9,14 @@ import android.widget.TextView;
 import com.baidu.location.BDLocation;
 import com.share.learn.R;
 import com.share.learn.bean.BannerImgInfo;
+import com.share.learn.bean.CourseInfo;
 import com.share.learn.bean.HomeInfo;
 import com.share.learn.bean.HomePagerBanner;
 import com.share.learn.fragment.BaseFragment;
 import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
 import com.share.learn.parse.HomePageBannerParse;
+import com.share.learn.parse.ScheduleParse;
 import com.share.learn.service.LocationUitl;
 import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.URLConstants;
@@ -28,6 +30,7 @@ import com.volley.req.net.RequestParam;
 import com.volley.req.parser.JsonParserBase;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,6 +46,7 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
     private boolean isPrepare = false;
     private boolean isHiden = true;
 
+    private ArrayList<ArrayList<CourseInfo>> weekCourseList ;
 
     private String weeks[] = new String[]{"周一","周二","周三","周四","周五","周六","周日"};
 
@@ -73,30 +77,38 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
     }
 
     private void initView(View view) {
-
         mViewPager = (ViewPager) view.findViewById(R.id.schedule_viewpager);
         mViewPager.setOffscreenPageLimit(0);
         mTabContainerView = (ScrollingTabContainerView) view.findViewById(R.id.schedule_tab_container);
-        onInitTabConfig();
-
+//        onInitTabConfig();
         setLoadingDilog(WaitLayer.DialogType.NOT_NOMAL);
         isPrepare = true;
         onLoadData();
     }
 
     private void onInitTabConfig() {
+        mTabContainerView.removeAllTabs();
         TabsActionBar tabsActionBar = new TabsActionBar(getActivity(), mTabContainerView);
         mTabsAdapter = new TabsAdapter(getActivity(), mViewPager, tabsActionBar);
 
         View inflateViwe = null;
         for(int i=0;i<weeks.length;i++){
+
+            ArrayList<CourseInfo> courseInfos = null;
+            if(weekCourseList != null && i<weekCourseList.size()){
+                courseInfos = weekCourseList.get(i);
+            }
+
             inflateViwe = LayoutInflater.from(getActivity()).inflate(R.layout.schedule, null);
             ((TextView)inflateViwe.findViewById(R.id.scheduleTxt)).setText(String.format(getString(R.string.schedule),weeks[i]));
 
             Bundle bundle = new Bundle();
             bundle.putInt("position",i);
+            if(courseInfos != null){
+                bundle.putSerializable("courList",courseInfos);
+            }
             mTabsAdapter.addTab(tabsActionBar.newTab().setCustomView(inflateViwe)
-                        .setmTabbgDrawableId(R.drawable.login_tab), WeeksFragment.class,null);
+                        .setmTabbgDrawableId(R.drawable.login_tab), WeeksFragment.class,bundle);
 
         }
 
@@ -118,6 +130,9 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         isHiden = hidden;
+        if(isPrepare && hidden){
+            dismissLoadingDilog();
+        }
         onLoadData();
 
     }
@@ -138,7 +153,7 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
         Map postParams = RequestHelp.getBaseParaMap("ScheduleList");
         RequestParam param = new RequestParam();
 //        param.setmParserClassName(HomePageBannerParse.class.getName());
-        param.setmParserClassName(new HomePageBannerParse());
+        param.setmParserClassName(new ScheduleParse());
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
@@ -147,26 +162,18 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
 
     @Override
     public void handleRspSuccess(Object obj) {
-        JsonParserBase<HomeInfo> jsonParserBase = (JsonParserBase<HomeInfo>)obj;
+        JsonParserBase<ArrayList<ArrayList<CourseInfo>>>  jsonParserBase = (JsonParserBase<ArrayList<ArrayList<CourseInfo>>>)obj;
         if(jsonParserBase != null){
-            HomeInfo homeInfo = jsonParserBase.getData();
-            ArrayList<HomePagerBanner> pagerBanners = homeInfo.getTopAdList();
-            BannerImgInfo imgInfo = null;
-//            bannerImgInfos.clear();
-            if(pagerBanners != null && pagerBanners.size()>0){
-                for(HomePagerBanner banner:pagerBanners){
-                    imgInfo = new BannerImgInfo();
-                    imgInfo.setId(banner.getId());
-                    imgInfo.setUrl(banner.getIconPath());
-                    imgInfo.setRedirect(banner.getRedirect());
-                    imgInfo.setTitle(imgInfo.getTitle());
-//                    bannerImgInfos.add(imgInfo);
-                }
-//                initGuidBanner(converView);
-            }
+            weekCourseList = jsonParserBase.getData();
         }
+        onInitTabConfig();
     }
 
+    @Override
+    protected void failRespone() {
+        super.failRespone();
+        onInitTabConfig();
+    }
 
     @Override
     public void onStop() {

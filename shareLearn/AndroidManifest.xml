@@ -97,6 +97,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.ForgetPassActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".activity.teacher.EvaluateActivity"
+                  android:screenOrientation="portrait"/>
 
 
         <!--老师端-->

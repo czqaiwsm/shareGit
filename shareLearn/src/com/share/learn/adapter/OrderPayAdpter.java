@@ -1,6 +1,9 @@
 package com.share.learn.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +13,16 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.share.learn.R;
+import com.share.learn.activity.teacher.EvaluateActivity;
 import com.share.learn.bean.OrderInfo;
 import com.share.learn.bean.msg.Message;
 import com.share.learn.utils.SmartToast;
+import com.share.learn.view.CustomListView;
 import com.share.learn.view.RoundImageView;
 
 import java.util.List;
 
-public class OrderPayAdpter extends BaseAdapter {
+public class OrderPayAdpter extends BaseAdapter implements View.OnClickListener{
     private List<OrderInfo> mItemList;
     private Context mContext;
     private int flag = 0 ;//1 待支付\2 已支付\ 3 已取消\ 4 已完成
@@ -75,6 +80,12 @@ public class OrderPayAdpter extends BaseAdapter {
             holder.left_tv.setVisibility(View.GONE);
             holder.right_tv.setVisibility(View.GONE);
 
+            holder.left_tv.setOnClickListener(this);
+            holder.right_tv.setOnClickListener(this);
+
+            holder.left_tv.setTag(position);
+            holder.right_tv.setTag(position);
+
             String statuStr = "";
             switch (flag){
                 case 1:
@@ -92,12 +103,12 @@ public class OrderPayAdpter extends BaseAdapter {
                     holder.left_tv.setText("完成订单");
                     break;
                 case 3:
-                    statuStr = "已取消";
                     break;
                 case 4:
                     statuStr = "已完成";
                     holder.right_tv.setVisibility(View.VISIBLE);
                     holder.right_tv.setText(mContext.getResources().getString(R.string.assert_now));
+
                     break;
             }
             holder.payStatus.setText(statuStr);
@@ -106,6 +117,37 @@ public class OrderPayAdpter extends BaseAdapter {
         return convertView;
     }
 
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = null;
+        OrderInfo orderInfo = mItemList.get((Integer)v.getTag());
+        switch (v.getId()){
+            case R.id.left_tv:
+                if(flag == 1){//待支付(联系老师)
+
+                }else if(flag == 2){//已支付(完成订单)
+
+                }
+                break;
+            case R.id.right_tv:
+                if(flag == 1){//待支付(立即支付)
+
+                }else if(flag == 2){//已支付(申请退款)
+
+                }else if(flag==4){//已完成(立即评价)
+
+                    intent = new Intent((Activity)mContext, EvaluateActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("orderInfo",orderInfo);
+                    intent.putExtra("bundle",bundle);
+                mContext.startActivity(intent);
+
+                }
+                break;
+
+        }
+    }
 
     class ViewHolder {
         @Bind(R.id.name)

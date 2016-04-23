@@ -1,11 +1,13 @@
 package com.share.learn.bean;
 
+import java.io.Serializable;
+
 /**
  * @desc 订单列表实体
  * @creator caozhiqing
  * @data 2016/4/1
  */
-public class OrderInfo {
+public class OrderInfo implements Serializable {
 
     private String orderId;//	订单ID	是	Int
     private String teacherName;//	老师姓名	是	String
@@ -15,8 +17,16 @@ public class OrderInfo {
     private String payTime	;//支付时间	是	Date	yyyy年-MM月-dd日
     private String payPrice	;//实际支付金额	是	Int
 
+    private String teacherId ;
 
 
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
 
     public String getCourseName() {
         return courseName;

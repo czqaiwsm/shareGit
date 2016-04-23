@@ -58,9 +58,9 @@ public class WeeksAdpter extends BaseAdapter {
 
         CourseInfo message = mItemList.get(position);
         if(message != null){
-//            holder.teacherName.setText(message.getTeacherName());
-//            holder.courseName.setText(message.getCourseName());
-//            holder.time.setText(message.getTime());
+            holder.teacherName.setText(message.getTeacherName());
+            holder.courseName.setText(message.getCourseName());
+            holder.time.setText(message.getSchooltime());
         }
         return convertView;
     }

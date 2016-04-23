@@ -77,6 +77,7 @@ public class ObjectRequest extends JsonRequest<Object> {
 
 			return Response.success(object, HttpHeaderParser.parseCacheHeaders(response));
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 			return Response.error(new ParseError(e));
 		}
 	}
