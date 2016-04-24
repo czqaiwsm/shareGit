@@ -1,7 +1,9 @@
 
 package com.share.learn.bean;
 
-public class ChatMsgEntity {
+import java.io.Serializable;
+
+public class ChatMsgEntity implements Serializable{
     private String senderId	;//发 送者ID
     private String receiverId ;//	接受者ID
     private String content	;//消息内容
@@ -9,6 +11,8 @@ public class ChatMsgEntity {
     private String teacherImg ;//	老师头像
     private String createTime ;//	创建时间
     private String direction ;//	聊天方向	是	Int	聊天方向：1-左(对方)，2-右(自己)
+    private String teacherName	;//老师姓名
+
 
     public String getSenderId() {
         return senderId;
@@ -64,5 +68,13 @@ public class ChatMsgEntity {
 
     public void setDirection(String direction) {
         this.direction = direction;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 }

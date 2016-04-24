@@ -13,6 +13,8 @@ public class MsgDetail {
     private String content	    ;//消息内容
     private String createTime	;//创建时间
     private String headImg	    ;//用户头像
+    private String studentImg   ;
+    private String teacherImg   ;
 
     public String getId() {
         return id;
@@ -69,5 +71,21 @@ public class MsgDetail {
 
     public void setHeadImg(String headImg) {
         this.headImg = headImg;
+    }
+
+    public String getStudentImg() {
+        return studentImg;
+    }
+
+    public void setStudentImg(String studentImg) {
+        this.studentImg = studentImg;
+    }
+
+    public String getTeacherImg() {
+        return teacherImg;
+    }
+
+    public void setTeacherImg(String teacherImg) {
+        this.teacherImg = teacherImg;
     }
 }

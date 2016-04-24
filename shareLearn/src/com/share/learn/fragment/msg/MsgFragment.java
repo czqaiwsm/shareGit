@@ -12,8 +12,10 @@ import com.share.learn.R;
 import com.share.learn.activity.center.OrderDetailActivity;
 import com.share.learn.activity.teacher.ChatMsgActivity;
 import com.share.learn.adapter.MsgAdpter;
+import com.share.learn.bean.ChatMsgEntity;
 import com.share.learn.bean.ContactorBean;
 import com.share.learn.bean.MsgDetail;
+import com.share.learn.bean.UserInfo;
 import com.share.learn.bean.msg.Message;
 import com.share.learn.fragment.BaseFragment;
 import com.share.learn.help.PullRefreshStatus;
@@ -24,6 +26,7 @@ import com.share.learn.parse.ContactorBeanParse;
 import com.share.learn.parse.MsgDetailParse;
 import com.share.learn.parse.VerifyCodeParse;
 import com.share.learn.utils.AlertDialogUtils;
+import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.URLConstants;
 import com.share.learn.utils.WaitLayer;
 import com.share.learn.view.CustomListView;
@@ -118,7 +121,28 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(mActivity, ChatMsgActivity.class);
-                startActivity(intent);
+                MsgDetail msgDetail = list.get(i-1);
+                UserInfo userInfo = BaseApplication.getInstance().userInfo;
+                if( userInfo !=  null){
+                     String teacherId = "";
+                    if(TextUtils.equals(userInfo.getId(),list.get(i-1).getReceiverId())){
+                        teacherId = list.get(i-1).getSenderId();
+                        intent.putExtra("teacherId",list.get(i-1).getSenderId());
+                    }else {
+                        teacherId = list.get(i-1).getReceiverId();
+                    }
+                    intent.putExtra("teacherId",teacherId);
+
+                    ChatMsgEntity chatMsgEntity = new ChatMsgEntity();
+                    chatMsgEntity.setDirection("2");
+                    chatMsgEntity.setReceiverId(teacherId);
+                    chatMsgEntity.setSenderId(userInfo.getId());
+
+                    chatMsgEntity.setTeacherName(msgDetail.getTeacherName());
+                    chatMsgEntity.setTeacherImg(msgDetail.getHeadImg());
+                    intent.putExtra("bundle",chatMsgEntity);
+                    startActivity(intent);
+                }
             }
         });
 

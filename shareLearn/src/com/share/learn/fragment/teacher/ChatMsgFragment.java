@@ -1,9 +1,11 @@
 package com.share.learn.fragment.teacher;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,10 +20,13 @@ import com.share.learn.adapter.ChatMsgViewAdapter;
 import com.share.learn.adapter.TeacherAssetAdapter;
 import com.share.learn.bean.ChatMsgEntity;
 import com.share.learn.bean.LoginInfo;
+import com.share.learn.bean.UserInfo;
 import com.share.learn.bean.msg.Message;
 import com.share.learn.fragment.BaseFragment;
 import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
+import com.share.learn.parse.BaseParse;
+import com.share.learn.parse.ChatMsgParse;
 import com.share.learn.parse.LoginInfoParse;
 import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.SoundMeter;
@@ -34,10 +39,8 @@ import com.volley.req.net.RequestParam;
 import com.volley.req.parser.JsonParserBase;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @desc 老师信息-->老师评价
@@ -61,17 +64,25 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
     private LinearLayout del_re;
     private ImageView chatting_mode_btn, volume;
     private boolean btn_vocie = false;
-    private int flag = 1;
     private Handler mHandler = new Handler();
     private String voiceName;
     private long startVoiceT, endVoiceT;
 
     private String teacherId = "";
 
+    private ChatMsgEntity chaMsg ;
+    private ChatMsgEntity sendChatMsg ;
+
+    private int flag = 1;//1 列表 2 发送信息
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = mActivity.getIntent();
+        if(intent != null && intent.hasExtra("teacherId") && intent.hasExtra("bundle")){
+            teacherId =  intent.getStringExtra("teacherId");
+            chaMsg = (ChatMsgEntity) intent.getSerializableExtra("bundle");
+        }
     }
 
     @Override
@@ -88,6 +99,7 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
         initData();
 
         setLoadingDilog(WaitLayer.DialogType.NOT_NOMAL);
+        flag = 1;
         requestTask();
     }
 
@@ -162,48 +174,49 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
 
     private void send() {
         String contString = mEditTextContent.getText().toString();
-//        if (contString.length() > 0) {
-//            ChatMsgEntity entity = new ChatMsgEntity();
-//            entity.setDate(getDate());
-//            entity.setName("高富帅");
-//            entity.setMsgType(false);
-//            entity.setText(contString);
-//
-//            mDataArrays.add(entity);
-//            mAdapter.notifyDataSetChanged();
-//
-//            mEditTextContent.setText("");
-//
-//            mListView.setSelection(mListView.getCount() - 1);
-//        }
+        if(!TextUtils.isEmpty(contString)){
+            flag = 2;
+            requestTask();
+        }else {
+            toasetUtil.showInfo("请输入信息");
+        }
     }
-
-    private String getDate() {
-        Calendar c = Calendar.getInstance();
-
-        String year = String.valueOf(c.get(Calendar.YEAR));
-        String month = String.valueOf(c.get(Calendar.MONTH));
-        String day = String.valueOf(c.get(Calendar.DAY_OF_MONTH) + 1);
-        String hour = String.valueOf(c.get(Calendar.HOUR_OF_DAY));
-        String mins = String.valueOf(c.get(Calendar.MINUTE));
-
-        StringBuffer sbBuffer = new StringBuffer();
-        sbBuffer.append(year + "-" + month + "-" + day + " " + hour + ":"
-                + mins);
-
-        return sbBuffer.toString();
-    }
-
 
     @Override
     protected void requestData() {
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
-        Map postParams = RequestHelp.getBaseParaMap("MessageChat") ;
-        postParams.put("teacherId", teacherId);
         RequestParam param = new RequestParam();
-//        param.setmParserClassName(LoginInfoParse.class.getName());
-        param.setmParserClassName(new LoginInfoParse());
+        Map postParams = null;
+
+        if(flag == 1){
+            postParams =  RequestHelp.getBaseParaMap("MessageChat") ;
+            postParams.put("teacherId", teacherId);
+            param.setmParserClassName(new ChatMsgParse());
+        }else {
+            postParams =  RequestHelp.getBaseParaMap("MessagePost") ;
+            param.setmParserClassName(new BaseParse());
+            sendChatMsg = new ChatMsgEntity();
+            sendChatMsg.setReceiverId(chaMsg.getReceiverId());
+            sendChatMsg.setTeacherImg(chaMsg.getTeacherImg());
+            sendChatMsg.setTeacherName(chaMsg.getTeacherName());
+            sendChatMsg.setDirection(chaMsg.getDirection());
+            sendChatMsg.setContent(mEditTextContent.getText().toString());
+            SimpleDateFormat df = new SimpleDateFormat("MM-dd HH:mm");//设置日期格式
+            sendChatMsg.setCreateTime(df.format(new Date()));
+            UserInfo userInfo = BaseApplication.getInstance().userInfo;
+            if(userInfo != null){
+                sendChatMsg.setSenderId(userInfo.getId());
+                sendChatMsg.setStudentImg(userInfo.getHeadImg());
+                postParams.put("studentName",TextUtils.isEmpty(userInfo.getNickName())?"":userInfo.getNickName());
+            }
+            postParams.put("receiverId",sendChatMsg.getReceiverId());
+            postParams.put("content",sendChatMsg.getContent());
+            postParams.put("studentImg",TextUtils.isEmpty(sendChatMsg.getStudentImg())?"":sendChatMsg.getStudentImg());
+            postParams.put("teacherImg",TextUtils.isEmpty(sendChatMsg.getTeacherImg())?"":sendChatMsg.getTeacherImg());
+            postParams.put("teacherName",TextUtils.isEmpty(sendChatMsg.getTeacherName())?"":sendChatMsg.getTeacherName());
+        }
+
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
@@ -213,39 +226,27 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void handleRspSuccess(Object obj) {
-        JsonParserBase<LoginInfo> jsonParserBase = (JsonParserBase<LoginInfo>)obj;
-        if ((jsonParserBase != null)){
-            BaseApplication.getInstance().userInfo = jsonParserBase.getData().getUserInfo();
-            BaseApplication.getInstance().accessToken = jsonParserBase.getData().getToken();
-            BaseApplication.getInstance().userId = BaseApplication.getInstance().userInfo.getId();
-//            toClassActivity(LoginFramgent.this, TeacherMainActivity.class.getName());//老师
-            mActivity.finish();
+        if(flag == 1){
+            JsonParserBase<ArrayList<ChatMsgEntity>> jsonParserBase = (JsonParserBase<ArrayList<ChatMsgEntity>>)obj;
+            if ((jsonParserBase != null)){
+                mDataArrays.clear();
+
+                if(jsonParserBase.getData() != null){
+                    mDataArrays.addAll(jsonParserBase.getData());
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+        }else {
+            mDataArrays.add(sendChatMsg);
+            mAdapter.notifyDataSetChanged();
+            mEditTextContent.setText("");
+            sendChatMsg = null;
         }
+
     }
 
-    private String[] msgArray = new String[] { "有人就有恩怨","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。"};
-
-    private String[] dataArray = new String[] { "2012-10-31 18:00",
-            "2012-10-31 18:10", "2012-10-31 18:11", "2012-10-31 18:20",
-            "2012-10-31 18:30", "2012-10-31 18:35"};
-    private final static int COUNT = 6;
 
     public void initData() {
-//        for (int i = 0; i < COUNT; i++) {
-//            ChatMsgEntity entity = new ChatMsgEntity();
-//            entity.setDate(dataArray[i]);
-//            if (i % 2 == 0) {
-//                entity.setName("白富美");
-//                entity.setMsgType(true);
-//            } else {
-//                entity.setName("高富帅");
-//                entity.setMsgType(false);
-//            }
-//
-//            entity.setText(msgArray[i]);
-//            mDataArrays.add(entity);
-//        }
-
         mAdapter = new ChatMsgViewAdapter(mActivity, mDataArrays);
         mListView.setAdapter(mAdapter);
 
@@ -315,6 +316,8 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
                 break;
         }
     }
+
+
 
 
 }

@@ -31,7 +31,7 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
 
     private TextView city_name, school;
 
-    private String joniorId;
+    private String joniorId = "";
     private  String cityId;
 
     @Override
@@ -42,6 +42,10 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(BaseApplication.getInstance().userInfo != null){
+            joniorId = BaseApplication.getInstance().userInfo.getGrade();
+        }
     }
 
     @Override
@@ -105,6 +109,8 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.choose_jonior:
                 intent = new Intent(mActivity, ChooseJoinorActivity.class);
+                intent.putExtra("joniorId",joniorId);
+                intent.setFlags(11);
                 startActivityForResult(intent, URLConstants.CHOOSE_JOINOR_REQUEST_CODE);
                 break;
             default:break;

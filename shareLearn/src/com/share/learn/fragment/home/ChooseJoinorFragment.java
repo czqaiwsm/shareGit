@@ -29,16 +29,28 @@ public class ChooseJoinorFragment extends BaseFragment {
     private CustomListView customListView = null;
     private List<IdInfo> list = new ArrayList<IdInfo>();
     private ChooseJoinorAdapter adapter;
-    private JoniorType joniorType ;
+    private JoniorType joniorType =  JoniorType.JONIOR;
+    private String selectId = "";
 
     @Override
     protected void requestData() {
-
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = mActivity.getIntent();
+        if(intent != null){
+
+            if(intent.hasExtra("joniorId"))
+            selectId =intent.getStringExtra("joniorId");
+
+            switch (intent.getFlags()){
+                case 11:
+                    joniorType = JoniorType.JONIOR;
+                    break;
+            }
+        }
     }
 
     @Override
@@ -82,7 +94,7 @@ public class ChooseJoinorFragment extends BaseFragment {
             idInfo.setName(map.get(ids[i]));
             list.add(idInfo);
         }
-        adapter = new ChooseJoinorAdapter(mActivity, list);
+        adapter = new ChooseJoinorAdapter(mActivity, list,selectId);
         customListView.setAdapter(adapter);
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -102,6 +114,9 @@ public class ChooseJoinorFragment extends BaseFragment {
         });
     }
 
+    public void setJoniorType(JoniorType joniorType) {
+        this.joniorType = joniorType;
+    }
 
     public enum JoniorType{
         JONIOR,//年级选择

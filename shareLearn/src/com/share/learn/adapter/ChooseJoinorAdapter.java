@@ -33,6 +33,12 @@ public class ChooseJoinorAdapter extends BaseAdapter {
         joniorId = BaseApplication.getInstance().userInfo.getGrade();
 
     }
+    public ChooseJoinorAdapter(Context context, List<IdInfo> items,String selectId) {
+        this.mContext = context;
+        this.mItemList = items;
+        joniorId = selectId;
+
+    }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override

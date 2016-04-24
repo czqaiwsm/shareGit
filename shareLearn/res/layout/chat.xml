@@ -27,7 +27,8 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dip"
-            android:src="@drawable/chatting_setmode_msg_btn" />
+            android:src="@drawable/chatting_setmode_msg_btn"
+        android:visibility="gone"/>
 
         <RelativeLayout
             android:id="@+id/btn_bottom"

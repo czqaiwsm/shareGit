@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.share.learn.R;
 import com.share.learn.bean.ChatMsgEntity;
 import com.share.learn.bean.PageInfo;
+import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.ImageLoaderUtil;
 
 import java.util.List;
@@ -38,7 +39,6 @@ public class ChatMsgViewAdapter extends BaseAdapter {
     private Context ctx;
 
     private LayoutInflater mInflater;
-    private String teacherName = "";
 
     public ChatMsgViewAdapter(Context context, List<ChatMsgEntity> coll) {
         ctx = context;
@@ -94,15 +94,18 @@ public class ChatMsgViewAdapter extends BaseAdapter {
             viewHolder.comMsgLL.setVisibility(View.VISIBLE);
             viewHolder.comtime.setText(entity.getCreateTime());
             viewHolder.comChatcontent.setText(entity.getContent());
-            viewHolder.comUsername.setText(teacherName);
+            viewHolder.comUsername.setText(entity.getTeacherName());
             ImageLoader.getInstance().displayImage(entity.getTeacherImg(),viewHolder.comhead,ImageLoaderUtil.mHallIconLoaderOptions);
         }else {
             viewHolder.sendMsgLL.setVisibility(View.VISIBLE);
             viewHolder.comMsgLL.setVisibility(View.GONE);
             viewHolder.sendtime.setText(entity.getCreateTime());
             viewHolder.sendcontent.setText(entity.getContent());
-            viewHolder.send_username.setText(teacherName);
-            ImageLoader.getInstance().displayImage(entity.getStudentImg(),viewHolder.sendUserHead,ImageLoaderUtil.mHallIconLoaderOptions);
+
+            if(BaseApplication.getInstance().userInfo != null){
+                viewHolder.send_username.setText(BaseApplication.getInstance().userInfo.getNickName());
+                ImageLoader.getInstance().displayImage(entity.getStudentImg(),viewHolder.sendUserHead,ImageLoaderUtil.mHallIconLoaderOptions);
+            }
 
         }
 
