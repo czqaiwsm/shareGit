@@ -3,159 +3,137 @@ package com.share.learn.adapter;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.os.Environment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.share.learn.R;
 import com.share.learn.bean.ChatMsgEntity;
+import com.share.learn.bean.PageInfo;
+import com.share.learn.utils.ImageLoaderUtil;
 
 import java.util.List;
 
 
 public class ChatMsgViewAdapter extends BaseAdapter {
 
-	public static interface IMsgViewType {
-		int IMVT_COM_MSG = 0;
-		int IMVT_TO_MSG = 1;
-	}
+    public enum  IMsgViewType {
+         IMVT_COM_MSG,
+         IMVT_TO_MSG ;
+    }
 
-	private static final String TAG = ChatMsgViewAdapter.class.getSimpleName();
+    private static final String TAG = ChatMsgViewAdapter.class.getSimpleName();
 
-	private List<ChatMsgEntity> coll;
+    private List<ChatMsgEntity> coll;
 
-	private Context ctx;
+    private Context ctx;
 
-	private LayoutInflater mInflater;
-	private MediaPlayer mMediaPlayer = new MediaPlayer();
+    private LayoutInflater mInflater;
+    private String teacherName = "";
 
-	public ChatMsgViewAdapter(Context context, List<ChatMsgEntity> coll) {
-		ctx = context;
-		this.coll = coll;
-		mInflater = LayoutInflater.from(context);
-	}
+    public ChatMsgViewAdapter(Context context, List<ChatMsgEntity> coll) {
+        ctx = context;
+        this.coll = coll;
+        mInflater = LayoutInflater.from(context);
+    }
 
-	public int getCount() {
-		return coll.size();
-	}
+    public int getCount() {
+        return coll.size();
+    }
 
-	public Object getItem(int position) {
-		return coll.get(position);
-	}
+    public Object getItem(int position) {
+        return coll.get(position);
+    }
 
-	public long getItemId(int position) {
-		return position;
-	}
+    public long getItemId(int position) {
+        return position;
+    }
 
-	public int getItemViewType(int position) {
-		// TODO Auto-generated method stub
-		ChatMsgEntity entity = coll.get(position);
+    public IMsgViewType getItemViewType(ChatMsgEntity entity) {
+        // TODO Auto-generated method stub
+        //聊天方向	是	Int	聊天方向：1-左(对方)，2-右(自己)
+        if (TextUtils.equals(entity.getDirection(), "1")) {
+            return IMsgViewType.IMVT_COM_MSG;
+        } else {
+            return IMsgViewType.IMVT_TO_MSG;
+        }
 
-		if (entity.getMsgType()) {
-			return IMsgViewType.IMVT_COM_MSG;
-		} else {
-			return IMsgViewType.IMVT_TO_MSG;
-		}
+    }
 
-	}
+    public int getViewTypeCount() {
+        // TODO Auto-generated method stub
+        return 2;
+    }
 
-	public int getViewTypeCount() {
-		// TODO Auto-generated method stub
-		return 2;
-	}
+    public View getView(int position, View convertView, ViewGroup parent) {
 
-	public View getView(int position, View convertView, ViewGroup parent) {
+        final ChatMsgEntity entity = coll.get(position);
 
-		final ChatMsgEntity entity = coll.get(position);
-		boolean isComMsg = entity.getMsgType();
+        ViewHolder viewHolder = null;
+        if (convertView == null) {
+            convertView = mInflater.inflate(
+                    R.layout.chatting_msg, null);
 
-		ViewHolder viewHolder = null;
-		if (convertView == null) {
-			if (isComMsg) {
-				convertView = mInflater.inflate(
-						R.layout.chatting_item_msg_text_left, null);
-			} else {
-				convertView = mInflater.inflate(
-						R.layout.chatting_item_msg_text_right, null);
-			}
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
-			viewHolder = new ViewHolder();
-			viewHolder.tvSendTime = (TextView) convertView
-					.findViewById(R.id.tv_sendtime);
-			viewHolder.tvUserName = (TextView) convertView
-					.findViewById(R.id.tv_username);
-			viewHolder.tvContent = (TextView) convertView
-					.findViewById(R.id.tv_chatcontent);
-			viewHolder.tvTime = (TextView) convertView
-					.findViewById(R.id.tv_time);
-			viewHolder.isComMsg = isComMsg;
+        if(getItemViewType(entity) == IMsgViewType.IMVT_COM_MSG){
+            viewHolder.sendMsgLL.setVisibility(View.GONE);
+            viewHolder.comMsgLL.setVisibility(View.VISIBLE);
+            viewHolder.comtime.setText(entity.getCreateTime());
+            viewHolder.comChatcontent.setText(entity.getContent());
+            viewHolder.comUsername.setText(teacherName);
+            ImageLoader.getInstance().displayImage(entity.getTeacherImg(),viewHolder.comhead,ImageLoaderUtil.mHallIconLoaderOptions);
+        }else {
+            viewHolder.sendMsgLL.setVisibility(View.VISIBLE);
+            viewHolder.comMsgLL.setVisibility(View.GONE);
+            viewHolder.sendtime.setText(entity.getCreateTime());
+            viewHolder.sendcontent.setText(entity.getContent());
+            viewHolder.send_username.setText(teacherName);
+            ImageLoader.getInstance().displayImage(entity.getStudentImg(),viewHolder.sendUserHead,ImageLoaderUtil.mHallIconLoaderOptions);
 
-			convertView.setTag(viewHolder);
-		} else {
-			viewHolder = (ViewHolder) convertView.getTag();
-		}
+        }
 
-		viewHolder.tvSendTime.setText(entity.getDate());
+        return convertView;
+    }
 
-		if (entity.getText().contains(".amr")) {
-			viewHolder.tvContent.setText("");
-			viewHolder.tvContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.chatto_voice_playing, 0);
-			viewHolder.tvTime.setText(entity.getTime());
-		} else {
-			viewHolder.tvContent.setText(entity.getText());
-			viewHolder.tvContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-			viewHolder.tvTime.setText("");
-		}
-		viewHolder.tvContent.setOnClickListener(new OnClickListener() {
 
-			public void onClick(View v) {
-				if (entity.getText().contains(".amr")) {
-					playMusic(android.os.Environment.getExternalStorageDirectory()+"/"+entity.getText()) ;
-				}
-			}
-		});
-		viewHolder.tvUserName.setText(entity.getName());
+    class ViewHolder {
+        @Bind(R.id.comtime)
+        TextView comtime;
+        @Bind(R.id.comhead)
+        ImageView comhead;
+        @Bind(R.id.com_chatcontent)
+        TextView comChatcontent;
+        @Bind(R.id.com_username)
+        TextView comUsername;
+        @Bind(R.id.comMsgLL)
+        LinearLayout comMsgLL;
+        @Bind(R.id.sendtime)
+        TextView sendtime;
+        @Bind(R.id.sendUserHead)
+        ImageView sendUserHead;
+        @Bind(R.id.sendcontent)
+        TextView sendcontent;
+        @Bind(R.id.send_username)
+        TextView send_username;
+        @Bind(R.id.sendMsgLL)
+        LinearLayout sendMsgLL;
 
-		return convertView;
-	}
-
-	static class ViewHolder {
-		public TextView tvSendTime;
-		public TextView tvUserName;
-		public TextView tvContent;
-		public TextView tvTime;
-		public boolean isComMsg = true;
-	}
-
-	/**
-	 * @Description
-	 * @param name
-	 */
-	private void playMusic(String name) {
-		try {
-			if (mMediaPlayer.isPlaying()) {
-				mMediaPlayer.stop();
-			}
-			mMediaPlayer.reset();
-			mMediaPlayer.setDataSource(name);
-			mMediaPlayer.prepare();
-			mMediaPlayer.start();
-			mMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
-				public void onCompletion(MediaPlayer mp) {
-
-				}
-			});
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	private void stop() {
-
-	}
-
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+    }
 }

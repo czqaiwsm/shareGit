@@ -2,69 +2,67 @@
 package com.share.learn.bean;
 
 public class ChatMsgEntity {
-    private static final String TAG = ChatMsgEntity.class.getSimpleName();
+    private String senderId	;//发 送者ID
+    private String receiverId ;//	接受者ID
+    private String content	;//消息内容
+    private String studentImg ;//	学生头像
+    private String teacherImg ;//	老师头像
+    private String createTime ;//	创建时间
+    private String direction ;//	聊天方向	是	Int	聊天方向：1-左(对方)，2-右(自己)
 
-    private String name;
-
-    private String date;
-
-    private String text;
-    
-    private String time;
-    
-    
-
-    public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
-		this.time = time;
-	}
-
-	private boolean isComMeg = true;
-
-    public String getName() {
-        return name;
+    public String getSenderId() {
+        return senderId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
     }
 
-    public String getDate() {
-        return date;
+    public String getReceiverId() {
+        return receiverId;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public boolean getMsgType() {
-        return isComMeg;
+    public String getStudentImg() {
+        return studentImg;
     }
 
-    public void setMsgType(boolean isComMsg) {
-    	isComMeg = isComMsg;
+    public void setStudentImg(String studentImg) {
+        this.studentImg = studentImg;
     }
 
-    public ChatMsgEntity() {
+    public String getTeacherImg() {
+        return teacherImg;
     }
 
-    public ChatMsgEntity(String name, String date, String text, boolean isComMsg) {
-        super();
-        this.name = name;
-        this.date = date;
-        this.text = text;
-        this.isComMeg = isComMsg;
+    public void setTeacherImg(String teacherImg) {
+        this.teacherImg = teacherImg;
     }
 
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
 }

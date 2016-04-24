@@ -12,26 +12,39 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.share.learn.R;
+import com.share.learn.activity.MainActivity;
 import com.share.learn.activity.teacher.ChatMsgActivity;
 import com.share.learn.adapter.ChatMsgViewAdapter;
 import com.share.learn.adapter.TeacherAssetAdapter;
 import com.share.learn.bean.ChatMsgEntity;
+import com.share.learn.bean.LoginInfo;
 import com.share.learn.bean.msg.Message;
 import com.share.learn.fragment.BaseFragment;
+import com.share.learn.help.RequestHelp;
+import com.share.learn.help.RequsetListener;
+import com.share.learn.parse.LoginInfoParse;
+import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.SoundMeter;
+import com.share.learn.utils.URLConstants;
+import com.share.learn.utils.WaitLayer;
 import com.share.learn.view.CustomListView;
+import com.volley.req.net.HttpURL;
+import com.volley.req.net.RequestManager;
+import com.volley.req.net.RequestParam;
+import com.volley.req.parser.JsonParserBase;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @desc 老师信息-->老师评价
  * @creator caozhiqing
  * @data 2016/3/10
  */
-public class ChatMsgFragment extends BaseFragment implements View.OnClickListener{
+public class ChatMsgFragment extends BaseFragment implements View.OnClickListener,RequsetListener{
 
     private TextView mBtnRcd;
     private EditText mEditTextContent;
@@ -53,11 +66,8 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
     private String voiceName;
     private long startVoiceT, endVoiceT;
 
+    private String teacherId = "";
 
-    @Override
-    protected void requestData() {
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +87,8 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
         initTitle();
         initData();
 
+        setLoadingDilog(WaitLayer.DialogType.NOT_NOMAL);
+        requestTask();
     }
 
 
@@ -150,20 +162,20 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
 
     private void send() {
         String contString = mEditTextContent.getText().toString();
-        if (contString.length() > 0) {
-            ChatMsgEntity entity = new ChatMsgEntity();
-            entity.setDate(getDate());
-            entity.setName("高富帅");
-            entity.setMsgType(false);
-            entity.setText(contString);
-
-            mDataArrays.add(entity);
-            mAdapter.notifyDataSetChanged();
-
-            mEditTextContent.setText("");
-
-            mListView.setSelection(mListView.getCount() - 1);
-        }
+//        if (contString.length() > 0) {
+//            ChatMsgEntity entity = new ChatMsgEntity();
+//            entity.setDate(getDate());
+//            entity.setName("高富帅");
+//            entity.setMsgType(false);
+//            entity.setText(contString);
+//
+//            mDataArrays.add(entity);
+//            mAdapter.notifyDataSetChanged();
+//
+//            mEditTextContent.setText("");
+//
+//            mListView.setSelection(mListView.getCount() - 1);
+//        }
     }
 
     private String getDate() {
@@ -182,6 +194,35 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
         return sbBuffer.toString();
     }
 
+
+    @Override
+    protected void requestData() {
+        HttpURL url = new HttpURL();
+        url.setmBaseUrl(URLConstants.BASE_URL);
+        Map postParams = RequestHelp.getBaseParaMap("MessageChat") ;
+        postParams.put("teacherId", teacherId);
+        RequestParam param = new RequestParam();
+//        param.setmParserClassName(LoginInfoParse.class.getName());
+        param.setmParserClassName(new LoginInfoParse());
+        param.setmPostarams(postParams);
+        param.setmHttpURL(url);
+        param.setPostRequestMethod();
+        RequestManager.getRequestData(getActivity(), createReqSuccessListener(),createMyReqErrorListener(), param);
+
+    }
+
+    @Override
+    public void handleRspSuccess(Object obj) {
+        JsonParserBase<LoginInfo> jsonParserBase = (JsonParserBase<LoginInfo>)obj;
+        if ((jsonParserBase != null)){
+            BaseApplication.getInstance().userInfo = jsonParserBase.getData().getUserInfo();
+            BaseApplication.getInstance().accessToken = jsonParserBase.getData().getToken();
+            BaseApplication.getInstance().userId = BaseApplication.getInstance().userInfo.getId();
+//            toClassActivity(LoginFramgent.this, TeacherMainActivity.class.getName());//老师
+            mActivity.finish();
+        }
+    }
+
     private String[] msgArray = new String[] { "有人就有恩怨","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。","有恩怨就有江湖","人就是江湖","你怎么退出？ ","生命中充满了巧合","两条平行线也会有相交的一天。"};
 
     private String[] dataArray = new String[] { "2012-10-31 18:00",
@@ -190,20 +231,20 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
     private final static int COUNT = 6;
 
     public void initData() {
-        for (int i = 0; i < COUNT; i++) {
-            ChatMsgEntity entity = new ChatMsgEntity();
-            entity.setDate(dataArray[i]);
-            if (i % 2 == 0) {
-                entity.setName("白富美");
-                entity.setMsgType(true);
-            } else {
-                entity.setName("高富帅");
-                entity.setMsgType(false);
-            }
-
-            entity.setText(msgArray[i]);
-            mDataArrays.add(entity);
-        }
+//        for (int i = 0; i < COUNT; i++) {
+//            ChatMsgEntity entity = new ChatMsgEntity();
+//            entity.setDate(dataArray[i]);
+//            if (i % 2 == 0) {
+//                entity.setName("白富美");
+//                entity.setMsgType(true);
+//            } else {
+//                entity.setName("高富帅");
+//                entity.setMsgType(false);
+//            }
+//
+//            entity.setText(msgArray[i]);
+//            mDataArrays.add(entity);
+//        }
 
         mAdapter = new ChatMsgViewAdapter(mActivity, mDataArrays);
         mListView.setAdapter(mAdapter);
