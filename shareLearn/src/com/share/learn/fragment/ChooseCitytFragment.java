@@ -45,37 +45,8 @@ public class ChooseCitytFragment extends BaseFragment implements OnClickListener
 
     @Override
     public void requestData() {
-        RequestParam param = new RequestParam();
-        HttpURL url = new HttpURL();
-//        url.setmBaseUrl(Constant.BASEURL + Constant.NEWS_URL);
-        url.setmGetParamPrefix("page").setmGetParamValues("10");
-//        url.setmGetParamPrefix(RequestParamConfig.START).setmGetParamValues(mPage + "");
-        param.setmHttpURL(url);
-//        param.setmParserClassName(NewsParser.class.getName());
-        RequestManager.getRequestData(getActivity(), createMyReqSuccessListener(), createMyReqErrorListener(), param);
     }
 
-    protected ErrorListener createMyReqErrorListener() {
-        return new ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                AppLog.Loge(" data failed to load" + error.getMessage());
-                if (getActivity() == null || isDetached()) {
-                    return;
-                }
-            }
-        };
-    }
-
-    private Listener<Object> createMyReqSuccessListener() {
-        return new Listener<Object>() {
-            @Override
-            public void onResponse(Object object) {
-                AppLog.Logd(object.toString());
-                AppLog.Loge(" data success to load" + object.toString());
-            }
-        };
-    }
 
 
     @Override
@@ -98,10 +69,14 @@ public class ChooseCitytFragment extends BaseFragment implements OnClickListener
     private void initView(View view) {
         cityName = (TextView) view.findViewById(R.id.city_name);
         listView = (CustomListView) view.findViewById(R.id.callListView);
-        cityName.setText(R.string.maping);
-        for(int i=0;i<5;i++){
-            list.add(i+"");
-        }
+        cityName.setText(BaseApplication.getInstance().location[0]);
+        list.add("上海");
+        list.add("南京");
+        list.add("合肥");
+        list.add("南昌");
+        list.add("芜湖");
+        list.add("六安");
+
         listView.setCanLoadMore(false);
         listView.setCanRefresh(false);
         adapter = new CityAdpter(getActivity(), list);
@@ -115,7 +90,8 @@ public class ChooseCitytFragment extends BaseFragment implements OnClickListener
                 String city = (String) arg0.getItemAtPosition(arg2);
                 Intent intent = new Intent();
                 intent.putExtra("city", city);
-                mActivity.setResult(URLConstants.CHOOSE_CITY_REQUEST_CODE,intent);
+                mActivity.setResult(Activity.RESULT_OK,intent);
+                cityName.setText(city);
                 mActivity.finish();
             }
         });
@@ -133,22 +109,6 @@ public class ChooseCitytFragment extends BaseFragment implements OnClickListener
         return view;
     }
 
-    /***
-     * Stop location service
-     */
-    @Override
-    public void onStop() {
-        // TODO Auto-generated method stub
-        super.onStop();
-    }
-
-    @Override
-    public void onStart() {
-        // TODO Auto-generated method stub
-        super.onStart();
-        // -----------location config ------------
-
-    }
 
 
     @Override

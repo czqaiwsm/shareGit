@@ -24,10 +24,8 @@ import com.share.learn.utils.URLConstants;
 public class ChooseFragment extends BaseFragment implements View.OnClickListener{
 
     private RelativeLayout chooseCityRl ;//城市
-    private TextView  chooseCityTxt;
 
     private RelativeLayout  chooseJoniorRl;//年级
-    private TextView  chooseJonirTxt;
 
     private TextView city_name, school;
 
@@ -64,10 +62,7 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
 
     private void initView(View view){
         chooseCityRl = (RelativeLayout) view.findViewById(R.id.city_choose);
-        chooseCityTxt = (TextView) view.findViewById(R.id.city_name);
-        ;;
         chooseJoniorRl = (RelativeLayout)view.findViewById(R.id.choose_jonior);
-        chooseJonirTxt = (TextView)view.findViewById(R.id.school);
         city_name = (TextView)view.findViewById(R.id.city_name);
         school = (TextView)view.findViewById(R.id.school);
         chooseCityRl.setOnClickListener(this);
@@ -86,7 +81,7 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
             public void onClick(View v) {
             //todo
                 Intent intent = new Intent();
-                intent.putExtra("cityName",cityId);
+                intent.putExtra("cityName",city_name.getText().toString());
                 intent.putExtra("joniorId",joniorId);
                 mActivity.setResult(Activity.RESULT_OK,intent);
                 mActivity.finish();
@@ -122,12 +117,11 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == Activity.RESULT_OK){
             if(requestCode == URLConstants.CHOOSE_CITY_REQUEST_CODE){//城市
-                chooseCityTxt.setText(data.hasExtra("city")?data.getStringExtra("city"):"");
+                city_name.setText(data.hasExtra("city")?data.getStringExtra("city"):"");
             }else if(requestCode == URLConstants.CHOOSE_JOINOR_REQUEST_CODE){//年级
                 joniorId = data.hasExtra(URLConstants.CHOOSE)?data.getStringExtra(URLConstants.CHOOSE):"";
-                chooseJonirTxt.setText(DataMapConstants.getJoniorMap().get(joniorId));
+                school.setText(DataMapConstants.getJoniorMap().get(joniorId));
             }
-          setData();
         }
 
     }

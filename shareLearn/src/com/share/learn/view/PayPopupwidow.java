@@ -79,7 +79,7 @@ public class PayPopupwidow implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.alipay://支付宝支付
-                PayUtil.alipay(activity,payInfo);
+                PayUtil.alipay(activity,payInfo,null);
                 break;
             case R.id.wxPay://微信支付
                 break;

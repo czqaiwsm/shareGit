@@ -40,10 +40,6 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
 
     private UserInfo mUserInfo;
 
-    private int update_data = -1;// 1:昵称 2:qq 3:邮箱 4:性别
-    private String[] items2 = new String[] { "男", "女" };
-    private int sex = -1;// 选择性别
-    private ScrollView scrollview;
 
     @Override
     public void onAttach(Activity activity) {
@@ -81,7 +77,6 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
     }
 
     private void initView(View v) {
-        scrollview = (ScrollView) v.findViewById(R.id.scrollview);
         mHeadImg = (RoundImageView) v.findViewById(R.id.account_head_img);
         pcenter_avatar_layout = (RelativeLayout) v.findViewById(R.id.pcenter_avatar_layout);
         wallet_layout = (RelativeLayout) v.findViewById(R.id.wallet_layout);

@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.alipay.sdk.pay.demo.PayCallBack;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -78,11 +79,8 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
 //    private TextView city;
 
 
-    private UserInfo mUserInfo;
-    private int sex = -1;// 选择性别
-    ScrollView scrollview;
-    private final int MODIFY_INFO = 111;//个人信息
-
+   private int recharge = 0x10;
+    private int withDraw = 0x11;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,7 +116,6 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
     }
 
     private void initView(View v) {
-        scrollview = (ScrollView) v.findViewById(R.id.scrollview);
 //        mHeadImg = (RoundImageView) v.findViewById(R.id.account_head_img);
 //        photo_layout = (RelativeLayout) v.findViewById(R.id.photo_avatar_layout);
 //        name_layout = (RelativeLayout) v.findViewById(R.id.name_layout);
@@ -149,11 +146,11 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
             break;
             case R.id.recharge_layout:// 充值
             intent = new Intent(mActivity, RechargeActivity.class);
-            startActivityForResult(intent,MODIFY_INFO);
+            startActivityForResult(intent,recharge);
             break;
             case R.id.withDraw_layout:// 提现
             intent = new Intent(mActivity, ChooseCityActivity.class);
-            startActivityForResult(intent,MODIFY_INFO);
+            startActivityForResult(intent,withDraw);
             break;
         }
 
@@ -198,6 +195,17 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == Activity.RESULT_OK){
+            requestTask();
+        }
+    }
+
+
 }

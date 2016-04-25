@@ -1,29 +1,33 @@
 package com.share.learn.fragment.center;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
+import com.alipay.sdk.pay.demo.PayCallBack;
+import com.google.gson.internal.LinkedTreeMap;
 import com.share.learn.R;
-import com.share.learn.activity.ChooseCityActivity;
-import com.share.learn.activity.center.PCenterModifyInfoActivity;
-import com.share.learn.activity.teacher.ChooseJoinorActivity;
+import com.share.learn.bean.PayInfo;
 import com.share.learn.fragment.BaseFragment;
-import com.share.learn.utils.AppLog;
-import com.volley.req.UserInfo;
+import com.share.learn.help.RequestHelp;
+import com.share.learn.help.RequsetListener;
+import com.share.learn.parse.BaseParse;
+import com.share.learn.parse.LoginInfoParse;
+import com.share.learn.utils.PayUtil;
+import com.share.learn.utils.URLConstants;
+import com.share.learn.utils.WaitLayer;
 import com.volley.req.net.HttpURL;
 import com.volley.req.net.RequestManager;
 import com.volley.req.net.RequestParam;
-import com.volley.req.net.RequestParamSub;
+import com.volley.req.parser.JsonParserBase;
+
+import java.util.Map;
 
 /**
  *钱包
@@ -31,7 +35,7 @@ import com.volley.req.net.RequestParamSub;
  * @time 2015年9月28日上午11:44:26
  *
  */
-public class RechargeFragment extends BaseFragment implements OnClickListener {
+public class RechargeFragment extends BaseFragment implements OnClickListener ,RequsetListener,PayCallBack {
 
     private EditText rechargePrice ;
     private TextView rechareQuery;
@@ -52,12 +56,14 @@ public class RechargeFragment extends BaseFragment implements OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         initTitleView();
         initView(view);
+        setLoadingDilog(WaitLayer.DialogType.MODALESS);
     }
 
     private void initTitleView() {
         setLeftHeadIcon(0);
         setTitleText(R.string.wallet);
         setLeftHeadIcon(0);
+
     }
 
     private void initView(View v) {
@@ -74,7 +80,11 @@ public class RechargeFragment extends BaseFragment implements OnClickListener {
         // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.recharge_query:
-
+                 if(TextUtils.isEmpty(rechargePrice.getText()) || TextUtils.equals("0",rechargePrice.getText())){
+                     toasetUtil.showInfo("请输入金额");
+                 }else {
+                     requestTask();
+                 }
                 break;
         }
 
@@ -87,48 +97,49 @@ public class RechargeFragment extends BaseFragment implements OnClickListener {
 //        startActivityForResult(new Intent(getActivity(), LoginActivity.class), Constant.RELOGIN);
     }
 
-    /**
-     * 请求 用户信息
-     */
     @Override
-    public void requestData() {
-        // TODO Auto-generated method stub
-        RequestParam param = new RequestParamSub(getActivity());
+    protected void requestData() {
         HttpURL url = new HttpURL();
-//        url.setmBaseUrl(Constant.GET_PcenterInfo);
-//        param.setmHttpURL(url);
-//        param.setmParserClassName(PcenterInfoParser.class.getName());
-        RequestManager.getRequestData(getActivity(), createMyReqSuccessListener(), createMyReqErrorListener(), param);
+        url.setmBaseUrl(URLConstants.BASE_URL);
+        Map postParams = RequestHelp.getBaseParaMap("Recharge") ;
+
+        RequestParam param = new RequestParam();
+
+        postParams.put("payPrice",rechargePrice.getText().toString());
+        postParams.put("payType","1");
+        param.setmParserClassName(new BaseParse());
+        param.setmPostarams(postParams);
+        param.setmHttpURL(url);
+        param.setPostRequestMethod();
+        RequestManager.getRequestData(getActivity(), createReqSuccessListener(),createMyReqErrorListener(), param);
+
     }
 
-    private Listener<Object> createMyReqSuccessListener() {
-        return new Listener<Object>() {
-            @Override
-            public void onResponse(Object object) {
-//                ResultInfo info = (ResultInfo) object;
-//                if (getActivity() != null && !isDetached()) {
-//                    if (info.getmCode() == ResultCode.CODE_0) {
-//                        mUserInfo = (UserInfo) info.getObject();
-//                        setData(mUserInfo);
-//                    } else {
-//                        SmartToast.showText(info.getmData());
-//                    }
-//                }
-            }
-        };
-    }
+    @Override
+    public void handleRspSuccess(Object obj) {
+        JsonParserBase jsonParserBase = (JsonParserBase)obj;
+        if ((jsonParserBase != null)){
+            LinkedTreeMap <String,String> treeMap = (LinkedTreeMap<String, String>) jsonParserBase.getData();
+             String order = treeMap.get("orderCode");
+            PayUtil.alipay(mActivity,new PayInfo(order,rechargePrice.getText().toString(),"充值","充值"),this);
+//            BaseApplication.getInstance().userInfo = jsonParserBase.getData().getUserInfo();
+//            BaseApplication.getInstance().accessToken = jsonParserBase.getData().getToken();
+//            BaseApplication.getInstance().userId = BaseApplication.getInstance().userInfo.getId();
+//            toClassActivity(LoginFramgent.this, MainActivity.class.getName());//学生
+//            toClassActivity(LoginFramgent.this, TeacherMainActivity.class.getName());//老师
 
-    protected ErrorListener createMyReqErrorListener() {
-        return new ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                AppLog.Loge(" data failed to load" + error.getMessage());
-                if (!isDetached()) {
-//                    showUIDialogState(false);
-                }
-            }
-        };
+        }
     }
 
 
+    @Override
+    public void paySucc() {
+        mActivity.setResult(Activity.RESULT_OK);
+        mActivity.finish();
+    }
+
+    @Override
+    public void payFail() {
+
+    }
 }

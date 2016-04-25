@@ -13,6 +13,13 @@ public class PayInfo {
     private String content;
     private String notifyUrl;
 
+    public PayInfo(String orderNum, String price, String productDesc, String content){
+        this.orderNum = orderNum;
+        this.price = price;
+        this.productDesc = productDesc;
+        this.content = content;
+    }
+
     public String getOrderNum() {
         return orderNum;
     }

@@ -235,7 +235,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
         if(payCourseInfo != null){
 
             //todo 弹出对话框,选择支付方式
-            AlipayUtil alipayUtil = new AlipayUtil(mActivity,payCourseInfo.getOrderCode(),"test",payCourseInfo.getCourseName(),payCourseInfo.getPayPrice());
+            AlipayUtil alipayUtil = new AlipayUtil(mActivity,payCourseInfo.getOrderCode(),"test",payCourseInfo.getCourseName(),payCourseInfo.getPayPrice(),null);
 
             alipayUtil.alipay();
         }

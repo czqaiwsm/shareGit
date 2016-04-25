@@ -9,10 +9,12 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import com.share.learn.R;
 import com.share.learn.activity.center.OrderDetailActivity;
+import com.share.learn.activity.teacher.TeacherDetailActivity;
 import com.share.learn.adapter.ContactAdpter;
 import com.share.learn.bean.Contactor;
 import com.share.learn.bean.ContactorBean;
 import com.share.learn.fragment.BaseFragment;
+import com.share.learn.fragment.teacher.TeacherDetailFragment;
 import com.share.learn.help.PullRefreshStatus;
 import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
@@ -110,7 +112,8 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(mActivity,OrderDetailActivity.class);
+                Intent intent = new Intent(mActivity,TeacherDetailActivity.class);
+                intent.putExtra("teacherId",list.get(i-1).getTeacberId());
                 startActivity(intent);
             }
         });

@@ -2,6 +2,7 @@ package com.share.learn.utils;
 
 import android.app.Activity;
 import com.alipay.sdk.pay.demo.AlipayUtil;
+import com.alipay.sdk.pay.demo.PayCallBack;
 import com.share.learn.bean.PayInfo;
 
 /**
@@ -12,9 +13,9 @@ import com.share.learn.bean.PayInfo;
 public class PayUtil {
 
 
-    public static void alipay(Activity mActivity,PayInfo payInfo){
+    public static void alipay(Activity mActivity,PayInfo payInfo,PayCallBack payCallBack){
 
-        AlipayUtil alipayUtil = new AlipayUtil(mActivity,payInfo.getOrderNum(),payInfo.getContent(),payInfo.getProductDesc(),payInfo.getPrice());
+        AlipayUtil alipayUtil = new AlipayUtil(mActivity,payInfo.getOrderNum(),payInfo.getContent(),payInfo.getProductDesc(),payInfo.getPrice(),payCallBack);
         alipayUtil.alipay();
     }
 

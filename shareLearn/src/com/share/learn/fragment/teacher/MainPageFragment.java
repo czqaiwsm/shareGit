@@ -2,6 +2,7 @@ package com.share.learn.fragment.teacher;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,16 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.share.learn.R;
+import com.share.learn.activity.teacher.ChatMsgActivity;
+import com.share.learn.bean.ChatMsgEntity;
 import com.share.learn.bean.TeacherDetailBean;
 import com.share.learn.bean.TeacherDetailInfo;
+import com.share.learn.bean.UserInfo;
 import com.share.learn.fragment.BaseFragment;
 import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
 import com.share.learn.parse.TeacherDetailParse;
+import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.URLConstants;
 import com.share.learn.utils.WaitLayer;
 import com.volley.req.net.HttpURL;
@@ -81,8 +86,10 @@ public class MainPageFragment extends BaseFragment implements View.OnClickListen
         seek_btn = (Button)view.findViewById(R.id.seek_btn);
         seek_btn.setClickable(false);
         seek_txt.setClickable(false);
-        ask_rl.setOnClickListener(this);
         seek_rl.setOnClickListener(this);
+        ask_btn.setClickable(false);
+        ask_txt.setClickable(false);
+        ask_rl.setOnClickListener(this);
 
         if(teacherDetailInfo != null){
             school.setText(teacherDetailInfo.getCollege());
@@ -106,6 +113,19 @@ public class MainPageFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ask_rl:
+                UserInfo userInfo = BaseApplication.getInstance().userInfo;
+                Intent intent = new Intent(mActivity, ChatMsgActivity.class);
+
+                intent.putExtra("teacherId",teacherDetailInfo.getId());
+                ChatMsgEntity chatMsgEntity = new ChatMsgEntity();
+                chatMsgEntity.setDirection("2");
+                chatMsgEntity.setReceiverId(teacherDetailInfo.getId());
+                chatMsgEntity.setSenderId(userInfo.getId());
+
+                chatMsgEntity.setTeacherName(teacherDetailInfo.getNickName());
+                chatMsgEntity.setTeacherImg(teacherDetailInfo.getHeadImg());
+                intent.putExtra("bundle",chatMsgEntity);
+                startActivity(intent);
                 break;
             case R.id.seek_rl:
                 cliclAble(false);
