@@ -152,7 +152,7 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<ContactorBean> jsonParserBase = (JsonParserBase<ContactorBean>)obj;
         ContactorBean chooseTeachBean = jsonParserBase.getData();
         if(chooseTeachBean != null){

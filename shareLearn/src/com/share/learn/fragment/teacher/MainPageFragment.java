@@ -154,7 +154,7 @@ public class MainPageFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
-    public void handleRspSuccess(Object obj)  {
+    public void handleRspSuccess(int requestType,Object obj)  {
         cliclAble(true);
         seek_btn.setSelected(!seek_btn.isSelected());
         seek_txt.setSelected(!seek_txt.isSelected());

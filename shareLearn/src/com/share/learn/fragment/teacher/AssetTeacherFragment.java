@@ -152,7 +152,7 @@ public class AssetTeacherFragment extends BaseFragment implements RequsetListene
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<CommentBean> jsonParserBase = (JsonParserBase<CommentBean>)obj;
         CommentBean chooseTeachBean = jsonParserBase.getData();
         if(chooseTeachBean != null){

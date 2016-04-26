@@ -10,15 +10,18 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.alipay.sdk.pay.demo.PayCallBack;
 import com.google.gson.internal.LinkedTreeMap;
 import com.share.learn.R;
 import com.share.learn.bean.PayInfo;
+import com.share.learn.bean.UserInfo;
 import com.share.learn.fragment.BaseFragment;
 import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
 import com.share.learn.parse.BaseParse;
-import com.share.learn.parse.LoginInfoParse;
+import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.PayUtil;
 import com.share.learn.utils.URLConstants;
 import com.share.learn.utils.WaitLayer;
@@ -30,16 +33,22 @@ import com.volley.req.parser.JsonParserBase;
 import java.util.Map;
 
 /**
- *钱包
+ * 钱包
  * @author czq
  * @time 2015年9月28日上午11:44:26
- *
  */
-public class RechargeFragment extends BaseFragment implements OnClickListener ,RequsetListener,PayCallBack {
+public class WidthDrawFragment extends BaseFragment implements OnClickListener, RequsetListener, PayCallBack {
 
-    private EditText rechargePrice ;
-    private TextView rechareQuery;
 
+    @Bind(R.id.alipayAccount)
+    EditText alipayAccount;
+    @Bind(R.id.alipayName)
+    EditText alipayName;
+    @Bind(R.id.recharge_query)
+    TextView rechargeQuery;
+
+
+    UserInfo userInfo = BaseApplication.getInstance().userInfo;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +56,8 @@ public class RechargeFragment extends BaseFragment implements OnClickListener ,R
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recharge, container, false);
+        View view = inflater.inflate(R.layout.fragment_widthdraw, container, false);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -55,80 +65,54 @@ public class RechargeFragment extends BaseFragment implements OnClickListener ,R
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initTitleView();
-        initView(view);
         setLoadingDilog(WaitLayer.DialogType.MODALESS);
     }
 
     private void initTitleView() {
         setLeftHeadIcon(0);
-        setTitleText(R.string.wallet);
+        setTitleText("绑定支付宝");
         setLeftHeadIcon(0);
 
+        rechargeQuery.setOnClickListener(this);
     }
 
-    private void initView(View v) {
-        rechargePrice = (EditText)v.findViewById(R.id.recharge_price);
-        rechareQuery = (TextView)v.findViewById(R.id.recharge_query);
-        rechareQuery.setOnClickListener(this);
-
-    }
-
-
-    private Intent intent ;
     @Override
     public void onClick(View v) {
         // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.recharge_query:
-                 if(TextUtils.isEmpty(rechargePrice.getText()) || TextUtils.equals("0",rechargePrice.getText())){
-                     toasetUtil.showInfo("请输入金额");
-                 }else {
-                     requestTask();
-                 }
+
+                if (TextUtils.isEmpty(alipayAccount.getText()) || TextUtils.isEmpty(alipayName.getText())) {
+                    toasetUtil.showInfo("请输入账号和姓名!");
+                } else if(userInfo == null || Integer.valueOf(userInfo.getBalance())<=0){
+                    toasetUtil.showInfo("账号没有足够余额!");
+                }else {
+                    requestTask();
+                }
                 break;
         }
 
     }
 
-    /**
-     * 重新登录
-     */
-    private void reLogin() {
-//        startActivityForResult(new Intent(getActivity(), LoginActivity.class), Constant.RELOGIN);
-    }
 
     @Override
     protected void requestData() {
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
-        Map postParams = RequestHelp.getBaseParaMap("Recharge") ;
+        Map postParams = RequestHelp.getBaseParaMap("Withdraw");
 
         RequestParam param = new RequestParam();
 
-        postParams.put("payPrice",rechargePrice.getText().toString());
-        postParams.put("payType","1");
+        postParams.put("account", alipayAccount.getText().toString());
+        postParams.put("realName", alipayName.getText().toString());
+        postParams.put("price", BaseApplication.getInstance().userInfo != null?
+                BaseApplication.getInstance().userInfo.getBalance():"");
         param.setmParserClassName(new BaseParse());
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
-        RequestManager.getRequestData(getActivity(), createReqSuccessListener(),createMyReqErrorListener(), param);
+        RequestManager.getRequestData(getActivity(), createReqSuccessListener(), createMyReqErrorListener(), param);
 
-    }
-
-    @Override
-    public void handleRspSuccess(int requestType,Object obj) {
-        JsonParserBase jsonParserBase = (JsonParserBase)obj;
-        if ((jsonParserBase != null)){
-            LinkedTreeMap <String,String> treeMap = (LinkedTreeMap<String, String>) jsonParserBase.getData();
-             String order = treeMap.get("orderCode");
-            PayUtil.alipay(mActivity,new PayInfo(order,rechargePrice.getText().toString(),"充值","充值"),this);
-//            BaseApplication.getInstance().userInfo = jsonParserBase.getData().getUserInfo();
-//            BaseApplication.getInstance().accessToken = jsonParserBase.getData().getToken();
-//            BaseApplication.getInstance().userId = BaseApplication.getInstance().userInfo.getId();
-//            toClassActivity(LoginFramgent.this, MainActivity.class.getName());//学生
-//            toClassActivity(LoginFramgent.this, TeacherMainActivity.class.getName());//老师
-
-        }
     }
 
 
@@ -141,5 +125,22 @@ public class RechargeFragment extends BaseFragment implements OnClickListener ,R
     @Override
     public void payFail() {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void handleRspSuccess(int requestType, Object obj) {
+        JsonParserBase jsonParserBase = (JsonParserBase) obj;
+        if ((jsonParserBase != null)) {
+            LinkedTreeMap<String, String> treeMap = (LinkedTreeMap<String, String>) jsonParserBase.getData();
+            String order = treeMap.get("tips");
+            toasetUtil.showInfo(order);
+            mActivity.finish();
+        }
     }
 }

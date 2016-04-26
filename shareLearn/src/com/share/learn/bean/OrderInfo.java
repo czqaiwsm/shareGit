@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 public class OrderInfo implements Serializable {
 
+
     private String orderId;//	订单ID	是	Int
     private String teacherName;//	老师姓名	是	String
 
@@ -18,6 +19,9 @@ public class OrderInfo implements Serializable {
     private String payPrice	;//实际支付金额	是	Int
 
     private String teacherId ;
+   private String evaluateStatus ;
+   private String         grade  ;
+   private String teacherImg     ;
 
 
     public String getTeacherId() {
@@ -67,5 +71,29 @@ public class OrderInfo implements Serializable {
 
     public void setPayPrice(String payPrice) {
         this.payPrice = payPrice;
+    }
+
+    public String getEvaluateStatus() {
+        return evaluateStatus;
+    }
+
+    public void setEvaluateStatus(String evaluateStatus) {
+        this.evaluateStatus = evaluateStatus;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getTeacherImg() {
+        return teacherImg;
+    }
+
+    public void setTeacherImg(String teacherImg) {
+        this.teacherImg = teacherImg;
     }
 }

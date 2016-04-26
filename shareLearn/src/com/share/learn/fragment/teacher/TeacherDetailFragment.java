@@ -137,7 +137,7 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
     }
 
     @Override
-    public void handleRspSuccess(Object obj)  {
+    public void handleRspSuccess(int requestType,Object obj)  {
         JsonParserBase<TeacherDetailBean> jsonParserBase = (JsonParserBase<TeacherDetailBean>)obj;
         if ((jsonParserBase != null)){
             courseInfos = jsonParserBase.getData().getCourseList();

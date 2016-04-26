@@ -302,7 +302,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         switch (requestCode){
             case URLConstants.CHOOSE_JOINOR_REQUEST_CODE://年级选择
                 BaseApplication.getInstance().userInfo.setGrade(requstValue);

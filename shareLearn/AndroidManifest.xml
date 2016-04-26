@@ -99,6 +99,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.teacher.EvaluateActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".activity.center.WidthDrawActivity"
+                  android:screenOrientation="portrait"/>
 
 
         <!--老师端-->

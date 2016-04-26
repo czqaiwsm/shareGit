@@ -25,10 +25,11 @@ public class PayPopupwidow implements View.OnClickListener{
     private Handler handler;
     private View view;
     private PayInfo payInfo;
-    public PayPopupwidow(Activity activity, Handler handler){
-        this.activity = activity;
-        this.handler = handler;
+    private View.OnClickListener onClickListener;
+    public PayPopupwidow(Activity activit, View.OnClickListener onClickListener){
+        this.onClickListener = onClickListener;
         setmSortPop();
+
 //        mSortPop.showAtLocation(getView(), Gravity.BOTTOM,0,0);
     }
 
@@ -71,8 +72,8 @@ public class PayPopupwidow implements View.OnClickListener{
             }
         });
 
-        view.findViewById(R.id.alipay).setOnClickListener(this);
-        view.findViewById(R.id.wxPay).setOnClickListener(this);
+        view.findViewById(R.id.alipay).setOnClickListener(onClickListener);
+        view.findViewById(R.id.wxPay).setOnClickListener(onClickListener);
     }
 
     @Override

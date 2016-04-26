@@ -92,14 +92,24 @@ public abstract class BaseFragment extends Fragment{
     };
 
 
-    protected abstract void requestData();//默认的请求方法
+    protected  void requestData(){
+
+        requestData(0);
+    }
+    protected void requestData(int requestTyep){
+
+    }
 
     protected void requestTask(){
+        requestTask(0);
+    }
+
+    protected void requestTask(int requestType){
         if (loadingDilog != null){
             showLoadingDilog(null);
             handler.sendEmptyMessageDelayed(CANCEL,10000);
         }
-        requestData();
+        requestData(requestType);
     }
 
     @Override
@@ -322,7 +332,7 @@ public abstract class BaseFragment extends Fragment{
     }
 
 
-    protected Response.Listener<Object> createReqSuccessListener() {
+    protected Response.Listener<Object> createReqSuccessListener(final int requestType) {
         return new Response.Listener<Object>() {
             @Override
             public void onResponse(Object object) {
@@ -332,9 +342,8 @@ public abstract class BaseFragment extends Fragment{
                     if(jsonParserBase != null && URLConstants.SUCCESS_CODE.equals(jsonParserBase.getRespCode())){
 
                         if(requsetListener != null){
-
                             try {
-                                requsetListener.handleRspSuccess(jsonParserBase);
+                                requsetListener.handleRspSuccess(requestType,jsonParserBase);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -351,6 +360,10 @@ public abstract class BaseFragment extends Fragment{
                 }
             }
         };
+    }
+
+    protected Response.Listener<Object> createReqSuccessListener() {
+        return createReqSuccessListener(0);
     }
 
     protected Response.ErrorListener createMyReqErrorListener() {

@@ -13,20 +13,26 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.share.learn.R;
+import com.share.learn.activity.teacher.ChatMsgActivity;
 import com.share.learn.activity.teacher.EvaluateActivity;
+import com.share.learn.bean.ChatMsgEntity;
+import com.share.learn.bean.MsgDetail;
 import com.share.learn.bean.OrderInfo;
+import com.share.learn.bean.UserInfo;
 import com.share.learn.bean.msg.Message;
+import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.SmartToast;
 import com.share.learn.view.CustomListView;
 import com.share.learn.view.RoundImageView;
 
 import java.util.List;
 
-public class OrderPayAdpter extends BaseAdapter implements View.OnClickListener{
+public class OrderPayAdpter extends BaseAdapter {
     private List<OrderInfo> mItemList;
     private Context mContext;
     private int flag = 0 ;//1 待支付\2 已支付\ 3 已取消\ 4 已完成
 
+    private View.OnClickListener listener;
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
@@ -34,10 +40,11 @@ public class OrderPayAdpter extends BaseAdapter implements View.OnClickListener{
 
     }
 
-    public OrderPayAdpter(Context context, List<OrderInfo> items,int flag) {
+    public OrderPayAdpter(Context context, List<OrderInfo> items, int flag, View.OnClickListener listener) {
         this.mContext = context;
         this.mItemList = items;
         this.flag = flag;
+        this.listener = listener;
     }
 
     @Override
@@ -80,8 +87,8 @@ public class OrderPayAdpter extends BaseAdapter implements View.OnClickListener{
             holder.left_tv.setVisibility(View.GONE);
             holder.right_tv.setVisibility(View.GONE);
 
-            holder.left_tv.setOnClickListener(this);
-            holder.right_tv.setOnClickListener(this);
+            holder.left_tv.setOnClickListener(listener);
+            holder.right_tv.setOnClickListener(listener);
 
             holder.left_tv.setTag(position);
             holder.right_tv.setTag(position);
@@ -118,36 +125,6 @@ public class OrderPayAdpter extends BaseAdapter implements View.OnClickListener{
     }
 
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = null;
-        OrderInfo orderInfo = mItemList.get((Integer)v.getTag());
-        switch (v.getId()){
-            case R.id.left_tv:
-                if(flag == 1){//待支付(联系老师)
-
-                }else if(flag == 2){//已支付(完成订单)
-
-                }
-                break;
-            case R.id.right_tv:
-                if(flag == 1){//待支付(立即支付)
-
-                }else if(flag == 2){//已支付(申请退款)
-
-                }else if(flag==4){//已完成(立即评价)
-
-                    intent = new Intent((Activity)mContext, EvaluateActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("orderInfo",orderInfo);
-                    intent.putExtra("bundle",bundle);
-                mContext.startActivity(intent);
-
-                }
-                break;
-
-        }
-    }
 
     class ViewHolder {
         @Bind(R.id.name)

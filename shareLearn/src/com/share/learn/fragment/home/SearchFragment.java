@@ -89,7 +89,7 @@ public class SearchFragment extends BaseFragment implements OnClickListener, Req
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<List<TeacherInfo>> jsonParserBase = (JsonParserBase<List<TeacherInfo>>) obj;
         List<TeacherInfo> teacherInfos = jsonParserBase.getData();
         list.clear();

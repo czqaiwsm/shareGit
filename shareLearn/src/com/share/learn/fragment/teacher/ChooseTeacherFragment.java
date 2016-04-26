@@ -142,7 +142,7 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<ChooseTeachBean> jsonParserBase = (JsonParserBase<ChooseTeachBean>)obj;
         ChooseTeachBean chooseTeachBean = jsonParserBase.getData();
         if(chooseTeachBean != null){

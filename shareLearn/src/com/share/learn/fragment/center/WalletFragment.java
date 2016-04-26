@@ -31,10 +31,7 @@ import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.share.learn.R;
 import com.share.learn.activity.ChooseCityActivity;
-import com.share.learn.activity.center.DetailActivity;
-import com.share.learn.activity.center.PCenterModifyInfoActivity;
-import com.share.learn.activity.center.RechargeActivity;
-import com.share.learn.activity.center.WalletActivity;
+import com.share.learn.activity.center.*;
 import com.share.learn.activity.teacher.ChooseJoinorActivity;
 import com.share.learn.fragment.BaseFragment;
 import com.share.learn.help.RequestHelp;
@@ -149,7 +146,7 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
             startActivityForResult(intent,recharge);
             break;
             case R.id.withDraw_layout:// 提现
-            intent = new Intent(mActivity, ChooseCityActivity.class);
+            intent = new Intent(mActivity, WidthDrawActivity.class);
             startActivityForResult(intent,withDraw);
             break;
         }
@@ -181,7 +178,7 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
     }
 
     @Override
-    public void handleRspSuccess(Object obj)  {
+    public void handleRspSuccess(int requestType,Object obj)  {
         String json = (String)((JsonParserBase)obj).getData().toString();
 
         try {

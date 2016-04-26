@@ -127,7 +127,7 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase jsonParserBase = (JsonParserBase)obj;
         if ((jsonParserBase != null)){
             toasetUtil.showSuccess("密码修改成功!请登录");

@@ -124,7 +124,7 @@ public class LoginFramgent extends BaseFragment implements View.OnClickListener,
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<LoginInfo> jsonParserBase = (JsonParserBase<LoginInfo>)obj;
         if ((jsonParserBase != null)){
             BaseApplication.getInstance().userInfo = jsonParserBase.getData().getUserInfo();

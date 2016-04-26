@@ -161,7 +161,7 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<ArrayList<ArrayList<CourseInfo>>>  jsonParserBase = (JsonParserBase<ArrayList<ArrayList<CourseInfo>>>)obj;
         if(jsonParserBase != null){
             weekCourseList = jsonParserBase.getData();

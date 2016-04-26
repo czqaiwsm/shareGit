@@ -130,7 +130,7 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
     }
 
     @Override
-    public void handleRspSuccess(Object obj)  {
+    public void handleRspSuccess(int requestType,Object obj)  {
         OrderDetailBean data = ((JsonParserBase<OrderDetailBean>)obj).getData();
 
             if(data != null){

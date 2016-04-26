@@ -22,17 +22,10 @@
             android:background="@color/white"
     >
     </com.share.learn.view.tab.ScrollingTabContainerView>
-
-    <!--<LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/container">
-
-    </LinearLayout>-->
     <android.support.v4.view.ViewPager
             android:id="@+id/schedule_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_10dp"
             android:background="@color/white"
             />
 

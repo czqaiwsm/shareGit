@@ -188,7 +188,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<HomeInfo> jsonParserBase = (JsonParserBase<HomeInfo>)obj;
         if(jsonParserBase != null){
             HomeInfo homeInfo = jsonParserBase.getData();

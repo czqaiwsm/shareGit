@@ -193,7 +193,7 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         if (flag == 1) {
         JsonParserBase<ArrayList<MsgDetail>> jsonParserBase = (JsonParserBase<ArrayList<MsgDetail>>) obj;
         ArrayList<MsgDetail> chooseTeachBean = jsonParserBase.getData();

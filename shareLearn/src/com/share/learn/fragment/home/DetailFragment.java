@@ -131,7 +131,7 @@ public class DetailFragment extends BaseFragment implements RequsetListener,Cust
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<ContactorBean> jsonParserBase = (JsonParserBase<ContactorBean>)obj;
         ContactorBean chooseTeachBean = jsonParserBase.getData();
         if(chooseTeachBean != null){

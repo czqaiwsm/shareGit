@@ -230,7 +230,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         PayCourseInfo payCourseInfo =( (JsonParserBase<PayCourseInfo>)obj).getData();
         if(payCourseInfo != null){
 

@@ -236,7 +236,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener,Re
 	private VerifyCode verifyCode = null;//验证码
 
 	@Override
-	public void handleRspSuccess(Object obj) {
+	public void handleRspSuccess(int requestType,Object obj) {
 		switch (requetType){
 			case 1:
 				MSG_TOTAL_TIME = -1;

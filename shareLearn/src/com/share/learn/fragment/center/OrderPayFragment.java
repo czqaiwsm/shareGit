@@ -1,5 +1,6 @@
 package com.share.learn.fragment.center;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,14 +10,19 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import com.share.learn.R;
 import com.share.learn.activity.center.OrderDetailActivity;
+import com.share.learn.activity.teacher.ChatMsgActivity;
+import com.share.learn.activity.teacher.EvaluateActivity;
 import com.share.learn.adapter.OrderPayAdpter;
+import com.share.learn.bean.ChatMsgEntity;
 import com.share.learn.bean.OrderInfo;
 import com.share.learn.bean.OrderListBean;
+import com.share.learn.bean.UserInfo;
 import com.share.learn.fragment.BaseFragment;
 import com.share.learn.help.PullRefreshStatus;
 import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
 import com.share.learn.parse.OrderListBeanParse;
+import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.URLConstants;
 import com.share.learn.utils.WaitLayer;
 import com.share.learn.view.CustomListView;
@@ -34,7 +40,7 @@ import java.util.Map;
  * @creator caozhiqing
  * @data 2016/3/10
  */
-public class OrderPayFragment extends BaseFragment implements RequsetListener,CustomListView.OnLoadMoreListener {
+public class OrderPayFragment extends BaseFragment implements RequsetListener,CustomListView.OnLoadMoreListener ,View.OnClickListener{
 
     private CustomListView customListView = null;
     private List<OrderInfo> list = new ArrayList<OrderInfo>();
@@ -78,7 +84,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
         if(!isPrepare || !isVisible){
             return;
         }
-         requestTask();
+         requestTask(1);
 
     }
 
@@ -103,7 +109,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
         customListView = (CustomListView)view.findViewById(R.id.callListView);
         noData = (TextView)view.findViewById(R.id.noData);
         customListView.setCanRefresh(true);
-        adapter = new OrderPayAdpter(mActivity, list,flag);
+        adapter = new OrderPayAdpter(mActivity, list,flag,this);
         customListView.setAdapter(adapter);
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -120,6 +126,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                 status = PullRefreshStatus.PULL_REFRESH;
                 pageNo = 1;
                 requestData();
+
             }
         });
     }
@@ -131,58 +138,74 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
         requestData();
     }
 
-
+    private int requestType = 1;//1 列表, 2立即支付  3 完成订单
     @Override
-    protected void requestData() {
+    protected void requestData(int requestType) {
+
 
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
-        Map postParams = RequestHelp.getBaseParaMap("OrderList");
-//        @"cityName", [ @"pageNo",@"courseId",@"grade", @"cmd",@"123456",@"vcode",@"",@"fInviteCode",@"000000",@"deviceId",@"10",@"appversion",@"4",@"clientType",[[UserInfoManage shareInstance] token],@"accessToken", nil];
-        postParams.put("status",flag);
-        postParams.put("vcode", "123456");
-        postParams.put("pageNo",pageNo);
+        Map postParams = null;
+
         RequestParam param = new RequestParam();
 //        param.setmParserClassName(OrderListBeanParse.class.getName());
-        param.setmParserClassName(new OrderListBeanParse());
+        switch (requestType){
+            case 1:
+                postParams = RequestHelp.getBaseParaMap("OrderList");
+                postParams.put("status",flag);
+                postParams.put("vcode", "123456");
+                postParams.put("pageNo",pageNo);
+                param.setmParserClassName(new OrderListBeanParse());
+                break;
+
+        }
+//        @"cityName", [ @"pageNo",@"courseId",@"grade", @"cmd",@"123456",@"vcode",@"",@"fInviteCode",@"000000",@"deviceId",@"10",@"appversion",@"4",@"clientType",[[UserInfoManage shareInstance] token],@"accessToken", nil];
+
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
-        RequestManager.getRequestData(getActivity(), createReqSuccessListener(), createMyReqErrorListener(), param);
+        RequestManager.getRequestData(getActivity(), createReqSuccessListener(requestType), createMyReqErrorListener(), param);
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
-        JsonParserBase<OrderListBean> jsonParserBase = (JsonParserBase<OrderListBean>)obj;
-        OrderListBean chooseTeachBean = jsonParserBase.getData();
-        if(chooseTeachBean != null){
-            pageCount = chooseTeachBean.getTotalPages();
-            pageSize = chooseTeachBean.getPageSize();
-            ArrayList<OrderInfo> teacherInfos = chooseTeachBean.getElements();
+    public void handleRspSuccess(int requestType,Object obj) {
+        switch (requestType){
+            case 1:
+                JsonParserBase<OrderListBean> jsonParserBase = (JsonParserBase<OrderListBean>)obj;
+                OrderListBean chooseTeachBean = jsonParserBase.getData();
+                if(chooseTeachBean != null){
+                    pageCount = chooseTeachBean.getTotalPages();
+                    pageSize = chooseTeachBean.getPageSize();
+                    ArrayList<OrderInfo> teacherInfos = chooseTeachBean.getElements();
 
-            switch (status){
-                case NORMAL:
-                    refresh(teacherInfos);
-                    break;
+                    switch (status){
+                        case NORMAL:
+                            refresh(teacherInfos);
+                            break;
 
-                case PULL_REFRESH:
-                    refresh(teacherInfos);
-                    customListView.onRefreshComplete();
-                    break;
-                case LOAD_MORE:
-                    if(teacherInfos != null && teacherInfos.size()>0){//有数据
-                        list.addAll(teacherInfos);
-                        customListView.onLoadMoreComplete(CustomListView.ENDINT_MANUAL_LOAD_DONE);
-                        adapter.notifyDataSetInvalidated();
-                    }else {
-                        pageNo--;
-                        customListView.onLoadMoreComplete(CustomListView.ENDINT_AUTO_LOAD_NO_DATA);
+                        case PULL_REFRESH:
+                            refresh(teacherInfos);
+                            customListView.onRefreshComplete();
+                            break;
+                        case LOAD_MORE:
+                            if(teacherInfos != null && teacherInfos.size()>0){//有数据
+                                list.addAll(teacherInfos);
+                                customListView.onLoadMoreComplete(CustomListView.ENDINT_MANUAL_LOAD_DONE);
+                                adapter.notifyDataSetInvalidated();
+                            }else {
+                                pageNo--;
+                                customListView.onLoadMoreComplete(CustomListView.ENDINT_AUTO_LOAD_NO_DATA);
+                            }
+                            break;
+                        default:break;
                     }
-                    break;
-                default:break;
-            }
+
+                }
+                break;
+
 
         }
+
     }
 
     @Override
@@ -230,6 +253,48 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
 
         }
     }
+    @Override
+    public void onClick(View v) {
+        Intent intent = null;
+        OrderInfo orderInfo = list.get((Integer)v.getTag());
+        switch (v.getId()){
+            case R.id.left_tv:
+                if(flag == 1){//待支付(联系老师)
+                    intent = new Intent(mActivity, ChatMsgActivity.class);
+                    UserInfo userInfo = BaseApplication.getInstance().userInfo;
+                    intent.putExtra("teacherId",orderInfo.getTeacherId());
 
+                    ChatMsgEntity chatMsgEntity = new ChatMsgEntity();
+                    chatMsgEntity.setDirection("2");
+                    chatMsgEntity.setReceiverId(orderInfo.getTeacherId());
+                    chatMsgEntity.setSenderId(userInfo.getId());
+
+                    chatMsgEntity.setTeacherName(orderInfo.getTeacherName());
+                    chatMsgEntity.setTeacherImg(orderInfo.getTeacherImg());
+                    intent.putExtra("bundle",chatMsgEntity);
+                    startActivity(intent);
+                }else if(flag == 2){//已支付(完成订单)
+
+
+                }
+                break;
+            case R.id.right_tv:
+                if(flag == 1){//待支付(立即支付)
+
+                }else if(flag == 2){//已支付(申请退款)
+
+                }else if(flag==4){//已完成(立即评价)
+
+                    intent = new Intent(mActivity, EvaluateActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("orderInfo",orderInfo);
+                    intent.putExtra("bundle",bundle);
+                    startActivity(intent);
+
+                }
+                break;
+
+        }
+    }
 
 }

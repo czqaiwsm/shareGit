@@ -225,7 +225,7 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         if(flag == 1){
             JsonParserBase<ArrayList<ChatMsgEntity>> jsonParserBase = (JsonParserBase<ArrayList<ChatMsgEntity>>)obj;
             if ((jsonParserBase != null)){

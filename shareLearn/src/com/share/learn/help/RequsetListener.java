@@ -10,7 +10,7 @@ import org.json.JSONException;
 public interface RequsetListener {
 
 
-    public void handleRspSuccess(Object obj) ;//处理成功后的请求参数
+    public void handleRspSuccess(int requestType,Object obj) ;//处理成功后的请求参数
 
 
 }

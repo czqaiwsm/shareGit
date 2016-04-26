@@ -105,7 +105,7 @@ public class FeedBackFragment extends BaseFragment implements OnClickListener,Re
     }
 
     @Override
-    public void handleRspSuccess(Object obj)  {
+    public void handleRspSuccess(int requestType,Object obj)  {
         mActivity.finish();
 
     }

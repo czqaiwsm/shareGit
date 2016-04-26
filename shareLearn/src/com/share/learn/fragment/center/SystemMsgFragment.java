@@ -159,7 +159,7 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener ,
     }
 
     @Override
-    public void handleRspSuccess(Object obj) {
+    public void handleRspSuccess(int requestType,Object obj) {
         switch (requestType){
             case 1:
                 JsonParserBase<SystemMsgListBean> jsonParserBase = (JsonParserBase<SystemMsgListBean>)obj;
