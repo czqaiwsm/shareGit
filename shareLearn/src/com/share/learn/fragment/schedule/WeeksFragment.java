@@ -34,11 +34,6 @@ public class WeeksFragment extends BaseFragment {
     private String weeks[] = new String[]{"周一","周二","周三","周四","周五","周六","周日"};
 
 
-    @Override
-    protected void requestData() {
-
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

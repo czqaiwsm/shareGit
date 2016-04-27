@@ -141,7 +141,7 @@ public class TeacherHomePageFragment extends BaseFragment implements View.OnClic
     }
 
     @Override
-    protected void requestData() {
+    protected void requestData(int requestType) {
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
 

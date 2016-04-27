@@ -168,7 +168,7 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
 
 
     @Override
-    protected void requestData() {
+    protected void requestData(int requestType) {
 
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);

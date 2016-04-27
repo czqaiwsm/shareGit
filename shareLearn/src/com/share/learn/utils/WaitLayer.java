@@ -18,6 +18,11 @@ public class WaitLayer {
 	private DialogType dialogType = DialogType.MODALESS;
 	private ViewGroup rootView;
 	private View  view;
+
+	public DialogType getDialogType(){
+		return dialogType;
+	}
+
 	public WaitLayer(Context context,DialogType dialogType) {
 		this.dialogType = dialogType;
 		creatDialog(context);

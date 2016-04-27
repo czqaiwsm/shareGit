@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
+import com.alipay.sdk.pay.demo.PayCallBack;
 import com.share.learn.R;
 import com.share.learn.bean.PageInfo;
 import com.share.learn.bean.PayInfo;
@@ -26,10 +27,13 @@ public class PayPopupwidow implements View.OnClickListener{
     private View view;
     private PayInfo payInfo;
     private View.OnClickListener onClickListener;
-    public PayPopupwidow(Activity activit, View.OnClickListener onClickListener){
-        this.onClickListener = onClickListener;
-        setmSortPop();
+    private PayCallBack payCallBack ;
 
+    public PayPopupwidow(Activity activit, View.OnClickListener onClickListener,PayCallBack payCallBack){
+        this.payCallBack = payCallBack;
+        this.onClickListener = onClickListener;
+        this.activity = activit;
+        setmSortPop();
 //        mSortPop.showAtLocation(getView(), Gravity.BOTTOM,0,0);
     }
 
@@ -72,6 +76,9 @@ public class PayPopupwidow implements View.OnClickListener{
             }
         });
 
+        if(onClickListener == null){
+            onClickListener = this;
+        }
         view.findViewById(R.id.alipay).setOnClickListener(onClickListener);
         view.findViewById(R.id.wxPay).setOnClickListener(onClickListener);
     }
@@ -80,7 +87,7 @@ public class PayPopupwidow implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.alipay://支付宝支付
-                PayUtil.alipay(activity,payInfo,null);
+                PayUtil.alipay(activity,payInfo,payCallBack);
                 break;
             case R.id.wxPay://微信支付
                 break;
@@ -89,6 +96,14 @@ public class PayPopupwidow implements View.OnClickListener{
         if(mSortPop != null && mSortPop.isShowing()){
             mSortPop.dismiss();
         }
+    }
+
+    public void dimiss(){
+
+        if(mSortPop != null && mSortPop.isShowing()){
+            mSortPop.dismiss();
+        }
+
     }
 
 }

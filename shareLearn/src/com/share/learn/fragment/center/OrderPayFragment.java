@@ -3,20 +3,19 @@ package com.share.learn.fragment.center;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import com.alipay.sdk.pay.demo.PayCallBack;
 import com.share.learn.R;
 import com.share.learn.activity.center.OrderDetailActivity;
 import com.share.learn.activity.teacher.ChatMsgActivity;
 import com.share.learn.activity.teacher.EvaluateActivity;
 import com.share.learn.adapter.OrderPayAdpter;
-import com.share.learn.bean.ChatMsgEntity;
-import com.share.learn.bean.OrderInfo;
-import com.share.learn.bean.OrderListBean;
-import com.share.learn.bean.UserInfo;
+import com.share.learn.bean.*;
 import com.share.learn.fragment.BaseFragment;
 import com.share.learn.help.PullRefreshStatus;
 import com.share.learn.help.RequestHelp;
@@ -26,6 +25,7 @@ import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.URLConstants;
 import com.share.learn.utils.WaitLayer;
 import com.share.learn.view.CustomListView;
+import com.share.learn.view.PayPopupwidow;
 import com.volley.req.net.HttpURL;
 import com.volley.req.net.RequestManager;
 import com.volley.req.net.RequestParam;
@@ -40,7 +40,7 @@ import java.util.Map;
  * @creator caozhiqing
  * @data 2016/3/10
  */
-public class OrderPayFragment extends BaseFragment implements RequsetListener,CustomListView.OnLoadMoreListener ,View.OnClickListener{
+public class OrderPayFragment extends BaseFragment implements RequsetListener,CustomListView.OnLoadMoreListener ,View.OnClickListener,PayCallBack{
 
     private CustomListView customListView = null;
     private List<OrderInfo> list = new ArrayList<OrderInfo>();
@@ -55,8 +55,12 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
     private int pageSize = 10;//每页的数据量
     private PullRefreshStatus status = PullRefreshStatus.NORMAL;
 
+    private  PayPopupwidow  payPopupwidow;
 
-    public OrderPayFragment(int flag){
+    private Handler handler;
+
+    public OrderPayFragment(int flag,Handler handler){
+        this.handler = handler;
         this.flag = flag;
     }
     @Override
@@ -74,9 +78,10 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        setLoadingDilog(WaitLayer.DialogType.NOT_NOMAL);
         isPrepare = true;
+        setLoadingDilog(WaitLayer.DialogType.NOT_NOMAL);
         onLazyLoad();
+        payPopupwidow = new PayPopupwidow(mActivity,null,this);
     }
 
     private void onLazyLoad(){
@@ -125,7 +130,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
             public void onRefresh() {
                 status = PullRefreshStatus.PULL_REFRESH;
                 pageNo = 1;
-                requestData();
+                requestData(1);
 
             }
         });
@@ -135,13 +140,11 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
     public void onLoadMore() {
         status = PullRefreshStatus.LOAD_MORE;
         pageNo++;
-        requestData();
+        requestData(1);
     }
 
-    private int requestType = 1;//1 列表, 2立即支付  3 完成订单
     @Override
     protected void requestData(int requestType) {
-
 
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
@@ -155,6 +158,12 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                 postParams.put("status",flag);
                 postParams.put("vcode", "123456");
                 postParams.put("pageNo",pageNo);
+                param.setmParserClassName(new OrderListBeanParse());
+                break;
+            case 3:
+                postParams = RequestHelp.getBaseParaMap("ConfirmOrder");
+                postParams.put("orderId",flag);
+                postParams.put("teacherId",pageNo);
                 param.setmParserClassName(new OrderListBeanParse());
                 break;
 
@@ -203,6 +212,10 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                 }
                 break;
 
+            case 3:
+                    handler.sendEmptyMessage(OrderFragment.CONFIRM_ORDER)    ;
+
+                break;
 
         }
 
@@ -253,10 +266,11 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
 
         }
     }
+    OrderInfo orderInfo = null;
     @Override
     public void onClick(View v) {
         Intent intent = null;
-        OrderInfo orderInfo = list.get((Integer)v.getTag());
+         orderInfo= list.get((Integer)v.getTag());
         switch (v.getId()){
             case R.id.left_tv:
                 if(flag == 1){//待支付(联系老师)
@@ -274,27 +288,44 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                     intent.putExtra("bundle",chatMsgEntity);
                     startActivity(intent);
                 }else if(flag == 2){//已支付(完成订单)
-
+                       orderInfo= list.get((Integer)v.getTag());
+                       requestTask(3);
 
                 }
                 break;
             case R.id.right_tv:
                 if(flag == 1){//待支付(立即支付)
-
+                    PayInfo payInfo = new PayInfo(orderInfo.getOrderId(),orderInfo.getPayPrice(),orderInfo.getCourseName(),orderInfo.getTeacherName());
+                    payPopupwidow.payPopShow(v,payInfo);
                 }else if(flag == 2){//已支付(申请退款)
 
                 }else if(flag==4){//已完成(立即评价)
-
                     intent = new Intent(mActivity, EvaluateActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("orderInfo",orderInfo);
                     intent.putExtra("bundle",bundle);
-                    startActivity(intent);
-
+                    startActivityForResult(intent,200);
                 }
                 break;
 
         }
     }
 
+    @Override
+    public void paySucc() {
+        handler.sendEmptyMessage(OrderFragment.PAY_SUCC);
+    }
+
+    @Override
+    public void payFail() {
+      toasetUtil.showInfo("支付失败");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK && requestCode==200){
+                 requestTask(1);
+        }
+    }
 }

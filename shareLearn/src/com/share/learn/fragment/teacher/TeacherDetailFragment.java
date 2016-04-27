@@ -122,7 +122,7 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
      * 请求 用户信息
      */
     @Override
-    public void requestData() {
+    public void requestData(int requestType) {
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
         Map postParams = RequestHelp.getBaseParaMap("TeacherDetail");

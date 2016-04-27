@@ -134,15 +134,6 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
     }
 
 
-    /**
-     * 请求 用户信息
-     */
-    @Override
-    public void requestData() {
-        // TODO Auto-generated method stub
-    }
-
-
     /******************************************** 修改头像start *****************************************************/
     private RoundImageView mHeadImg;
     private RelativeLayout pcenter_avatar_layout;

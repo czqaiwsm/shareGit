@@ -98,7 +98,7 @@ public class RechargeFragment extends BaseFragment implements OnClickListener ,R
     }
 
     @Override
-    protected void requestData() {
+    protected void requestData(int requestType) {
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
         Map postParams = RequestHelp.getBaseParaMap("Recharge") ;

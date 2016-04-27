@@ -26,11 +26,6 @@ public class TeachContactFragment extends BaseFragment {
     ContactAdpter adapter;
 
     @Override
-    protected void requestData() {
-
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }

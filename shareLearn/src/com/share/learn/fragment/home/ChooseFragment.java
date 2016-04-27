@@ -32,10 +32,6 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
     private String joniorId = "";
     private  String cityId;
 
-    @Override
-    protected void requestData() {
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

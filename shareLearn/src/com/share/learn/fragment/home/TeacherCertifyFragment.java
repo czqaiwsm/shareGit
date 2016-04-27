@@ -37,11 +37,6 @@ public class TeacherCertifyFragment extends BaseFragment implements View.OnClick
     RelativeLayout chooseCertifyRl;
 
     @Override
-    protected void requestData() {
-
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }

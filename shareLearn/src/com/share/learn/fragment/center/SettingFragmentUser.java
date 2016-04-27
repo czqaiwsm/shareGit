@@ -185,7 +185,7 @@ public class SettingFragmentUser extends BaseFragment implements OnClickListener
      * 请求 用户信息
      */
     @Override
-    public void requestData() {
+    public void requestData(int requestType) {
         // TODO Auto-generated method stub
         RequestParam param = new RequestParamSub(getActivity());
         HttpURL url = new HttpURL();

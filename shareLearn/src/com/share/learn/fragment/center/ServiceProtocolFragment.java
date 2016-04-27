@@ -127,11 +127,6 @@ public class ServiceProtocolFragment extends BaseFragment {
         view.removeAllViews();
     }
 
-    @Override
-    public void requestData() {
-        // TODO Auto-generated method stub
-
-    }
 
 
 }

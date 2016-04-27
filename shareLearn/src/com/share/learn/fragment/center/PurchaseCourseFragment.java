@@ -27,10 +27,9 @@ import com.share.learn.help.RequsetListener;
 import com.share.learn.parse.HomePageBannerParse;
 import com.share.learn.parse.PayCourseInfoParse;
 import com.share.learn.service.LocationUitl;
-import com.share.learn.utils.AppLog;
-import com.share.learn.utils.BaseApplication;
-import com.share.learn.utils.URLConstants;
+import com.share.learn.utils.*;
 import com.share.learn.view.CustomListView;
+import com.share.learn.view.PayPopupwidow;
 import com.volley.req.UserInfo;
 import com.volley.req.net.HttpURL;
 import com.volley.req.net.RequestManager;
@@ -69,6 +68,9 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
     private int trueMoey = 0;
     private int orderPay = 0;
 
+    private int payType = 1;//1 alipay,  2 weixin
+//    private PayPopupwidow payPopupwidow;
+   PayRequestUtils payRequestUtils = null;
 
     private CoursePopupWindow coursePopupWindow ;
 
@@ -97,6 +99,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
         initTitleView();
         initView(view);
         iniData();
+        payRequestUtils = new PayRequestUtils(this,courseInfo,null);
     }
 
     private void initTitleView() {
@@ -118,6 +121,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
         buy_layout = (RelativeLayout)v.findViewById(R.id.buy_layout);
 
+//        payPopupwidow = new PayPopupwidow(mActivity,this);
 
         login_pay.setOnClickListener(this);
         buy_layout.setOnClickListener(this);
@@ -177,12 +181,20 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
                 coursePopupWindow.showAtLocation(buy_layout, Gravity.BOTTOM, 0, 0);
             break;
             case R.id.login_text:// 立即支付
-            requestTask();
+                payRequestUtils.payPopShow(v,""+orderPay,trueMoey+"",account.getTag().toString(),address.getText().toString());
             break;
             case R.id.withDraw_layout:// 提现
             intent = new Intent(mActivity, ChooseCityActivity.class);
             startActivityForResult(intent,MODIFY_INFO);
             break;
+            case R.id.alipay://支付宝支付
+                payType = 1;
+                requestTask();
+                break;
+            case R.id.wxPay://微信支付
+                payType = 2;
+                requestTask();
+                break;
         }
 
     }
@@ -192,24 +204,13 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
      * 请求 用户信息
      */
     @Override
-    public void requestData() {
+    public void requestData(int requestType) {
         // TODO Auto-generated method stub
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
 
         Map postParams = RequestHelp.getBaseParaMap("PayCourseOrder");
-
-//        payType	支付类型 1-支付宝，8-账户余额
-//        studentName	学生姓名
-//        teacherId	老师ID
-//        teacherName	老师姓名
-//        courseId	课程ID
-//        orderPrice	订单金额
-//        payPrice	实际支付金额
-//        payCount	购买次数
-//        remark	详细地址
-
-        postParams.put("payType", "1");
+        postParams.put("payType", payType);
         postParams.put("studentName", BaseApplication.getInstance().userInfo.getNickName());
         postParams.put("teacherId", courseInfo.getTeacherId());
         postParams.put("teacherName", courseInfo.getTeacherName());
@@ -236,7 +237,6 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
             //todo 弹出对话框,选择支付方式
             AlipayUtil alipayUtil = new AlipayUtil(mActivity,payCourseInfo.getOrderCode(),"test",payCourseInfo.getCourseName(),payCourseInfo.getPayPrice(),null);
-
             alipayUtil.alipay();
         }
     }

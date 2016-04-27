@@ -140,7 +140,7 @@ public class ForgetPasswordFragment extends BaseFragment implements OnClickListe
 				timeHandler.sendMessage(message);
 				phone = forget_phone.getText().toString();
 				requetType = 1;
-				requestData();// ----------发送请求
+				requestData(0);// ----------发送请求
 				forget_getCode.requestFocus();
 			}
 		}
@@ -178,7 +178,7 @@ public class ForgetPasswordFragment extends BaseFragment implements OnClickListe
 
 
 	@Override
-	public void requestData() {
+	public void requestData(int requestType) {
 		RequestParam param = null;
 		switch (requetType){
 			case 1:

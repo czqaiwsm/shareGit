@@ -100,7 +100,7 @@ public class DetailFragment extends BaseFragment implements RequsetListener,Cust
             public void onRefresh() {
                 status = PullRefreshStatus.PULL_REFRESH;
                 pageNo = 1;
-                requestData();
+                requestData(0);
             }
         });
 
@@ -111,12 +111,12 @@ public class DetailFragment extends BaseFragment implements RequsetListener,Cust
     public void onLoadMore() {
         status = PullRefreshStatus.LOAD_MORE;
         pageNo++;
-        requestData();
+        requestData(0);
     }
 
 
     @Override
-    protected void requestData() {
+    protected void requestData(int requestType) {
 
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);

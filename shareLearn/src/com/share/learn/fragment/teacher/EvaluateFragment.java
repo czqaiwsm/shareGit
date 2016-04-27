@@ -1,5 +1,6 @@
 package com.share.learn.fragment.teacher;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -103,7 +104,7 @@ public class EvaluateFragment extends BaseFragment implements OnClickListener,Re
      * 请求 用户信息
      */
     @Override
-    public void requestData() {
+    public void requestData(int requestType) {
 
 //        teacherId	老师ID
 //        studentName	学生姓名
@@ -133,6 +134,7 @@ public class EvaluateFragment extends BaseFragment implements OnClickListener,Re
 
     @Override
     public void handleRspSuccess(int requestType,Object obj)  {
+        mActivity.setResult(Activity.RESULT_OK);
         mActivity.finish();
 
     }

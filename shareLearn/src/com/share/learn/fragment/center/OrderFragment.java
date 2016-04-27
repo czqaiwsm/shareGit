@@ -1,6 +1,8 @@
 package com.share.learn.fragment.center;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -28,6 +30,26 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener{
     private ImageView[] imageViews = new ImageView[viewCount];
     private RelativeLayout[] rLayouts = new RelativeLayout[viewCount];
     private TextView[] textViews = new TextView[viewCount];
+
+    public  static final int PAY_SUCC = 0X12;
+    public  static final int CONFIRM_ORDER = 0X22;
+
+    private Handler handler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case PAY_SUCC:
+                    mViewPager.setCurrentItem(1,true);
+                    break;
+                case CONFIRM_ORDER:
+                    mViewPager.setCurrentItem(3,true);
+                    break;
+            }
+
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -79,7 +101,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener{
         List<Fragment> orderPayFragments = new ArrayList<Fragment>();
         for(int i=0;i<viewCount;i++){
             rLayouts[i].setOnClickListener(this);
-            orderPayFragments.add(new OrderPayFragment(i+1));
+            orderPayFragments.add(new OrderPayFragment(i+1,handler));
         }
         mViewPager.setAdapter(new OrderPageFragmentAdapter(getFragmentManager(), orderPayFragments));
         imageViews[0].setSelected(true);
@@ -102,12 +124,6 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener{
     public void onSaveInstanceState(Bundle outState) {
         outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void requestData() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override

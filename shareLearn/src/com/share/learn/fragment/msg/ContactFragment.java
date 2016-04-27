@@ -123,7 +123,7 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
             public void onRefresh() {
                 status = PullRefreshStatus.PULL_REFRESH;
                 pageNo = 1;
-                requestData();
+                requestData(0);
             }
         });
     }
@@ -132,12 +132,12 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
     public void onLoadMore() {
         status = PullRefreshStatus.LOAD_MORE;
         pageNo++;
-        requestData();
+        requestData(0);
     }
 
 
     @Override
-    protected void requestData() {
+    protected void requestData(int requestType) {
 
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);

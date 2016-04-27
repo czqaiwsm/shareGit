@@ -155,7 +155,7 @@ public class PcenterModifyInfoIAFragment extends BaseFragment {
 	/******************* 网络数据获取 **************************/
 	// 请求数据
 	@Override
-	public void requestData() {
+	public void requestData(int requestType) {
 //		RequestParam param = new RequestParamSub(getActivity());
 //		HttpURL url = new HttpURL();
 //		url.setmBaseUrl(url);

@@ -183,7 +183,7 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
     }
 
     @Override
-    protected void requestData() {
+    protected void requestData(int requestType) {
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
         RequestParam param = new RequestParam();

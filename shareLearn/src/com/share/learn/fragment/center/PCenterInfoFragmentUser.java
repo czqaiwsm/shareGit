@@ -285,7 +285,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
      * 请求 用户信息
      */
     @Override
-    public void requestData() {
+    public void requestData(int requestType) {
         // TODO Auto-generated method stub
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);

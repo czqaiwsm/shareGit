@@ -106,7 +106,7 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
             public void onRefresh() {
                 status = PullRefreshStatus.PULL_REFRESH;
                 pageNo = 1;
-                requestData();
+                requestData(0);
             }
         });
     }
@@ -115,12 +115,12 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
     public void onLoadMore() {
         status = PullRefreshStatus.LOAD_MORE;
         pageNo++;
-        requestData();
+        requestData(0);
     }
 
 
     @Override
-    protected void requestData() {
+    protected void requestData(int requestType) {
         setTitleText(BaseApplication.getInstance().location[0]);
 
         HttpURL url = new HttpURL();

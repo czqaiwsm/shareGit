@@ -43,9 +43,6 @@ public class ChooseCitytFragment extends BaseFragment implements OnClickListener
 
 
 
-    @Override
-    public void requestData() {
-    }
 
 
 

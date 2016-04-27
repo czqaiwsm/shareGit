@@ -62,7 +62,7 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
     ImageView idImg;
 
     @Override
-    protected void requestData() {
+    protected void requestData(int requestType) {
 
     }
 

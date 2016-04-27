@@ -163,7 +163,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener,Re
 				timeHandler.sendMessage(message);
 				requetType = 1;
 				phone = register_phone.getText().toString();
-				requestData();// ----------发送请求
+				requestData(0);// ----------发送请求
 				getCode.requestFocus();
 			}
 		}
@@ -201,7 +201,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener,Re
 
 
 	@Override
-	public void requestData() {
+	public void requestData(int requestType) {
 		RequestParam param = null;
         switch (requetType){
 			case 1:

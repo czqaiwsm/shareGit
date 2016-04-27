@@ -94,7 +94,7 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener ,
                 status = PullRefreshStatus.PULL_REFRESH;
                 pageNo = 1;
                 requestType = 1;
-                requestData();
+                requestData(0);
             }
         });
 
@@ -106,7 +106,7 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener ,
         status = PullRefreshStatus.LOAD_MORE;
         pageNo++;
         requestType = 1;
-        requestData();
+        requestData(0);
     }
 
     public void delMsgReq(String id){
@@ -131,7 +131,7 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener ,
     }
 
     @Override
-    protected void requestData() {
+    protected void requestData(int requestType) {
         HttpURL url = new HttpURL();
         RequestParam param = new RequestParam();
         Map postParams  = null;

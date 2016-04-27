@@ -68,11 +68,6 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
     ImageView schoolCertifyImg;
 
     @Override
-    protected void requestData() {
-
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }

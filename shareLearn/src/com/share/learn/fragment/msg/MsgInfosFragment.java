@@ -81,10 +81,5 @@ public class MsgInfosFragment extends BaseFragment {
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void requestData() {
-        // TODO Auto-generated method stub
-
-    }
 
 }

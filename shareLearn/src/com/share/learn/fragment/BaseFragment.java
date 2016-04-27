@@ -92,12 +92,7 @@ public abstract class BaseFragment extends Fragment{
     };
 
 
-    protected  void requestData(){
-
-        requestData(0);
-    }
     protected void requestData(int requestTyep){
-
     }
 
     protected void requestTask(){
@@ -105,7 +100,7 @@ public abstract class BaseFragment extends Fragment{
     }
 
     protected void requestTask(int requestType){
-        if (loadingDilog != null){
+        if (loadingDilog != null && !loadingDilog.isShow()){
             showLoadingDilog(null);
             handler.sendEmptyMessageDelayed(CANCEL,10000);
         }
@@ -134,6 +129,10 @@ public abstract class BaseFragment extends Fragment{
     }
 
     protected void setLoadingDilog(WaitLayer.DialogType type){
+        if(loadingDilog != null && loadingDilog.getDialogType()==type){
+            return;
+        }
+        dismissLoadingDilog();
         loadingDilog = new WaitLayer(mActivity, type);
     }
 
@@ -143,7 +142,7 @@ public abstract class BaseFragment extends Fragment{
         }
     }
 
-    protected void dismissLoadingDilog(){
+    public void dismissLoadingDilog(){
         if(loadingDilog != null && loadingDilog.isShow()){
             loadingDilog.dismiss();
         }

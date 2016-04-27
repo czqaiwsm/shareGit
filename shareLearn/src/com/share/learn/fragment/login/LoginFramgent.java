@@ -107,7 +107,7 @@ public class LoginFramgent extends BaseFragment implements View.OnClickListener,
     }
 
     @Override
-    protected void requestData() {
+    protected void requestData(int requestType) {
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
         Map postParams = RequestHelp.getBaseParaMap("UserLogin") ;

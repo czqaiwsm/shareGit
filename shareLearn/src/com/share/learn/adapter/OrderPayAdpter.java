@@ -113,9 +113,13 @@ public class OrderPayAdpter extends BaseAdapter {
                     break;
                 case 4:
                     statuStr = "已完成";
-                    holder.right_tv.setVisibility(View.VISIBLE);
                     holder.right_tv.setText(mContext.getResources().getString(R.string.assert_now));
 
+                       if(TextUtils.equals(message.getEvaluateStatus(),"0")){
+                           holder.right_tv.setVisibility(View.VISIBLE);
+                       }else {
+                           holder.right_tv.setVisibility(View.GONE);
+                       }
                     break;
             }
             holder.payStatus.setText(statuStr);

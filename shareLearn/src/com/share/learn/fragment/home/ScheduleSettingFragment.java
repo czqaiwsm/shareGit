@@ -46,10 +46,6 @@ public class ScheduleSettingFragment extends BaseFragment implements View.OnClic
     @Bind(R.id.sure)
     TextView sure;
 
-    @Override
-    protected void requestData() {
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

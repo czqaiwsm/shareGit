@@ -32,9 +32,6 @@ public class ChooseJoinorFragment extends BaseFragment {
     private JoniorType joniorType =  JoniorType.JONIOR;
     private String selectId = "";
 
-    @Override
-    protected void requestData() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
