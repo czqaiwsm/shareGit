@@ -7,17 +7,17 @@ package com.share.learn.bean;
  */
 public class OrderDetailInfo {
 
-
-        private String  teacherId;
-        private String  teacherName;
-        private String  courseId;
-        private String  payTime;
-        private String  orderPrice;    //订单金额
-        private String  discountPrice;// 优惠金额
-        private String  payPrice;     // 实际支付金额
-        private String  courseName;
-        private int  payCount;
-
+    private String teacherId     ;
+    private String teacherName   ;
+    private String teacherImg    ;
+    private String courseName    ;
+    private int payCount      ;
+    private String payTime       ;
+    private int orderPrice    ;
+    private String  discountPrice;
+    private String grade         ;
+    private int payPrice        ;
+    private String evaluateStatus  ;
     public String getTeacherId() {
         return teacherId;
     }
@@ -34,12 +34,28 @@ public class OrderDetailInfo {
         this.teacherName = teacherName;
     }
 
-    public String getCourseId() {
-        return courseId;
+    public String getTeacherImg() {
+        return teacherImg;
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
+    public void setTeacherImg(String teacherImg) {
+        this.teacherImg = teacherImg;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public int getPayCount() {
+        return payCount;
+    }
+
+    public void setPayCount(int payCount) {
+        this.payCount = payCount;
     }
 
     public String getPayTime() {
@@ -50,11 +66,11 @@ public class OrderDetailInfo {
         this.payTime = payTime;
     }
 
-    public String getOrderPrice() {
+    public int getOrderPrice() {
         return orderPrice;
     }
 
-    public void setOrderPrice(String orderPrice) {
+    public void setOrderPrice(int orderPrice) {
         this.orderPrice = orderPrice;
     }
 
@@ -66,28 +82,27 @@ public class OrderDetailInfo {
         this.discountPrice = discountPrice;
     }
 
-    public String getPayPrice() {
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public int getPayPrice() {
         return payPrice;
     }
 
-    public void setPayPrice(String payPrice) {
+    public void setPayPrice(int payPrice) {
         this.payPrice = payPrice;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getEvaluateStatus() {
+        return evaluateStatus;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-
-    public int getPayCount() {
-        return payCount;
-    }
-
-    public void setPayCount(int payCount) {
-        this.payCount = payCount;
+    public void setEvaluateStatus(String evaluateStatus) {
+        this.evaluateStatus = evaluateStatus;
     }
 }

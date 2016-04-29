@@ -3,6 +3,7 @@ package com.share.learn.parse;
 import com.google.gson.reflect.TypeToken;
 import com.share.learn.bean.ChooseTeachBean;
 import com.share.learn.bean.OrderDetailBean;
+import com.share.learn.bean.OrderDetailInfo;
 import com.share.learn.utils.URLConstants;
 import com.volley.req.net.inferface.IParser;
 import com.volley.req.parser.JsonParserBase;
@@ -26,7 +27,7 @@ public class OrderDetailBeanParse implements IParser {
         JsonParserBase result = ParserUtil.fromJsonBase(json, new TypeToken<JsonParserBase>() {
         }.getType());
         if(URLConstants.SUCCESS_CODE.equals(result.getRespCode())){
-            return ParserUtil.fromJsonBase(json, new TypeToken<JsonParserBase<OrderDetailBean>>() {
+            return ParserUtil.fromJsonBase(json, new TypeToken<JsonParserBase<OrderDetailInfo>>() {
             }.getType());
         }
         return result;

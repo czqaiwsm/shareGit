@@ -192,6 +192,9 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
         if(flag == 1){
             postParams =  RequestHelp.getBaseParaMap("MessageChat") ;
             postParams.put("teacherId", teacherId);
+            if (BaseApplication.getInstance().userInfo != null){
+                postParams.put("studentImg", BaseApplication.getInstance().userInfo.getHeadImg());
+            }
             param.setmParserClassName(new ChatMsgParse());
         }else {
             postParams =  RequestHelp.getBaseParaMap("MessagePost") ;

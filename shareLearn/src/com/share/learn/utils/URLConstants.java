@@ -25,6 +25,8 @@ public class URLConstants {
 
     /********Intent value*************/
     public static final  String COURSEID = "courseId";
+    public static final int ORDERLEFT = 0X20;
+    public static final int ORDERRIGHT = 0X21;
     /********Intent value*************/
 
     public static final String BASE_URL = "http://120.25.171.4/learn-interface/interface/api.action";//基础URL

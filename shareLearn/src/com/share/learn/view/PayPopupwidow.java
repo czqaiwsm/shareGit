@@ -12,6 +12,7 @@ import com.alipay.sdk.pay.demo.PayCallBack;
 import com.share.learn.R;
 import com.share.learn.bean.PageInfo;
 import com.share.learn.bean.PayInfo;
+import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.PayUtil;
 
 /**
@@ -44,6 +45,11 @@ public class PayPopupwidow implements View.OnClickListener{
         }
         this.payInfo = news;
         if(mSortPop != null){
+            if(BaseApplication.getInstance().userInfo != null){
+                if(payInfo != null && payInfo.getPrice().compareTo(BaseApplication.getInstance().userInfo.getBalance())>1){
+                    view.findViewById(R.id.wxPay).setVisibility(View.GONE);
+                }
+            }
             mSortPop.showAtLocation(view, Gravity.BOTTOM,0,0);
         }else {
             setmSortPop();
@@ -81,6 +87,11 @@ public class PayPopupwidow implements View.OnClickListener{
         }
         view.findViewById(R.id.alipay).setOnClickListener(onClickListener);
         view.findViewById(R.id.wxPay).setOnClickListener(onClickListener);
+        if(BaseApplication.getInstance().userInfo != null){
+            if(payInfo != null && payInfo.getPrice().compareTo(BaseApplication.getInstance().userInfo.getBalance())>1){
+                view.findViewById(R.id.wxPay).setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
@@ -90,6 +101,8 @@ public class PayPopupwidow implements View.OnClickListener{
                 PayUtil.alipay(activity,payInfo,payCallBack);
                 break;
             case R.id.wxPay://微信支付
+                PayUtil.walletPay(activity,payInfo,payCallBack);
+
                 break;
         }
 
@@ -103,6 +116,14 @@ public class PayPopupwidow implements View.OnClickListener{
         if(mSortPop != null && mSortPop.isShowing()){
             mSortPop.dismiss();
         }
+
+    }
+
+    public static void main(String arg[]){
+
+        System.out.println("4".compareTo("10"));
+        System.out.println("8".compareTo("10"));
+        System.out.println("11".compareTo("10"));
 
     }
 

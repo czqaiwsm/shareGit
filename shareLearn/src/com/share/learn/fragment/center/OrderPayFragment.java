@@ -1,6 +1,8 @@
 package com.share.learn.fragment.center;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -56,8 +58,8 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
     private PullRefreshStatus status = PullRefreshStatus.NORMAL;
 
     private  PayPopupwidow  payPopupwidow;
-
     private Handler handler;
+
 
     public OrderPayFragment(int flag,Handler handler){
         this.handler = handler;
@@ -121,7 +123,9 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(mActivity,OrderDetailActivity.class);
                 intent.putExtra("orderId",list.get(i-1).getOrderId());
-                startActivity(intent);
+                intent.putExtra("flag",flag);
+                intent.putExtra("orderStatus",list.get(i-1).getEvaluateStatus());
+                startActivityForResult(intent,flag);
             }
         });
 
@@ -162,8 +166,8 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                 break;
             case 3:
                 postParams = RequestHelp.getBaseParaMap("ConfirmOrder");
-                postParams.put("orderId",flag);
-                postParams.put("teacherId",pageNo);
+                postParams.put("orderId",orderInfo.getOrderId());
+                postParams.put("teacherId",orderInfo.getTeacherId());
                 param.setmParserClassName(new OrderListBeanParse());
                 break;
 
@@ -324,8 +328,22 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Activity.RESULT_OK && requestCode==200){
-                 requestTask(1);
+        if(resultCode == Activity.RESULT_OK){
+            switch (requestCode){
+                case 200:
+                    requestTask(1);
+                    break;
+                case 1:
+                    paySucc();
+                    break;
+                case 2://完成订单
+                    handler.sendEmptyMessage(OrderFragment.CONFIRM_ORDER)    ;
+                    break;
+                case 4://立即评价
+                    requestTask(1);
+                    break;
+
+            }
         }
     }
 }
