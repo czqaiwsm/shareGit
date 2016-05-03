@@ -2,6 +2,7 @@ package com.volley.req.net;
 
 import android.content.Context;
 import android.util.Log;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
@@ -40,7 +41,6 @@ public abstract class RequestManager {
 
 	/**
 	 * @return instance of the queue
-	 * @throws IllegalStatException if init has not yet been called
 	 */
 	public static RequestQueue getRequestQueue() {
 		if (mRequestQueue != null) {
@@ -65,6 +65,8 @@ public abstract class RequestManager {
 			if (param.getmParserClassName() != null) {
 				request.setTag(param.getmParserClassName());
 			}
+
+			request.setRetryPolicy(new DefaultRetryPolicy(10000,20000,2.0f));
 		} catch (JSONException e) {
 			Log.e("JSON","JSONException" + e.getMessage());
 			return;

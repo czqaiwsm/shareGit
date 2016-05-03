@@ -76,7 +76,8 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
         initView(view);
         initTitle();
         cityName = BaseApplication.getInstance().location[0];
-        joniorId = BaseApplication.getInstance().userInfo.getGrade();
+        joniorId = BaseApplication.getInstance().userInfo!=null
+        ?BaseApplication.getInstance().userInfo.getGrade():"";
         setLoadingDilog(WaitLayer.DialogType.NOT_NOMAL);
         requestTask();
     }
@@ -121,8 +122,6 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
 
     @Override
     protected void requestData(int requestType) {
-        setTitleText(BaseApplication.getInstance().location[0]);
-
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
         Map postParams = RequestHelp.getBaseParaMap("TeacherList");
@@ -220,11 +219,6 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
             adapter.notifyDataSetChanged();
 
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
     @Override
