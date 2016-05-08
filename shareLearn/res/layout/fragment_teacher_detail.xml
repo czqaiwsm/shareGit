@@ -18,6 +18,8 @@
                     android:id="@+id/head_photo"
                     android:layout_width="@dimen/round_img_size"
                     android:layout_height="@dimen/round_img_size"
+                    android:minHeight="@dimen/round_img_size"
+                    android:minWidth="@dimen/round_img_size"
                     android:layout_margin="@dimen/msg_margin"
                     android:src="@drawable/default_user_portrait"
                     />

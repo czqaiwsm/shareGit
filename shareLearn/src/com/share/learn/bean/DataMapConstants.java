@@ -60,7 +60,7 @@ public class DataMapConstants {
         if(gender == null){
             gender = new HashMap<String, String>();
             gender.put("1","男");
-            gender.put("2","nv");
+            gender.put("2","女");
         }
         return gender;
     }

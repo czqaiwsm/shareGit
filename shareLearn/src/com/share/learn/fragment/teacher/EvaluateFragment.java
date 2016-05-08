@@ -26,7 +26,7 @@ import com.volley.req.net.RequestParam;
 import java.util.Map;
 
 /**
- *钱包
+ *评价
  * @author czq
  * @time 2015年9月28日上午11:44:26
  *
@@ -64,7 +64,7 @@ public class EvaluateFragment extends BaseFragment implements OnClickListener,Re
 
     private void initTitleView() {
         setLeftHeadIcon(0);
-        setTitleText(R.string.feed_back_content);
+        setTitleText("评价");
         setLeftHeadIcon(0);
     }
 

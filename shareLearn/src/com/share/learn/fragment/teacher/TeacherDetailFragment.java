@@ -6,7 +6,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.share.learn.R;
 import com.share.learn.bean.CourseInfo;
 import com.share.learn.bean.TeacherDetailBean;
@@ -15,6 +17,7 @@ import com.share.learn.fragment.BaseFragment;
 import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
 import com.share.learn.parse.TeacherDetailParse;
+import com.share.learn.utils.ImageLoaderUtil;
 import com.share.learn.utils.URLConstants;
 import com.share.learn.utils.WaitLayer;
 import com.share.learn.view.RoundImageView;
@@ -85,6 +88,7 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
         headPhoto = (RoundImageView)view.findViewById(R.id.head_photo);
         name = (TextView) view.findViewById(R.id.Name);
         content = (TextView) view.findViewById(R.id.content);
+
 //        onInitTabConfig();
     }
 
@@ -108,6 +112,8 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
 //                .setmTabbgDrawableId(R.drawable.login_tab), WaitBuyFragment.class, null);
         Bundle bundle2 = new Bundle();
         bundle2.putString("teacherId",teacherId);
+        bundle2.putString("teacherName",teacherDetailInfo.getNickName());
+        bundle2.putString("teacherImg",teacherDetailInfo.getHeadImg());
         mTabsAdapter.addTab(tabsActionBar.newTab().setCustomView(LayoutInflater.from(getActivity()).inflate(R.layout.evaluate, null))
                 .setmTabbgDrawableId(R.drawable.login_tab), AssetTeacherFragment.class, bundle2);
     }
@@ -148,6 +154,9 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
                    courseInfo.setTeacherName(teacherDetailInfo.getNickName());
                }
             }
+            name.setText(teacherDetailInfo.getNickName());
+            content.setText(teacherDetailInfo.getSignature());
+            ImageLoader.getInstance().displayImage(teacherDetailInfo.getHeadImg(),headPhoto, ImageLoaderUtil.mHallIconLoaderOptions);
 
             onInitTabConfig();
         }

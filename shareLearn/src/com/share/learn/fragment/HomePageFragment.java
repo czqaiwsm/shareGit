@@ -209,13 +209,6 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        AppLog.Loge("hidden:" + hidden + "  isHiden:" + isHidden());
-//       if(!hidden){//可见时 调接口
-//        requestTask();
-//       }
-    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

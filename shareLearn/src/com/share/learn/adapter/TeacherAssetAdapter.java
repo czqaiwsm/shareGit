@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.share.learn.R;
 import com.share.learn.bean.CommentInfo;
+import com.share.learn.utils.ImageLoaderUtil;
 import com.share.learn.view.RoundImageView;
 
 import java.util.List;
@@ -50,12 +52,12 @@ public class TeacherAssetAdapter extends BaseAdapter {
         }
 
         CommentInfo map = mItemList.get(position);
-//        if(map != null){
-//            ImageLoader.getInstance().displayImage(map.getHeadPhoto(),holder.headPhoto,ImageLoaderUtil.mHallIconLoaderOptions);
-//            holder.name.setText(map.getName());
-//            holder.time.setText(map.getTime());
-//            holder.assetConten.setText(map.getMsg_content());
-//        }
+        if(map != null){
+            ImageLoader.getInstance().displayImage(map.getHeadImg(),holder.headPhoto, ImageLoaderUtil.mHallIconLoaderOptions);
+            holder.name.setText(map.getStudentName());
+            holder.time.setText(map.getCommentTime());
+            holder.assetConten.setText(map.getCommentDesc());
+        }
         return convertView;
     }
 

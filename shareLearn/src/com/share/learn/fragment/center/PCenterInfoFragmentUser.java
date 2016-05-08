@@ -152,29 +152,9 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         name.setText(BaseApplication.getInstance().userInfo.getNickName());
         sexTxt.setText(DataMapConstants.getGender().get(BaseApplication.getInstance().userInfo.getGender()));
         jonior.setText(DataMapConstants.getJoniorMap().get(BaseApplication.getInstance().userInfo.getGrade()));
+        ImageLoader.getInstance().displayImage(BaseApplication.getInstance().userInfo.getHeadImg(), mHeadImg, ImageLoaderUtil.mHallIconLoaderOptions);
     }
 
-    private void setData(UserInfo userInfo) {
-        ImageLoader.getInstance().displayImage(userInfo.getAvatar(), mHeadImg, ImageLoaderUtil.mHallIconLoaderOptions);
-//        if (!Utility.isEmpty(userInfo.getNickname())) {// 昵称
-//            account_nickname.setText(userInfo.getNickname());
-//        }
-//        if (!Utility.isEmpty(userInfo.getQq())) {// qq
-//            account_qq.setText(userInfo.getQq());
-//        }
-//        if (!Utility.isEmpty(userInfo.getEmail())) {
-//            account_email.setText(userInfo.getEmail());
-//        }
-//        if (!Utility.isEmpty(userInfo.getUsername())) {
-//            account_phone.setText(userInfo.getUsername());
-//        }
-//        if (!Utility.isEmpty(userInfo.getSex())) {
-//            account_sex.setText(userInfo.getSex().equals("0") ? "男" : "女");
-//        }
-
-        ArrayMap map = null;
-
-    }
 
     private Intent intent ;
     @Override
@@ -274,12 +254,6 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    /**
-     * 重新登录
-     */
-    private void reLogin() {
-//        startActivityForResult(new Intent(getActivity(), LoginActivity.class), Constant.RELOGIN);
-    }
 
     /**
      * 请求 用户信息
@@ -290,7 +264,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
         Map postParams = RequestHelp.getBaseParaMap("UserInfoEdit");
-        postParams.put("editType", requestType);
+        postParams.put("editType", this.requestType);
         postParams.put("editValue", requstValue);
         RequestParam param = new RequestParam();
 //        param.setmParserClassName(LoginInfoParse.class.getName());

@@ -129,8 +129,8 @@
             </RelativeLayout>
 
             <View android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:background="@drawable/dap_line"
+                  android:layout_height="0.5dp"
+                  android:background="@color/color_small_gray"
                   android:layout_marginRight="@dimen/app_text_size_min"
                   android:layout_marginLeft="@dimen/app_text_size_min"
             />
@@ -164,8 +164,8 @@
                     />
             </RelativeLayout>
             <View android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:background="@drawable/dap_line"
+                  android:layout_height="0.5dp"
+                  android:background="@color/color_small_gray"
                   android:layout_marginRight="@dimen/app_text_size_min"
                   android:layout_marginLeft="@dimen/app_text_size_min"
             />
@@ -198,8 +198,8 @@
                     />
             </RelativeLayout>
             <View android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:background="@drawable/dap_line"
+                  android:layout_height="0.5dp"
+                  android:background="@color/color_small_gray"
                   android:layout_marginRight="@dimen/app_text_size_min"
                   android:layout_marginLeft="@dimen/app_text_size_min"
             />

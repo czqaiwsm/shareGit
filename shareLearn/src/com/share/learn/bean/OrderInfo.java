@@ -22,6 +22,7 @@ public class OrderInfo implements Serializable {
    private String evaluateStatus ;
    private String         grade  ;
    private String teacherImg     ;
+    private String refundtatus;//		0-正常 1-退款中 2-退款完成
 
 
     public String getTeacherId() {
@@ -95,5 +96,13 @@ public class OrderInfo implements Serializable {
 
     public void setTeacherImg(String teacherImg) {
         this.teacherImg = teacherImg;
+    }
+
+    public String getRefundtatus() {
+        return refundtatus;
+    }
+
+    public void setRefundtatus(String refundtatus) {
+        this.refundtatus = refundtatus;
     }
 }

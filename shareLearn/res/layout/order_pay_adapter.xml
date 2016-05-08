@@ -49,8 +49,8 @@
         <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/dap_line"
+              android:layout_height="0.5dp"
+              android:background="@color/white_bg_home"
               android:layout_marginTop="@dimen/_10dp"
               android:layout_below="@+id/price"/>
         <TextView android:id="@+id/time"

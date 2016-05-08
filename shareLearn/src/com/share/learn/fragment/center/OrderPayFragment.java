@@ -23,6 +23,7 @@ import com.share.learn.help.PullRefreshStatus;
 import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
 import com.share.learn.parse.OrderListBeanParse;
+import com.share.learn.utils.AlertDialogUtils;
 import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.URLConstants;
 import com.share.learn.utils.WaitLayer;
@@ -147,6 +148,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
         requestData(1);
     }
 
+    private String orderId = "";
     @Override
     protected void requestData(int requestType) {
 
@@ -166,14 +168,19 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                 break;
             case 3:
                 postParams = RequestHelp.getBaseParaMap("ConfirmOrder");
+                orderId = orderInfo.getOrderId();
                 postParams.put("orderId",orderInfo.getOrderId());
                 postParams.put("teacherId",orderInfo.getTeacherId());
                 param.setmParserClassName(new OrderListBeanParse());
                 break;
+            case 4:
+                postParams = RequestHelp.getBaseParaMap("Refund");
+                orderId = orderInfo.getOrderId();
+                postParams.put("orderId",orderInfo.getOrderId());
+                param.setmParserClassName(new OrderListBeanParse());
+                break;
 
         }
-//        @"cityName", [ @"pageNo",@"courseId",@"grade", @"cmd",@"123456",@"vcode",@"",@"fInviteCode",@"000000",@"deviceId",@"10",@"appversion",@"4",@"clientType",[[UserInfoManage shareInstance] token],@"accessToken", nil];
-
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
@@ -190,12 +197,10 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                     pageCount = chooseTeachBean.getTotalPages();
                     pageSize = chooseTeachBean.getPageSize();
                     ArrayList<OrderInfo> teacherInfos = chooseTeachBean.getElements();
-
                     switch (status){
                         case NORMAL:
                             refresh(teacherInfos);
                             break;
-
                         case PULL_REFRESH:
                             refresh(teacherInfos);
                             customListView.onRefreshComplete();
@@ -218,6 +223,16 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
 
             case 3:
                     handler.sendEmptyMessage(OrderFragment.CONFIRM_ORDER)    ;
+            case 4://申请退款成功
+
+                    for(OrderInfo orderInfo:list){
+                        if(orderInfo.getOrderId().equalsIgnoreCase(orderId)){
+
+                            orderInfo.setRefundtatus("1");
+                            adapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
 
                 break;
 
@@ -272,7 +287,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
     }
     OrderInfo orderInfo = null;
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         Intent intent = null;
          orderInfo= list.get((Integer)v.getTag());
         switch (v.getId()){
@@ -292,8 +307,14 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                     intent.putExtra("bundle",chatMsgEntity);
                     startActivity(intent);
                 }else if(flag == 2){//已支付(完成订单)
-                       orderInfo= list.get((Integer)v.getTag());
-                       requestTask(3);
+                    AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "您确定完成订单?", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            orderInfo= list.get((Integer)v.getTag());
+                            requestTask(3);
+                        }
+                    },null);
+
 
                 }
                 break;
@@ -302,6 +323,14 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                     PayInfo payInfo = new PayInfo(orderInfo.getOrderId(),orderInfo.getPayPrice(),orderInfo.getCourseName(),orderInfo.getTeacherName());
                     payPopupwidow.payPopShow(v,payInfo);
                 }else if(flag == 2){//已支付(申请退款)
+
+                    AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "您正在申请退款", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            orderInfo= list.get((Integer)v.getTag());
+                            requestTask(4);
+                        }
+                    },null);
 
                 }else if(flag==4){//已完成(立即评价)
                     intent = new Intent(mActivity, EvaluateActivity.class);

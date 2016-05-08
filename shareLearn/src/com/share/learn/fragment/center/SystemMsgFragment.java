@@ -70,7 +70,7 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener ,
         super.onViewCreated(view, savedInstanceState);
         initView(view);
         initTitle();
-        requestTask();
+        requestTask(1);
     }
 
     private void initTitle(){
@@ -94,7 +94,7 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener ,
                 status = PullRefreshStatus.PULL_REFRESH;
                 pageNo = 1;
                 requestType = 1;
-                requestData(0);
+                requestData(1);
             }
         });
 
@@ -106,14 +106,14 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener ,
         status = PullRefreshStatus.LOAD_MORE;
         pageNo++;
         requestType = 1;
-        requestData(0);
+        requestData(1);
     }
 
     public void delMsgReq(String id){
         if(!TextUtils.isEmpty(id)){
             delMsgId = id;
             requestType = 2;
-            requestTask();
+            requestTask(2);
         }
 
     }

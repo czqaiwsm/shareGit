@@ -1,5 +1,6 @@
 package com.share.learn.fragment.teacher;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,8 @@ public class AssetTeacherFragment extends BaseFragment implements RequsetListene
     private PullRefreshStatus status = PullRefreshStatus.NORMAL;
 
     private String teacherId = "";
+    private String teacherName = "";
+    private String teacherImg = "";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,8 @@ public class AssetTeacherFragment extends BaseFragment implements RequsetListene
         Bundle bundle = getArguments();
         if(bundle != null ){
             teacherId = bundle.getString("teacherId");
+            teacherName = bundle.getString("teacherName");
+            teacherImg  = bundle.getString("teacherImg");
         }
     }
 
@@ -93,12 +98,24 @@ public class AssetTeacherFragment extends BaseFragment implements RequsetListene
             }
         });
 
-        customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                toClassActivity(AssetTeacherFragment.this, ChatMsgActivity.class.getName());
+                Intent intent = new Intent(mActivity, ChatMsgActivity.class);
+                UserInfo userInfo = BaseApplication.getInstance().userInfo;
+                intent.putExtra("teacherId",teacherId);
+
+                ChatMsgEntity chatMsgEntity = new ChatMsgEntity();
+                chatMsgEntity.setDirection("2");
+                chatMsgEntity.setReceiverId(teacherId);
+                chatMsgEntity.setSenderId(userInfo.getId());
+
+                chatMsgEntity.setTeacherName(teacherName);
+                chatMsgEntity.setTeacherImg(teacherImg);
+                intent.putExtra("bundle",chatMsgEntity);
+                startActivity(intent);
             }
-        });
+        });*/
     }
 
     private void onLazyLoad(){

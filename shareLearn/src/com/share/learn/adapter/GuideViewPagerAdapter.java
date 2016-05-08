@@ -308,7 +308,7 @@ public class GuideViewPagerAdapter extends PagerAdapter {
 		   super.onLooperPrepared();
 		   while(isAutoPlay){
 			   try {
-				   Thread.sleep(2000);
+				   Thread.sleep(3000);
 				   uiHadler.removeMessages(0);
 				   uiHadler.sendEmptyMessage(0);
 			   } catch (InterruptedException e) {

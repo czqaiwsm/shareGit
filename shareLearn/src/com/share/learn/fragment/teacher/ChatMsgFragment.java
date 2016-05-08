@@ -168,7 +168,7 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
     private void initTitle(){
 
         setLeftHeadIcon(0);
-        setTitleText("消息");
+        setTitleText(chaMsg.getTeacherName());
 
     }
 

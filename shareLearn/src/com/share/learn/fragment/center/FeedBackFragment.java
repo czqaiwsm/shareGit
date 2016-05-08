@@ -96,7 +96,7 @@ public class FeedBackFragment extends BaseFragment implements OnClickListener,Re
         Map postParams = RequestHelp.getBaseParaMap("FeedBackPost");//关注
         RequestParam param = new RequestParam();
 //        param.setmParserClassName(TeacherDetailParse.class.getName());
-        postParams.put("content",rechargePrice.getText());
+        postParams.put("content",rechargePrice.getText().toString());
         param.setmParserClassName(new TeacherDetailParse());
         param.setmPostarams(postParams);
         param.setmHttpURL(url);

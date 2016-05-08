@@ -32,6 +32,7 @@ import com.share.learn.activity.ChooseCityActivity;
 import com.share.learn.activity.center.PCenterModifyInfoActivity;
 import com.share.learn.activity.center.ResetPassActivity;
 import com.share.learn.activity.center.ServiceProtocolActivity;
+import com.share.learn.activity.login.LoginActivity;
 import com.share.learn.activity.teacher.ChooseJoinorActivity;
 import com.share.learn.fragment.BaseFragment;
 import com.share.learn.utils.*;
@@ -154,7 +155,7 @@ public class SettingFragmentUser extends BaseFragment implements OnClickListener
         DataCleanManager.cleanApplicationData(fileList);
 //			Constant.CLEAR_SEARCH = true;
         SmartToast.showText(mActivity, "成功清理缓存" + cache_size);
-//        setCache();
+        setCache();
     }
 
     private Intent intent ;
@@ -165,16 +166,18 @@ public class SettingFragmentUser extends BaseFragment implements OnClickListener
             case R.id.changePass_layout:// 修改密码
                 toClassActivity(SettingFragmentUser.this, ResetPassActivity.class.getName());
                 break;
-            case R.id.clear_layout:// 服务协议
+            case R.id.clear_layout:// 缓存
                 clearCache();
             break;
-            case R.id.about_layout:// 缓存
+            case R.id.about_layout://
 
             break;
-            case R.id.service_pro_layout:// 关于我们
+            case R.id.service_pro_layout:
                 toClassActivity(SettingFragmentUser.this, ServiceProtocolActivity.class.getName());
                 break;
             case R.id.exitLogin:// 退出登录
+                AppManager.getAppManager().AppExit(BaseApplication.getInstance());
+                startActivity(new Intent(mActivity, LoginActivity.class));
             break;
         }
 

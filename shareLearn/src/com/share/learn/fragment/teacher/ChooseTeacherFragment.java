@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import com.baidu.location.BDLocation;
 import com.share.learn.R;
 import com.share.learn.activity.home.ChooseActivity;
+import com.share.learn.activity.teacher.TeacherDetailActivity;
 import com.share.learn.adapter.ChooseTeacherAdpter;
 import com.share.learn.adapter.MsgAdpter;
 import com.share.learn.bean.*;
@@ -101,6 +103,15 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
         customListView.setCanRefresh(true);
         adapter = new ChooseTeacherAdpter(mActivity, list);
         customListView.setAdapter(adapter);
+
+        customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(mActivity, TeacherDetailActivity.class);
+                intent.putExtra("teacherId",list.get(position-1).getId());
+                startActivity(intent);
+            }
+        });
 
         customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
             @Override
