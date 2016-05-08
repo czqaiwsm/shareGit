@@ -30,7 +30,7 @@
               android:layout_marginLeft="5dp"
               android:layout_marginTop="5dp" >
 
-          <ImageView
+          <!--<ImageView
                   android:id="@+id/comhead"
                   android:layout_width="52dp"
                   android:layout_height="52dp"
@@ -38,7 +38,17 @@
                   android:layout_alignParentTop="true"
                   android:background="@drawable/abaose"
                   android:clickable="true"
-          />
+          />-->
+          <com.share.learn.view.RoundImageView
+                  android:id="@+id/comhead"
+                  android:layout_width="52dp"
+                  android:layout_height="52dp"
+                  android:layout_alignParentLeft="true"
+                  android:layout_alignParentTop="true"
+                  android:clickable="true"
+                  android:layout_centerVertical="true"
+                  android:src="@drawable/aot"
+                  android:adjustViewBounds="true" />
 
           <TextView
                   android:id="@+id/com_chatcontent"
@@ -92,7 +102,7 @@
                 android:layout_marginRight="5dp" >
 
 
-            <ImageView
+           <!-- <ImageView
                     android:id="@+id/sendUserHead"
                     android:layout_width="52dp"
                     android:layout_height="52dp"
@@ -100,7 +110,18 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:background="@drawable/shuaige"/>
-
+-->
+            <com.share.learn.view.RoundImageView
+                    android:id="@+id/sendUserHead"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/aot"
+                    android:adjustViewBounds="true" />
             <TextView
                     android:id="@+id/sendcontent"
                     android:layout_toLeftOf="@id/sendUserHead"

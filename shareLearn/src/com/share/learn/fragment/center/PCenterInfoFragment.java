@@ -104,7 +104,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
         if(userInfo != null){
             ImageLoader.getInstance().displayImage(userInfo.getHeadImg(), mHeadImg, ImageLoaderUtil.mHallIconLoaderOptions);
             name.setText(userInfo.getNickName());
-            jonior.setText(DataMapConstants.getJoniorMap().get(userInfo.getGrade()));
+            jonior.setText(String.format(getResources().getString(R.string.pohone),userInfo.getMobile()));
         }
 
 

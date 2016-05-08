@@ -21,6 +21,7 @@ import com.share.learn.bean.ChatMsgEntity;
 import com.share.learn.bean.PageInfo;
 import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.ImageLoaderUtil;
+import com.share.learn.view.RoundImageView;
 
 import java.util.List;
 
@@ -117,7 +118,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
         @Bind(R.id.comtime)
         TextView comtime;
         @Bind(R.id.comhead)
-        ImageView comhead;
+        RoundImageView comhead;
         @Bind(R.id.com_chatcontent)
         TextView comChatcontent;
         @Bind(R.id.com_username)
@@ -127,7 +128,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
         @Bind(R.id.sendtime)
         TextView sendtime;
         @Bind(R.id.sendUserHead)
-        ImageView sendUserHead;
+        RoundImageView sendUserHead;
         @Bind(R.id.sendcontent)
         TextView sendcontent;
         @Bind(R.id.send_username)
