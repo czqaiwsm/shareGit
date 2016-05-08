@@ -8,15 +8,31 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.android.volley.Response;
+import com.google.gson.reflect.TypeToken;
 import com.share.learn.R;
+import com.share.learn.bean.LoginInfo;
+import com.share.learn.bean.VersionBean;
 import com.share.learn.fragment.*;
 import com.share.learn.fragment.center.PCenterInfoFragment;
 import com.share.learn.fragment.center.PCenterInfoFragmentUser;
 import com.share.learn.fragment.msg.MsgInfosFragment;
 import com.share.learn.fragment.schedule.ScheduleFragment;
+import com.share.learn.help.RequestHelp;
+import com.share.learn.help.RequsetListener;
+import com.share.learn.parse.LoginInfoParse;
 import com.share.learn.service.LocationUitl;
 import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.SmartToast;
+import com.share.learn.utils.URLConstants;
+import com.share.learn.utils.WaitLayer;
+import com.volley.req.net.HttpURL;
+import com.volley.req.net.RequestManager;
+import com.volley.req.net.RequestParam;
+import com.volley.req.parser.JsonParserBase;
+import com.volley.req.parser.ParserUtil;
+
+import java.util.Map;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
@@ -43,12 +59,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private int currentTabIndex;
     Fragment currentFragment = null;
     int i=0;
+    private WaitLayer loadingDilog;//默认是与界面绑定对话框
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.main_activity);
+        requestData(0);
         fragments = new Fragment[VIEW_COUNT];
         fragments[0] = homePageFragment =new HomePageFragment();
         fragments[1] = msgInfosFragment = new MsgInfosFragment();
@@ -127,6 +145,42 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         transaction.show(newf);
         transaction.commitAllowingStateLoss();
     }
+
+
+
+    protected void requestData(int requestType) {
+        HttpURL url = new HttpURL();
+        url.setmBaseUrl(URLConstants.BASE_URL);
+        Map postParams = RequestHelp.getBaseParaMap("Vervion") ;
+        RequestParam param = new RequestParam();
+//        param.setmParserClassName(LoginInfoParse.class.getName());
+        param.setmPostarams(postParams);
+        param.setmHttpURL(url);
+        param.setPostRequestMethod();
+        RequestManager.getRequestData(this, createReqSuccessListener(requestType),null, param);
+
+    }
+
+    protected Response.Listener<Object> createReqSuccessListener(final int requestType) {
+        return new Response.Listener<Object>() {
+            @Override
+            public void onResponse(Object object) {
+                if (object != null){
+
+                    JsonParserBase result = ParserUtil.fromJsonBase(object.toString(), new TypeToken<JsonParserBase>() {
+                    }.getType());
+
+                    if(URLConstants.SUCCESS_CODE.equals(result.getRespCode())){
+                        result =   ParserUtil.fromJsonBase(object.toString(), new TypeToken<JsonParserBase<VersionBean>>() {
+                        }.getType());
+                        VersionBean versionBean = (VersionBean)result.getData();
+
+                    }
+                }
+            }
+        };
+    }
+
 
     /**
      * 显示购物车界面

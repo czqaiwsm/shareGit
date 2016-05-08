@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.*;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.share.learn.activity.ChooseCityActivity;
 import com.share.learn.activity.center.PCenterModifyInfoActivity;
 import com.share.learn.activity.center.ResetPassActivity;
 import com.share.learn.activity.center.ServiceProtocolActivity;
+import com.share.learn.activity.center.SettingActivity;
 import com.share.learn.activity.login.LoginActivity;
 import com.share.learn.activity.teacher.ChooseJoinorActivity;
 import com.share.learn.fragment.BaseFragment;
@@ -176,12 +178,14 @@ public class SettingFragmentUser extends BaseFragment implements OnClickListener
                 toClassActivity(SettingFragmentUser.this, ServiceProtocolActivity.class.getName());
                 break;
             case R.id.exitLogin:// 退出登录
-                AppManager.getAppManager().AppExit(BaseApplication.getInstance());
-                startActivity(new Intent(mActivity, LoginActivity.class));
+//                AppManager.getAppManager().AppExit(BaseApplication.getInstance());
+                AppManager.getAppManager().finishAllActivity();
+                SettingActivity.exit = true;
             break;
         }
 
     }
+
 
 
     /**
