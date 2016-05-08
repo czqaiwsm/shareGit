@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+>
+    <!--<include
+            android:id="@+id/head"
+            layout="@layout/fragment_home_header"/>-->
+
+    <RelativeLayout android:id="@+id/guide"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_below="@+id/head">
+        <include layout="@layout/guide"/>
+    </RelativeLayout>
+
+   <!-- <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/guide"
+
+    >-->
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:orientation="vertical"
+                      android:layout_below="@+id/guide"
+                      android:weightSum="2">
+
+            <!--一排-->
+             <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="0dp"
+                           android:weightSum="2"
+                           android:orientation="horizontal"
+                           android:layout_marginTop="@dimen/_10dp"
+                           android:layout_weight="1">
+
+                 <LinearLayout
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:layout_gravity="center"
+                               android:layout_weight="1"
+                               android:orientation="vertical"
+                               android:gravity="center">
+                     <ImageView android:id="@+id/courseSettingImg"
+                                android:layout_width="@dimen/home_tea_img_size"
+                                android:layout_height="@dimen/home_tea_img_size"
+                                android:background="@drawable/course_setting_selector"
+                     />
+                     <TextView android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_marginTop="@dimen/txt_margin"
+                               android:textSize="@dimen/home_txt_size"
+                               android:textColor="@color/home_txt_color"
+                               android:text="课程设置"/>
+                 </LinearLayout>
+                 <LinearLayout android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:layout_gravity="center"
+                               android:layout_weight="1"
+                               android:orientation="vertical"
+                               android:gravity="center">
+                     <ImageView android:id="@+id/certifySettingImg"
+                                android:layout_width="@dimen/home_tea_img_size"
+                                android:layout_height="@dimen/home_tea_img_size"
+                                android:background="@drawable/certify_setting_selector"
+                     />
+                     <TextView android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_marginTop="@dimen/txt_margin"
+                               android:textSize="@dimen/home_txt_size"
+                               android:textColor="@color/home_txt_color"
+                               android:text="认证设置"/>
+                 </LinearLayout>
+                 <!--<LinearLayout android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:layout_gravity="center"
+                               android:layout_weight="1"
+                               android:orientation="vertical"
+                               android:gravity="center">
+                     <ImageView android:id="@+id/englishImg"
+                                android:layout_width="@dimen/home_tea_img_size"
+                                android:layout_height="@dimen/home_tea_img_size"
+                                android:background="@drawable/english_selector"
+                     />
+                     <TextView android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_marginTop="@dimen/txt_margin"
+                               android:textSize="@dimen/home_txt_size"
+                               android:textColor="@color/home_txt_color"
+                               android:text="英語"/>
+                 </LinearLayout>-->
+             </LinearLayout>
+
+            <!--<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:weightSum="3"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_weight="1">
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                    <ImageView android:id="@+id/physicsImg"
+                               android:layout_width="@dimen/home_tea_img_size"
+                               android:layout_height="@dimen/home_tea_img_size"
+                               android:background="@drawable/physic_selector"
+                    />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_marginTop="@dimen/txt_margin"
+                              android:textSize="@dimen/home_txt_size"
+                              android:textColor="@color/home_txt_color"
+                              android:text="物理"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="match_parent"
+                              android:layout_gravity="center"
+                              android:layout_weight="1"
+                              android:orientation="vertical"
+                              android:gravity="center">
+                    <ImageView android:id="@+id/chemistryImg"
+                               android:layout_width="@dimen/home_tea_img_size"
+                               android:layout_height="@dimen/home_tea_img_size"
+                               android:background="@drawable/chemistry_selector"
+                    />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_marginTop="@dimen/txt_margin"
+                              android:textSize="@dimen/home_txt_size"
+                              android:textColor="@color/home_txt_color"
+                              android:text="化學"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="match_parent"
+                              android:layout_gravity="center"
+                              android:layout_weight="1"
+                              android:orientation="vertical"
+                              android:gravity="center">
+                    <ImageView android:id="@+id/biologyImg"
+                               android:layout_width="@dimen/home_tea_img_size"
+                               android:layout_height="@dimen/home_tea_img_size"
+                               android:background="@drawable/biology_selector"
+                    />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_marginTop="@dimen/txt_margin"
+                              android:textSize="@dimen/home_txt_size"
+                              android:textColor="@color/home_txt_color"
+                              android:text="生物"/>
+                </LinearLayout>
+            </LinearLayout>-->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_weight="1">
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                    <ImageView android:id="@+id/myOrder"
+                               android:layout_width="@dimen/home_tea_img_size"
+                               android:layout_height="@dimen/home_tea_img_size"
+                               android:background="@drawable/order_selector"
+                    />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_marginTop="@dimen/txt_margin"
+                              android:textSize="@dimen/home_txt_size"
+                              android:textColor="@color/home_txt_color"
+                              android:text="我的订单"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="match_parent"
+                              android:layout_gravity="center"
+                              android:layout_weight="1"
+                              android:orientation="vertical"
+                              android:gravity="center">
+                    <ImageView android:id="@+id/myBalance"
+                               android:layout_width="@dimen/home_tea_img_size"
+                               android:layout_height="@dimen/home_tea_img_size"
+                               android:background="@drawable/balance_selector"
+                    />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_marginTop="@dimen/txt_margin"
+                              android:textSize="@dimen/home_txt_size"
+                              android:textColor="@color/home_txt_color"
+                              android:text="我的余额"/>
+                </LinearLayout>
+                <!--<LinearLayout android:layout_width="0dp"
+                              android:layout_height="match_parent"
+                              android:layout_gravity="center"
+                              android:layout_weight="1"
+                              android:orientation="vertical"
+                              android:gravity="center">
+                    <ImageView android:id="@+id/geographyImg"
+                               android:layout_width="@dimen/home_tea_img_size"
+                               android:layout_height="@dimen/home_tea_img_size"
+                               android:background="@drawable/geography_selector"
+                    />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_marginTop="@dimen/txt_margin"
+                              android:textSize="@dimen/home_txt_size"
+                              android:textColor="@color/home_txt_color"
+                              android:text="地理"/>
+                </LinearLayout>-->
+            </LinearLayout>
+        </LinearLayout>
+    <!--</ScrollView>-->
+
+</RelativeLayout>
