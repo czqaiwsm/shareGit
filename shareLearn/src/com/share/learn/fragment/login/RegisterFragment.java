@@ -119,7 +119,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener,Re
 
 	private void initTitleView() {
 		setTitleText(R.string.welcome_register);
-
+        setLeftHeadIcon(0);
 	}
 
 
