@@ -121,6 +121,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(mActivity,OrderDetailActivity.class);
                 intent.putExtra("orderId",list.get(i-1).getOrderId());
+                intent.putExtra("studentName",list.get(i-1).getStudentName());
                 intent.putExtra("flag",flag);
                 intent.putExtra("orderStatus",list.get(i-1).getEvaluateStatus());
                 startActivityForResult(intent,flag);

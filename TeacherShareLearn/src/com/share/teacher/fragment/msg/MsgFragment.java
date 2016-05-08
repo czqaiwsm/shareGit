@@ -120,12 +120,12 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
                 UserInfo userInfo = BaseApplication.getInstance().userInfo;
                 if( userInfo !=  null){
                      String teacherId = "";
-//                    if(TextUtils.equals(userInfo.getId(),list.get(i-1).getReceiverId())){
-//                        teacherId = list.get(i-1).getSenderId();
-//                        intent.putExtra("teacherId",list.get(i-1).getSenderId());
-//                    }else {
-//                        teacherId = list.get(i-1).getReceiverId();
-//                    }
+                    if(TextUtils.equals(userInfo.getId(),list.get(i-1).getReceiverId())){
+                        teacherId = list.get(i-1).getSenderId();
+                        intent.putExtra("teacherId",list.get(i-1).getSenderId());
+                    }else {
+                        teacherId = list.get(i-1).getReceiverId();
+                    }
                     intent.putExtra("teacherId",teacherId);
 
                     ChatMsgEntity chatMsgEntity = new ChatMsgEntity();
@@ -133,7 +133,7 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
                     chatMsgEntity.setReceiverId(teacherId);
 //                    chatMsgEntity.setSenderId(userInfo.getId());
 
-                    chatMsgEntity.setTeacherName(msgDetail.getTeacherName());
+                    chatMsgEntity.setTeacherName(msgDetail.getStudentName());
                     chatMsgEntity.setTeacherImg(msgDetail.getHeadImg());
                     intent.putExtra("bundle",chatMsgEntity);
                     startActivity(intent);

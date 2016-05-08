@@ -64,6 +64,7 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
 
     private String orderId = "";
     private String orderStatus = "";
+    private String studentName = "";
     private OrderDetailInfo orderDetailInfo ;
 
     private int flag = 0 ;//1 待支付\2 已支付\ 3 已取消\ 4 已完成
@@ -76,6 +77,7 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
         if(intent != null ){
             orderId = intent.getStringExtra("orderId");
             flag = intent.getIntExtra("flag",0);
+            studentName = intent.getStringExtra("studentName");
 //            orderStatus = intent.getStringExtra("orderStatus");
         }
     }
@@ -133,7 +135,7 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
                  orderDetailInfo = ((JsonParserBase<OrderDetailInfo>)obj).getData();
                 if(orderDetailInfo != null){
                     if(orderDetailInfo != null){
-                        courseName.setText(orderDetailInfo.getStudentName());
+                        courseName.setText(studentName);
                         course_duration.setText(orderDetailInfo.getCourseName());
                         count_time.setText(orderDetailInfo.getPayCount()+"");
                         dateTime.setText(TextUtils.isEmpty(orderDetailInfo.getPayTime())?"":orderDetailInfo.getPayTime());

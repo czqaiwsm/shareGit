@@ -57,7 +57,7 @@ public class ContactAdpter extends BaseAdapter {
         Contactor message = mItemList.get(position);
         if (message != null) {
             ImageLoader.getInstance().displayImage(message.getHeadImg(),holder.headPhoto, ImageLoaderUtil.mHallIconLoaderOptions);
-            holder.name.setText(message.getTeacherName());
+            holder.name.setText(message.getStudentName());
         }
         return convertView;
     }

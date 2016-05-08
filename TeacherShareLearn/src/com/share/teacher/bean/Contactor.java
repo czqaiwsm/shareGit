@@ -8,8 +8,8 @@ package com.share.teacher.bean;
 public class Contactor {
 
     private String headImg;
-    private String teacberId;
-    private String teacherName;
+    private String studentId;
+    private String studentName;
 
     public String getHeadImg() {
         return headImg;
@@ -19,19 +19,19 @@ public class Contactor {
         this.headImg = headImg;
     }
 
-    public String getTeacberId() {
-        return teacberId;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public void setTeacberId(String teacberId) {
-        this.teacberId = teacberId;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 
-    public String getTeacherName() {
-        return teacherName;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 }

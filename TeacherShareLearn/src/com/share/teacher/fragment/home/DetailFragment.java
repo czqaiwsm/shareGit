@@ -9,14 +9,18 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import com.share.teacher.R;
 import com.share.teacher.activity.center.OrderDetailActivity;
+import com.share.teacher.adapter.ChooseJoinorAdapter;
+import com.share.teacher.adapter.ContactAdpter;
 import com.share.teacher.adapter.DetailAdapter;
 import com.share.teacher.bean.Contactor;
 import com.share.teacher.bean.ContactorBean;
+import com.share.teacher.bean.PayDetail;
 import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.help.PullRefreshStatus;
 import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.ContactorBeanParse;
+import com.share.teacher.parse.PayDetailParse;
 import com.share.teacher.utils.URLConstants;
 import com.share.teacher.utils.WaitLayer;
 import com.share.teacher.view.CustomListView;
@@ -34,10 +38,10 @@ import java.util.Map;
  * @creator caozhiqing
  * @data 2016/3/10
  */
-public class DetailFragment extends BaseFragment implements RequsetListener,CustomListView.OnLoadMoreListener {
+public class DetailFragment extends BaseFragment implements RequsetListener,CustomListView.OnLoadMoreListener{
 
     private CustomListView customListView = null;
-    private List<String> list = new ArrayList<String>();
+    private List<PayDetail> list = new ArrayList<PayDetail>();
     private DetailAdapter adapter;
 
     private TextView noData;
@@ -120,8 +124,7 @@ public class DetailFragment extends BaseFragment implements RequsetListener,Cust
         url.setmBaseUrl(URLConstants.BASE_URL);
         Map postParams = RequestHelp.getBaseParaMap("PayDetailList");
         RequestParam param = new RequestParam();
-        postParams.put("pageNo",pageNo);
-        param.setmParserClassName(new ContactorBeanParse());
+        param.setmParserClassName(new PayDetailParse());
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
@@ -130,35 +133,20 @@ public class DetailFragment extends BaseFragment implements RequsetListener,Cust
 
     @Override
     public void handleRspSuccess(int requestType,Object obj) {
-        JsonParserBase<ContactorBean> jsonParserBase = (JsonParserBase<ContactorBean>)obj;
-        ContactorBean chooseTeachBean = jsonParserBase.getData();
-        if(chooseTeachBean != null){
-            pageCount = chooseTeachBean.getTotalPages();
-            pageSize = chooseTeachBean.getPageSize();
-            ArrayList<Contactor> teacherInfos = chooseTeachBean.getElements();
+        JsonParserBase<ArrayList<PayDetail>> jsonParserBase = (JsonParserBase<ArrayList<PayDetail>>)obj;
+        if(jsonParserBase != null){
+            ArrayList<PayDetail> teacherInfos = jsonParserBase.getData();
 
-            switch (status){
-                case NORMAL:
-                    refresh(teacherInfos);
-                    break;
-
-                case PULL_REFRESH:
-                    refresh(teacherInfos);
-                    customListView.onRefreshComplete();
-                    break;
-                case LOAD_MORE:
-                    if(teacherInfos != null && teacherInfos.size()>0){//有数据
-//                        list.addAll(teacherInfos);
-                        customListView.onLoadMoreComplete(CustomListView.ENDINT_MANUAL_LOAD_DONE);
-                        adapter.notifyDataSetInvalidated();
-                    }else {
-                        pageNo--;
-                        customListView.onLoadMoreComplete(CustomListView.ENDINT_AUTO_LOAD_NO_DATA);
-                    }
-                    break;
-                default:break;
+            list.clear();
+            list.addAll(teacherInfos);
+            if(list.size()==0){
+                noData.setVisibility(View.VISIBLE);
+                customListView.setVisibility(View.GONE);
+            }else {
+                noData.setVisibility(View.GONE);
+                customListView.setVisibility(View.VISIBLE);
             }
-
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -182,30 +170,6 @@ public class DetailFragment extends BaseFragment implements RequsetListener,Cust
     protected void errorRespone() {
         super.errorRespone();
         failRespone();
-    }
-
-    /**
-     * 页数为1时使用
-     * @param teacherInfos
-     */
-    private void refresh(ArrayList<Contactor> teacherInfos){
-        if(teacherInfos==null || teacherInfos.size()==0){//显示无数据
-            if(list.size()==0){
-                noData.setVisibility(View.VISIBLE);
-            }
-        }else {
-            noData.setVisibility(View.GONE);
-            list.clear();
-//            list.addAll(teacherInfos);
-            if(teacherInfos.size()>=pageSize){//有足够的数据,可以下拉刷新
-                customListView.setCanLoadMore(true);
-                customListView.setOnLoadListener(this);
-            }else {
-                customListView.setCanLoadMore(false);
-            }
-            adapter.notifyDataSetChanged();
-
-        }
     }
 
 }

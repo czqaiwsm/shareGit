@@ -109,9 +109,9 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(mActivity,TeacherDetailActivity.class);
-                intent.putExtra("teacherId",list.get(i-1).getTeacberId());
-                startActivity(intent);
+//                Intent intent = new Intent(mActivity,TeacherDetailActivity.class);
+//                intent.putExtra("teacherId",list.get(i-1).getStudentId());
+//                startActivity(intent);
             }
         });
 

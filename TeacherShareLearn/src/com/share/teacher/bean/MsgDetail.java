@@ -6,15 +6,16 @@ package com.share.teacher.bean;
  * @date 16/4/12
  */
 public class MsgDetail {
-    private String id	        ;//消息ID
-    private String senderId   	;//当前登录者id
-    private String receiverId	;//消息接受者id
-    private String teacherName	;//老师姓名
-    private String content	    ;//消息内容
-    private String createTime	;//创建时间
-    private String headImg	    ;//用户头像
-    private String studentImg   ;
-    private String teacherImg   ;
+    private String id;//消息ID
+    private String senderId;//当前登录者id
+    private String receiverId;//消息接受者id
+    private String content;//消息内容
+    private String createTime;//创建时间
+    private String headImg;//用户头像
+    private String studentImg;
+
+    private String derection;//": 1,
+    private String studentName;//": "测试",
 
     public String getId() {
         return id;
@@ -57,13 +58,6 @@ public class MsgDetail {
         this.senderId = senderId;
     }
 
-    public String getTeacherName() {
-        return teacherName;
-    }
-
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
-    }
 
     public String getHeadImg() {
         return headImg;
@@ -81,11 +75,19 @@ public class MsgDetail {
         this.studentImg = studentImg;
     }
 
-    public String getTeacherImg() {
-        return teacherImg;
+    public String getDerection() {
+        return derection;
     }
 
-    public void setTeacherImg(String teacherImg) {
-        this.teacherImg = teacherImg;
+    public void setDerection(String derection) {
+        this.derection = derection;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 }

@@ -59,7 +59,7 @@ public class MsgAdpter extends BaseAdapter {
         MsgDetail message = mItemList.get(position);
         if(message != null){
             ImageLoader.getInstance().displayImage(message.getHeadImg(),holder.headPhoto,ImageLoaderUtil.mHallIconLoaderOptions);
-            holder.name.setText(message.getTeacherName());
+            holder.name.setText(message.getStudentName());
             holder.time.setText(message.getCreateTime());
 //            holder.name.setText(message.get());
             holder.msgContent.setText(message.getContent());

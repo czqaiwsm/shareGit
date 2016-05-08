@@ -1,6 +1,7 @@
 package com.share.teacher.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.share.teacher.R;
+import com.share.teacher.activity.center.ServiceProtocolActivity;
 import com.share.teacher.bean.BannerImgInfo;
 import com.share.teacher.utils.ImageLoaderUtil;
 
@@ -145,7 +147,7 @@ public class GuideViewPagerAdapter extends PagerAdapter {
 			if(isId){
 				views.add(buildImageView(m_i_picId[i]));
 			}else {
-				views.add(buildImageView(bannerImgInfos.get(i).getUrl()));
+				views.add(buildImageView(bannerImgInfos.get(i).getUrl(),i));
 
 			}
 		}
@@ -201,11 +203,21 @@ public class GuideViewPagerAdapter extends PagerAdapter {
 	}
 
 
-	private ImageView buildImageView(String url){
+	private ImageView buildImageView(String url,int position){
 		ImageView iv = new ImageView(context);
 		if(url != null){
 //			todo 加载网络图片，用ImgeLoader或其他框架
 			ImageLoader.getInstance().displayImage(url,iv,ImageLoaderUtil.mHallIconLoaderOptions);
+			iv.setTag(bannerImgInfos.get(position).getRedirect());
+			iv.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(context, ServiceProtocolActivity.class);
+					intent.setFlags(11);
+					intent.putExtra("url",v.getTag().toString());
+					context.startActivity(intent);
+				}
+			});
 		}
 		buildImgLayout(iv);
 		return iv;
@@ -309,7 +321,7 @@ public class GuideViewPagerAdapter extends PagerAdapter {
 		   super.onLooperPrepared();
 		   while(isAutoPlay){
 			   try {
-				   Thread.sleep(2000);
+				   Thread.sleep(3000);
 				   uiHadler.removeMessages(0);
 				   uiHadler.sendEmptyMessage(0);
 			   } catch (InterruptedException e) {

@@ -1,5 +1,6 @@
 package com.share.teacher.fragment.center;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,13 +19,24 @@ import com.share.teacher.fragment.BaseFragment;
 public class ServiceProtocolFragment extends BaseFragment {
 
     private WebView mWebView;
-    private String url,shippingStr;
-
+    private String url;
+    private String title = "我要学服务协议";
+    private int flag = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        Intent intent = mActivity.getIntent();
+        if(intent != null){
+            url = intent.getStringExtra("url");
+            flag = intent.getFlags();
+            switch (flag){
+                case 11:
+                    title = "我享学";
+                    break;
+            }
+        }
     }
 
     @Override
@@ -45,7 +57,7 @@ public class ServiceProtocolFragment extends BaseFragment {
     @SuppressWarnings("deprecation")
     private void initView(View view) {
         // TODO Auto-generated method stub
-        setTitleText("我要学服务协议");
+        setTitleText(title);
         setLeftHeadIcon(R.drawable.back, new OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -77,9 +89,9 @@ public class ServiceProtocolFragment extends BaseFragment {
         mWebView.getSettings().setBuiltInZoomControls(false);
         mWebView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);// 可能的话不要超过屏幕宽度
         if(TextUtils.isEmpty(url)){
-            mWebView.loadUrl(url);
+            url = "www.baidu.com";
         }
-        mWebView.loadUrl("http://www.sf-express.com/cn/sc/");
+        mWebView.loadUrl(url);
 
     }
 
