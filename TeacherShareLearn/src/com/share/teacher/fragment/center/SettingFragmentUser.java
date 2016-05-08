@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.share.teacher.R;
 import com.share.teacher.activity.center.ResetPassActivity;
 import com.share.teacher.activity.center.ServiceProtocolActivity;
+import com.share.teacher.activity.center.SettingActivity;
 import com.share.teacher.activity.login.LoginActivity;
 import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.utils.*;
@@ -151,8 +152,8 @@ public class SettingFragmentUser extends BaseFragment implements OnClickListener
                 break;
             case R.id.exitLogin:// 退出登录
 
-                AppManager.getAppManager().AppExit(BaseApplication.getInstance());
-                startActivity(new Intent(mActivity, LoginActivity.class));
+                SettingActivity.exit = true;
+                AppManager.getAppManager().finishAllActivity();
             break;
         }
 

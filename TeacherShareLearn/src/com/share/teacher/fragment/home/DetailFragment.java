@@ -92,8 +92,8 @@ public class DetailFragment extends BaseFragment implements RequsetListener,Cust
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(mActivity,OrderDetailActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(mActivity,OrderDetailActivity.class);
+//                startActivity(intent);
             }
         });
 

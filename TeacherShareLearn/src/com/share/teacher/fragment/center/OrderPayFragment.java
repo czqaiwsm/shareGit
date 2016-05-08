@@ -286,7 +286,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                     chatMsgEntity.setReceiverId(orderInfo.getTeacherId());
 //                    chatMsgEntity.setSenderId(userInfo.getId());
 
-                    chatMsgEntity.setTeacherName(orderInfo.getTeacherName());
+                    chatMsgEntity.setStudentName(orderInfo.getTeacherName());
                     chatMsgEntity.setTeacherImg(orderInfo.getTeacherImg());
                     intent.putExtra("bundle",chatMsgEntity);
                     startActivity(intent);

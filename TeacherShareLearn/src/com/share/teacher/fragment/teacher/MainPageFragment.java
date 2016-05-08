@@ -118,7 +118,7 @@ public class MainPageFragment extends BaseFragment implements View.OnClickListen
                 chatMsgEntity.setReceiverId(teacherDetailInfo.getId());
 //                chatMsgEntity.setSenderId(userInfo.getId());
 
-                chatMsgEntity.setTeacherName(teacherDetailInfo.getNickName());
+                chatMsgEntity.setStudentName(teacherDetailInfo.getNickName());
                 chatMsgEntity.setTeacherImg(teacherDetailInfo.getHeadImg());
                 intent.putExtra("bundle",chatMsgEntity);
                 startActivity(intent);

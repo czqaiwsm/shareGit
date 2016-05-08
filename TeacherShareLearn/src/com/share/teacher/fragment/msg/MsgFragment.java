@@ -133,8 +133,9 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
                     chatMsgEntity.setReceiverId(teacherId);
 //                    chatMsgEntity.setSenderId(userInfo.getId());
 
-                    chatMsgEntity.setTeacherName(msgDetail.getStudentName());
-                    chatMsgEntity.setTeacherImg(msgDetail.getHeadImg());
+                    chatMsgEntity.setStudentName(msgDetail.getStudentName());
+                    chatMsgEntity.setStudentImg(msgDetail.getHeadImg());
+                    chatMsgEntity.setTeacherImg(userInfo.getHeadImg());
                     intent.putExtra("bundle",chatMsgEntity);
                     startActivity(intent);
                 }

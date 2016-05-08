@@ -11,7 +11,7 @@ public class ChatMsgEntity implements Serializable{
     private String teacherImg ;//	老师头像
     private String createTime ;//	创建时间
     private String direction ;//	聊天方向	是	Int	聊天方向：1-左(对方)，2-右(自己)
-    private String teacherName	;//老师姓名
+    private String studentName	;//老师姓名
 
 
     public String getSenderId() {
@@ -70,11 +70,11 @@ public class ChatMsgEntity implements Serializable{
         this.direction = direction;
     }
 
-    public String getTeacherName() {
-        return teacherName;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 }

@@ -159,7 +159,7 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
     private void initTitle(){
 
         setLeftHeadIcon(0);
-        setTitleText("消息");
+        setTitleText(chaMsg.getStudentName());
 
     }
 
@@ -182,9 +182,9 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
 
         if(flag == 1){
             postParams =  RequestHelp.getBaseParaMap("MessageChat") ;
-            postParams.put("teacherId", teacherId);
+            postParams.put("studentId", teacherId);
             if (BaseApplication.getInstance().userInfo != null){
-                postParams.put("studentImg", BaseApplication.getInstance().userInfo.getHeadImg());
+                postParams.put("teacherImg", BaseApplication.getInstance().userInfo.getHeadImg());
             }
             param.setmParserClassName(new ChatMsgParse());
         }else {
@@ -193,7 +193,7 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
             sendChatMsg = new ChatMsgEntity();
             sendChatMsg.setReceiverId(chaMsg.getReceiverId());
             sendChatMsg.setTeacherImg(chaMsg.getTeacherImg());
-            sendChatMsg.setTeacherName(chaMsg.getTeacherName());
+            sendChatMsg.setStudentName(chaMsg.getStudentName());
             sendChatMsg.setDirection(chaMsg.getDirection());
             sendChatMsg.setContent(mEditTextContent.getText().toString());
             SimpleDateFormat df = new SimpleDateFormat("MM-dd HH:mm");//设置日期格式
@@ -206,9 +206,9 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
             }
             postParams.put("receiverId",sendChatMsg.getReceiverId());
             postParams.put("content",sendChatMsg.getContent());
-            postParams.put("studentImg",TextUtils.isEmpty(sendChatMsg.getStudentImg())?"":sendChatMsg.getStudentImg());
-            postParams.put("teacherImg",TextUtils.isEmpty(sendChatMsg.getTeacherImg())?"":sendChatMsg.getTeacherImg());
-            postParams.put("teacherName",TextUtils.isEmpty(sendChatMsg.getTeacherName())?"":sendChatMsg.getTeacherName());
+//            postParams.put("studentImg",TextUtils.isEmpty(sendChatMsg.getStudentImg())?"":sendChatMsg.getStudentImg());
+//            postParams.put("teacherImg",TextUtils.isEmpty(sendChatMsg.getTeacherImg())?"":sendChatMsg.getTeacherImg());
+//            postParams.put("teacherName",TextUtils.isEmpty(sendChatMsg.getTeacherName())?"":sendChatMsg.getTeacherName());
         }
 
         param.setmPostarams(postParams);

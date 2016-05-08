@@ -89,8 +89,8 @@ public class ChatMsgViewAdapter extends BaseAdapter {
             viewHolder.comMsgLL.setVisibility(View.VISIBLE);
             viewHolder.comtime.setText(entity.getCreateTime());
             viewHolder.comChatcontent.setText(entity.getContent());
-            viewHolder.comUsername.setText(entity.getTeacherName());
-            ImageLoader.getInstance().displayImage(entity.getTeacherImg(),viewHolder.comhead,ImageLoaderUtil.mHallIconLoaderOptions);
+//            viewHolder.comUsername.setText(entity.getTeacherName());
+            ImageLoader.getInstance().displayImage(entity.getStudentImg(),viewHolder.comhead,ImageLoaderUtil.mHallIconLoaderOptions);
         }else {
             viewHolder.sendMsgLL.setVisibility(View.VISIBLE);
             viewHolder.comMsgLL.setVisibility(View.GONE);
@@ -98,8 +98,8 @@ public class ChatMsgViewAdapter extends BaseAdapter {
             viewHolder.sendcontent.setText(entity.getContent());
 
             if(BaseApplication.getInstance().userInfo != null){
-                viewHolder.send_username.setText(BaseApplication.getInstance().userInfo.getNickName());
-                ImageLoader.getInstance().displayImage(entity.getStudentImg(),viewHolder.sendUserHead,ImageLoaderUtil.mHallIconLoaderOptions);
+//                viewHolder.send_username.setText(BaseApplication.getInstance().userInfo.getNickName());
+                ImageLoader.getInstance().displayImage(entity.getTeacherImg(),viewHolder.sendUserHead,ImageLoaderUtil.mHallIconLoaderOptions);
             }
 
         }
