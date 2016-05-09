@@ -21,7 +21,7 @@
                   style="@style/chat_text_date_style"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="2016-08-15"/>
+                  android:text=""/>
       </LinearLayout>
 
       <RelativeLayout
@@ -30,15 +30,17 @@
               android:layout_marginLeft="5dp"
               android:layout_marginTop="5dp" >
 
-          <ImageView
+          <com.share.teacher.view.RoundImageView
                   android:id="@+id/comhead"
                   android:layout_width="52dp"
                   android:layout_height="52dp"
+                  android:layout_centerVertical="true"
+                  android:src="@drawable/aot"
+                  android:layout_toLeftOf="@+id/img"
                   android:layout_alignParentLeft="true"
                   android:layout_alignParentTop="true"
-                  android:background="@drawable/abaose"
                   android:clickable="true"
-          />
+                  android:adjustViewBounds="true" />
 
           <TextView
                   android:id="@+id/com_chatcontent"
@@ -57,7 +59,6 @@
                   android:layout_height="wrap_content"
                   android:layout_alignParentLeft="true"
                   android:layout_below="@id/comhead"
-                  android:text="ajf;dfa;"
                   android:layout_toLeftOf="@id/com_chatcontent" />
       </RelativeLayout>
       
@@ -92,14 +93,18 @@
                 android:layout_marginRight="5dp" >
 
 
-            <ImageView
+            <com.share.teacher.view.RoundImageView
                     android:id="@+id/sendUserHead"
                     android:layout_width="52dp"
                     android:layout_height="52dp"
-                    android:focusable="false"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/aot"
+                    android:layout_toLeftOf="@+id/img"
+                    android:clickable="true"
+                    android:adjustViewBounds="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:background="@drawable/shuaige"/>
+                    />
 
             <TextView
                     android:id="@+id/sendcontent"

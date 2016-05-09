@@ -107,6 +107,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.center.EditActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".activity.teacher.MyAssetActivity"
+                  android:screenOrientation="portrait"/>
 
 
         <!--老师端-->

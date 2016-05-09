@@ -14,6 +14,7 @@ import com.share.teacher.R;
 import com.share.teacher.adapter.CityAdpter;
 import com.share.teacher.service.LocationUitl;
 import com.share.teacher.utils.BaseApplication;
+import com.share.teacher.utils.SharePreferenceUtils;
 import com.share.teacher.view.CustomListView;
 
 import java.util.ArrayList;
@@ -29,11 +30,6 @@ public class ChooseCitytFragment extends BaseFragment implements OnClickListener
     private List<String> list = new ArrayList<String>();
     private CityAdpter adapter;
     private TextView cityName;
-
-
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,8 +72,10 @@ public class ChooseCitytFragment extends BaseFragment implements OnClickListener
                 String city = (String) arg0.getItemAtPosition(arg2);
                 Intent intent = new Intent();
                 intent.putExtra("city", city);
+                System.out.println("city:"+city);
                 mActivity.setResult(Activity.RESULT_OK,intent);
                 cityName.setText(city);
+                SharePreferenceUtils.getInstance(BaseApplication.getInstance()).saveCityName(city);
                 mActivity.finish();
             }
         });

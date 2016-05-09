@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.share.teacher.R;
 import com.share.teacher.activity.center.*;
+import com.share.teacher.activity.teacher.MyAssetActivity;
 import com.share.teacher.bean.UserInfo;
 import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.utils.BaseApplication;
@@ -119,15 +120,19 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
             case R.id.wallet_layout:// 钱包
                 toClassActivity(PCenterInfoFragment.this, WalletActivity.class.getName());
                 break;
+            case R.id.cation_layout:// 我的评价
+                toClassActivity(PCenterInfoFragment.this, MyAssetActivity.class.getName());
+                break;
             case R.id.order_layout:// 订单
                 toClassActivity(PCenterInfoFragment.this, OrderActivity.class.getName());
                 break;
-            case R.id.feedBace_layout:// 订单
+            case R.id.feedBace_layout:// 反馈
                 toClassActivity(PCenterInfoFragment.this, FeedBackActivity.class.getName());
                 break;
-            case R.id.set_layout:// 订单
+            case R.id.set_layout:// 设置
                 toClassActivity(PCenterInfoFragment.this, SettingActivity.class.getName());
                 break;
+
         }
 
     }

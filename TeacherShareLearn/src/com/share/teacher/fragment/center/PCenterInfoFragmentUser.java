@@ -150,6 +150,8 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         signature_layout.setOnClickListener(this);
         indure_layout.setOnClickListener(this);
         reputation_layout.setOnClickListener(this);
+        city_layout.setOnClickListener(this);
+        city.setText(SharePreferenceUtils.getInstance(BaseApplication.getInstance()).getCityName());
 
         setData(BaseApplication.getInstance().userInfo);
     }
@@ -209,7 +211,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
             break;
             case R.id.city_layout:// 城市
             intent = new Intent(mActivity, ChooseCityActivity.class);
-            startActivityForResult(intent,MODIFY_GENDER);
+            startActivityForResult(intent,MODIFY_CITY);
             break;
             case R.id.signature_layout:// 签名
             intent = new Intent(mActivity, EditActivity.class);
@@ -292,6 +294,9 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
                 case MODIFY_GENDER://性别
                     requstValue = data.getStringExtra("gender");
                     requestTask(2);
+                    break;
+                case MODIFY_CITY://城市
+                    city.setText(SharePreferenceUtils.getInstance(BaseApplication.getInstance()).getCityName());
                     break;
                 case URLConstants.CHOOSE_JOINOR_REQUEST_CODE:
                 requstValue = data.getStringExtra(URLConstants.CHOOSE);

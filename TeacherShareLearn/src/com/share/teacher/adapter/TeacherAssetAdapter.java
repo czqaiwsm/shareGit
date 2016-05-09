@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.share.teacher.R;
 import com.share.teacher.bean.CommentInfo;
+import com.share.teacher.utils.ImageLoaderUtil;
 import com.share.teacher.view.RoundImageView;
 
 import java.util.List;
@@ -44,18 +47,20 @@ public class TeacherAssetAdapter extends BaseAdapter {
             holder.name = (TextView) convertView.findViewById(R.id.Name);
             holder.time = (TextView) convertView.findViewById(R.id.time);
             holder.assetConten = (TextView) convertView.findViewById(R.id.msg_content);
+            holder.ratingBar = (RatingBar) convertView.findViewById(R.id.myRatingbar);
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         CommentInfo map = mItemList.get(position);
-//        if(map != null){
-//            ImageLoader.getInstance().displayImage(map.getHeadPhoto(),holder.headPhoto,ImageLoaderUtil.mHallIconLoaderOptions);
-//            holder.name.setText(map.getName());
-//            holder.time.setText(map.getTime());
-//            holder.assetConten.setText(map.getMsg_content());
-//        }
+        if(map != null){
+            ImageLoader.getInstance().displayImage(map.getHeadImg(),holder.headPhoto, ImageLoaderUtil.mHallIconLoaderOptions);
+            holder.name.setText(map.getStudentName());
+            holder.time.setText(map.getCommentTime());
+            holder.assetConten.setText(map.getCommentDesc());
+            holder.ratingBar.setRating(Float.valueOf(map.getServiceScore()));
+        }
         return convertView;
     }
 
@@ -64,6 +69,7 @@ public class TeacherAssetAdapter extends BaseAdapter {
         private TextView name;
         private TextView time;
         private TextView assetConten;//评价类容
+        private RatingBar ratingBar ;//
     }
 
     @Override
