@@ -21,6 +21,7 @@ import com.share.learn.activity.center.DetailActivity;
 import com.share.learn.activity.center.RechargeActivity;
 import com.share.learn.bean.CourseInfo;
 import com.share.learn.bean.PayCourseInfo;
+import com.share.learn.bean.PayInfo;
 import com.share.learn.fragment.BaseFragment;
 import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
@@ -68,7 +69,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
     private int trueMoey = 0;
     private int orderPay = 0;
 
-    private int payType = 1;//1 alipay,  2 weixin
+    private int payType = 1;//1-支付宝，8-账户余额
 //    private PayPopupwidow payPopupwidow;
    PayRequestUtils payRequestUtils = null;
 
@@ -99,7 +100,8 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
         initTitleView();
         initView(view);
         iniData();
-        payRequestUtils = new PayRequestUtils(this,courseInfo,null);
+        setLoadingDilog(WaitLayer.DialogType.MODALESS);
+        payRequestUtils = new PayRequestUtils(this,courseInfo,null,this);
     }
 
     private void initTitleView() {
@@ -183,16 +185,12 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
             case R.id.login_text:// 立即支付
                 payRequestUtils.payPopShow(v,""+orderPay,trueMoey+"",account.getTag().toString(),address.getText().toString());
             break;
-            case R.id.withDraw_layout:// 提现
-            intent = new Intent(mActivity, ChooseCityActivity.class);
-            startActivityForResult(intent,MODIFY_INFO);
-            break;
             case R.id.alipay://支付宝支付
                 payType = 1;
                 requestTask();
                 break;
             case R.id.wxPay://微信支付
-                payType = 2;
+                payType = 8;
                 requestTask();
                 break;
         }
@@ -206,7 +204,9 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
     @Override
     public void requestData(int requestType) {
         // TODO Auto-generated method stub
+        payRequestUtils.dismissPup();
         HttpURL url = new HttpURL();
+
         url.setmBaseUrl(URLConstants.BASE_URL);
 
         Map postParams = RequestHelp.getBaseParaMap("PayCourseOrder");
@@ -226,18 +226,21 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
-        RequestManager.getRequestData(getActivity(), createReqSuccessListener(), createMyReqErrorListener(), param);
+        RequestManager.getRequestData(getActivity(), createReqSuccessListener(requestType), createMyReqErrorListener(), param);
     }
 
 
     @Override
     public void handleRspSuccess(int requestType,Object obj) {
         PayCourseInfo payCourseInfo =( (JsonParserBase<PayCourseInfo>)obj).getData();
-        if(payCourseInfo != null){
 
-            //todo 弹出对话框,选择支付方式
-            AlipayUtil alipayUtil = new AlipayUtil(mActivity,payCourseInfo.getOrderCode(),"test",payCourseInfo.getCourseName(),payCourseInfo.getPayPrice(),null);
-            alipayUtil.alipay();
+        PayInfo payInfo = new PayInfo(payCourseInfo.getOrderCode(),payCourseInfo.getPayPrice(),payCourseInfo.getCourseName(),payCourseInfo.getCreateTime());
+        if(payCourseInfo != null){
+            if (payType == 1){
+                PayUtil.alipay(mActivity,payInfo,null);
+            }else {
+                PayUtil.walletPay(mActivity,payInfo,null);
+            }
         }
     }
 
@@ -275,8 +278,8 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
             customListView.setCanLoadMore(false);
             customListView.setCanRefresh(false);
-            for(int i=0;i<20;i++){
-                datas.add(i+"次");
+            for(int i=1;i<20;i++){
+                datas.add((i)+"次");
             }
 
             customListView.setAdapter(new BaseAdapter() {
@@ -320,11 +323,11 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
             customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    account.setText(datas.get(i));
-                    account.setTag(i+1);
+                    account.setText(datas.get(i-1));
+                    account.setTag(i-1);
 
-                    orderPay = priceMoney * (i+1);
-                    trueMoey = orderPay - getDiscontPrice(i+1);
+                    orderPay = priceMoney * (i);
+                    trueMoey = orderPay - getDiscontPrice(i);
                     favourable.setText(String.format(getResources().getString(R.string.balance_has,getDiscontPrice(i+1))));
                     truePay.setText(String.format(getResources().getString(R.string.balance_has,trueMoey)));
                     dismiss();

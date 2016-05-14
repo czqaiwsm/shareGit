@@ -104,7 +104,7 @@ public class MainPageFragment extends BaseFragment implements View.OnClickListen
             }
             certify.setText(str);
             apputation.setText(teacherDetailInfo.getExperience());
-
+           seek_btn.setSelected("2".equalsIgnoreCase(teacherDetailInfo.getIsCheck()));
         }
     }
 
@@ -143,7 +143,7 @@ public class MainPageFragment extends BaseFragment implements View.OnClickListen
         url.setmBaseUrl(URLConstants.BASE_URL);
         Map postParams = RequestHelp.getBaseParaMap("Attention");//关注
         postParams.put("teacherId",teacherDetailInfo.getId());
-        postParams.put("isCheck",ask_txt.isSelected()?1:2);//Int	1-取消，2-关注
+        postParams.put("isCheck",seek_btn.isSelected()?1:2);//Int	1-取消，2-关注
         RequestParam param = new RequestParam();
 //        param.setmParserClassName(TeacherDetailParse.class.getName());
         param.setmParserClassName(new TeacherDetailParse());

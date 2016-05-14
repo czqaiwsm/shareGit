@@ -27,6 +27,7 @@ public class TeacherDetailInfo extends TeacherInfo {
     private String createTime;// null,
     private String hname;// 城市,
     private String aname;// 地区
+    private String isCheck;//1-取消，2-关注
 
     public String getMobile() {
         return mobile;
@@ -186,5 +187,13 @@ public class TeacherDetailInfo extends TeacherInfo {
 
     public void setAname(String aname) {
         this.aname = aname;
+    }
+
+    public String getIsCheck() {
+        return isCheck;
+    }
+
+    public void setIsCheck(String isCheck) {
+        this.isCheck = isCheck;
     }
 }

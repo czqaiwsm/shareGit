@@ -13,6 +13,9 @@ public class TeacherDetailBean {
 
     private TeacherDetailInfo teacherInfo ;
 
+    private String isCheck;//1-取消，2-关注
+
+
     public ArrayList<CourseInfo> getCourseList() {
         return courseList;
     }
@@ -27,5 +30,13 @@ public class TeacherDetailBean {
 
     public void setTeacherInfo(TeacherDetailInfo teacherInfo) {
         this.teacherInfo = teacherInfo;
+    }
+
+    public String getIsCheck() {
+        return isCheck;
+    }
+
+    public void setIsCheck(String isCheck) {
+        this.isCheck = isCheck;
     }
 }

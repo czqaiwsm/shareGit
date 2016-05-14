@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.share.learn.R;
 import com.share.learn.activity.center.*;
+import com.share.learn.activity.home.MsgChooseActivity;
 import com.share.learn.bean.DataMapConstants;
 import com.share.learn.bean.UserInfo;
 import com.share.learn.fragment.BaseFragment;
@@ -71,7 +72,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
             @Override
             public void onClick(View v) {
                 //todo 系统消息
-                toClassActivity(PCenterInfoFragment.this,SystemMsgActivity.class.getName());
+                toClassActivity(PCenterInfoFragment.this,MsgChooseActivity.class.getName());
             }
         });
     }

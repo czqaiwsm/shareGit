@@ -136,9 +136,7 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
         Map postParams = RequestHelp.getBaseParaMap("TeacherList");
-//        @"cityName", [ @"pageNo",@"courseId",@"grade", @"cmd",@"123456",@"vcode",@"",@"fInviteCode",@"000000",@"deviceId",@"10",@"appversion",@"4",@"clientType",[[UserInfoManage shareInstance] token],@"accessToken", nil];
         postParams.put("cityName", cityName);
-        postParams.put("vcode", "123456");
         postParams.put("pageNo",pageNo);
         postParams.put("courseId",courseId);
         postParams.put("grade",joniorId);

@@ -6,6 +6,7 @@ package com.share.learn.bean;
  * @date 16/4/7
  */
 public class SystemMsg {
+    private String status;
     private String id;
     private String title;//	String
     private String content;//是	String

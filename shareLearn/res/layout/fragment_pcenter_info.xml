@@ -150,6 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@drawable/item_click"
+                android:visibility="gone"
                 android:padding="@dimen/app_text_size_min" >
                 <ImageView android:layout_width="@dimen/pc_img_size"
                            android:layout_height="@dimen/pc_img_size"

@@ -118,12 +118,14 @@ public class EvaluateFragment extends BaseFragment implements OnClickListener,Re
         Map postParams = RequestHelp.getBaseParaMap("UserEvaluateSubmit");//关注
         RequestParam param = new RequestParam();
 //        param.setmParserClassName(TeacherDetailParse.class.getName());
+
+        postParams.put("orderId",orderInfo.getOrderId());
         postParams.put("teacherId",orderInfo.getTeacherId());
         postParams.put("studentName", BaseApplication.getInstance().userInfo.getNickName());
         postParams.put("grade",BaseApplication.getInstance().userInfo.getGrade());
         postParams.put("headImg",BaseApplication.getInstance().userInfo.getHeadImg());
         postParams.put("serviceScore",ratingBar.getRating());
-        postParams.put("commentDesc",TextUtils.isEmpty(rechareQuery.getText())?"":rechareQuery.getText());
+        postParams.put("commentDesc",TextUtils.isEmpty(rechargePrice.getText())?"":rechargePrice.getText());
 
         param.setmParserClassName(new TeacherDetailParse());
         param.setmPostarams(postParams);

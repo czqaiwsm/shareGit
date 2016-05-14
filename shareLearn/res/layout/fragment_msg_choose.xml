@@ -28,7 +28,7 @@
                           android:layout_gravity="center"
                           android:gravity="center_vertical"
                           android:textColor="@color/teach_txt_color"
-                          android:text="@string/city"/>
+                          android:text="系统消息"/>
                 <TextView android:id="@+id/city_name"
                           android:layout_width="wrap_content"
                           android:layout_height="match_parent"
@@ -64,7 +64,7 @@
                           android:layout_gravity="center"
                           android:gravity="center_vertical"
                           android:textColor="@color/teach_txt_color"
-                          android:text="@string/jonior"/>
+                          android:text="个人消息"/>
                 <TextView android:id="@+id/school"
                           android:layout_width="wrap_content"
                           android:layout_height="match_parent"

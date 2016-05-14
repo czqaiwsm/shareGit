@@ -97,14 +97,14 @@ public class DetailFragment extends BaseFragment implements RequsetListener,Cust
             }
         });
 
-        customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                status = PullRefreshStatus.PULL_REFRESH;
-                pageNo = 1;
-                requestData(0);
-            }
-        });
+//        customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                status = PullRefreshStatus.PULL_REFRESH;
+//                pageNo = 1;
+//                requestData(0);
+//            }
+//        });
 
     }
 
@@ -150,21 +150,21 @@ public class DetailFragment extends BaseFragment implements RequsetListener,Cust
         }
     }
 
-    @Override
-    protected void failRespone() {
-        super.failRespone();
-        switch (status) {
-            case PULL_REFRESH:
-                customListView.onRefreshComplete();
-                break;
-            case LOAD_MORE:
-                pageNo--;
-                customListView.onLoadMoreComplete(CustomListView.ENDINT_MANUAL_LOAD_DONE);
-                break;
-            default:
-                break;
-        }
-    }
+//    @Override
+//    protected void failRespone() {
+//        super.failRespone();
+//        switch (status) {
+//            case PULL_REFRESH:
+//                customListView.onRefreshComplete();
+//                break;
+//            case LOAD_MORE:
+//                pageNo--;
+//                customListView.onLoadMoreComplete(CustomListView.ENDINT_MANUAL_LOAD_DONE);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
     @Override
     protected void errorRespone() {

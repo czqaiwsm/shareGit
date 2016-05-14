@@ -63,6 +63,7 @@ public class PayUtil {
                 }.getType());
                 if(base.getRespCode().equalsIgnoreCase(URLConstants.SUCCESS_CODE)){
                     SmartToast.showText(mActivity,"支付成功");
+                    if(payCallBack != null)
                     payCallBack.paySucc();
                 }else {
                     SmartToast.showText(mActivity,base.getRespDesc());
@@ -75,7 +76,8 @@ public class PayUtil {
             public void onErrorResponse(VolleyError volleyError) {
                 SmartToast.showText(mActivity,"支付失败");
                 waitLayer.dismiss();
-                payCallBack.payFail();
+                if(payCallBack != null)
+                    payCallBack.payFail();
 
             }
         }, param);

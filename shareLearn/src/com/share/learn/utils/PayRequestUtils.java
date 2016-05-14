@@ -25,10 +25,10 @@ import java.util.Map;
  * @desc 请用一句话描述它
  * @date 16/4/27
  */
-public class PayRequestUtils implements View.OnClickListener{
+public class PayRequestUtils {
 
     private PayPopupwidow payPopupwidow;
-    private int payType = 1;//1 alipay,  2 weixin
+    private int payType = 1;//1 alipay,  8 weixin
     private BaseFragment baseFragment;
     private CourseInfo courseInfo;
 
@@ -40,11 +40,11 @@ public class PayRequestUtils implements View.OnClickListener{
     public int reqestType = 1;//1 需要生成订单,2 不要生成订单
 
 
-    public PayRequestUtils(BaseFragment baseFragment,CourseInfo courseInfo,PayCallBack payCallBack){
+    public PayRequestUtils(BaseFragment baseFragment, CourseInfo courseInfo, PayCallBack payCallBack, View.OnClickListener onClickListener){
         this.payCallBack = payCallBack;
         this.courseInfo = courseInfo;
         this.baseFragment = baseFragment;
-        payPopupwidow = new PayPopupwidow(baseFragment.getActivity(),this,null);
+        payPopupwidow = new PayPopupwidow(baseFragment.getActivity(),onClickListener,null);
     }
 
     public void payPopShow(View v,String orderPay,String trueMoey,String payCount,String remark){
@@ -55,22 +55,26 @@ public class PayRequestUtils implements View.OnClickListener{
         this.remark = remark;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getHeight()){
-
-        case R.id.alipay://支付宝支付
-        payType = 1;
-        break;
-        case R.id.wxPay://微信支付
-        payType = 2;
-        break;
-        }
-        if(reqestType == 1){
-            requestData();
-            payPopupwidow.dimiss();
-        }
+    public void dismissPup(){
+        payPopupwidow.dimiss();
     }
+
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()){
+//
+//        case R.id.alipay://支付宝支付
+//        payType = 1;
+//        break;
+//        case R.id.wxPay://微信支付
+//        payType = 8;
+//        break;
+//        }
+//        if(reqestType == 1){
+//            requestData();
+//            payPopupwidow.dimiss();
+//        }
+//    }
 
     public void requestData() {
         // TODO Auto-generated method stub
@@ -108,6 +112,7 @@ public class PayRequestUtils implements View.OnClickListener{
                 alipayUtil.alipay();
             }else {
                 //账号支付
+
             }
 
         }

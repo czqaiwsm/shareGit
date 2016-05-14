@@ -50,8 +50,6 @@ public class AssetTeacherFragment extends BaseFragment implements RequsetListene
     private PullRefreshStatus status = PullRefreshStatus.NORMAL;
 
     private String teacherId = "";
-    private String teacherName = "";
-    private String teacherImg = "";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +57,6 @@ public class AssetTeacherFragment extends BaseFragment implements RequsetListene
         Bundle bundle = getArguments();
         if(bundle != null ){
             teacherId = bundle.getString("teacherId");
-            teacherName = bundle.getString("teacherName");
-            teacherImg  = bundle.getString("teacherImg");
         }
     }
 

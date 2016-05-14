@@ -350,7 +350,7 @@ public abstract class BaseFragment extends Fragment{
 
                     }else{
                         failRespone();
-                        if(!isDetached()){
+                        if(!isDetached() && toasetUtil != null){
                             toasetUtil.showInfo(jsonParserBase!=null?jsonParserBase.getRespDesc():"无有效数据!");
                         }
                     }

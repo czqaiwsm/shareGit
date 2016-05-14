@@ -101,6 +101,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.center.WidthDrawActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.MsgChooseActivity"
+                  android:screenOrientation="portrait"/>
 
 
         <!--老师端-->

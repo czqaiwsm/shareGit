@@ -1,5 +1,7 @@
 package com.share.learn.help;
 
+import android.content.Context;
+import android.telephony.TelephonyManager;
 import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.URLConstants;
 import com.volley.req.net.HttpURL;
@@ -25,7 +27,7 @@ public class RequestHelp {
         postParams.put("appVersion", application.appVersion);
         postParams.put("clientType", 3);
         postParams.put("accessToken", application.accessToken);
-        postParams.put("deviceId", "10");
+        postParams.put("deviceId", BaseApplication.diviceId);
         return postParams;
     }
 

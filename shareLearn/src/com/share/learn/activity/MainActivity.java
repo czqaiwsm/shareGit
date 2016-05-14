@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         setContentView(R.layout.main_activity);
         requestData(0);
         fragments = new Fragment[VIEW_COUNT];

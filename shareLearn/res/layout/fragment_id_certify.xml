@@ -41,8 +41,8 @@
             </LinearLayout>
             <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/dap_line"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_small_gray"
                     android:layout_marginLeft="@dimen/_10dp"
                     android:layout_marginRight="@dimen/_10dp"
                     android:layout_marginTop="@dimen/_10dp"/>
@@ -79,8 +79,8 @@
             </RelativeLayout>
             <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/dap_line"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_small_gray"
                     android:layout_marginLeft="@dimen/_10dp"
                     android:layout_marginRight="@dimen/_10dp"/>
 
@@ -116,8 +116,8 @@
             </RelativeLayout>
             <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/dap_line"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_small_gray"
                     android:layout_marginLeft="@dimen/_10dp"
                     android:layout_marginRight="@dimen/_10dp"/>
             <LinearLayout android:layout_width="match_parent"
@@ -140,8 +140,8 @@
 
                 <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/dap_line"
+                        android:layout_height="0.5dp"
+                        android:background="@color/color_small_gray"
                         android:layout_marginTop="@dimen/_10dp"
                 />
             </LinearLayout>
@@ -185,8 +185,8 @@
                 </FrameLayout>
                 <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/dap_line"
+                        android:layout_height="0.5dp"
+                        android:background="@color/color_small_gray"
                         android:layout_marginTop="@dimen/_10dp"
                 />
             </LinearLayout>

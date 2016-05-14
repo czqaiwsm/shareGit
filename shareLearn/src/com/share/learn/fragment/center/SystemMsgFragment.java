@@ -41,11 +41,11 @@ import java.util.Map;
  */
 public class SystemMsgFragment extends BaseFragment implements RequsetListener ,CustomListView.OnLoadMoreListener{
 
+    public static int MsgType = 1;//系统消息  2个人消息
     private CustomListView customListView = null;
     private List<SystemMsg> list = new ArrayList<SystemMsg>();
     private SystemMsgAdapter adapter;
     private TextView noData;
-
 
     private int pageNo = 1;
     private int pageCount = 0;//总页数
@@ -137,13 +137,22 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener ,
         Map postParams  = null;
         switch (requestType){
            case 1:
-               postParams = RequestHelp.getBaseParaMap("SysMsgList");
+               if(MsgType == 1){
+                   postParams = RequestHelp.getBaseParaMap("SysMsgList");
+               }else if(MsgType == 2) {
+                   postParams = RequestHelp.getBaseParaMap("PersonMsgList");
+
+               }
 //        param.setmParserClassName(SystemMsgParse.class.getName());
                postParams.put("pageNo",pageNo);
                param.setmParserClassName(new SystemMsgParse());
                break;
            case 2:
-               postParams = RequestHelp.getBaseParaMap("DelSysMsg");
+               if(MsgType == 1){
+                   postParams = RequestHelp.getBaseParaMap("DelSysMsg");
+               }else if(MsgType == 2) {
+                   postParams = RequestHelp.getBaseParaMap("DelPersonMsg");
+               }
 //        param.setmParserClassName(SystemMsgParse.class.getName());
                postParams.put("msgId",delMsgId);
                param.setmParserClassName(new BaseParse());
@@ -155,7 +164,7 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener ,
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
-        RequestManager.getRequestData(getActivity(), createReqSuccessListener(), createMyReqErrorListener(), param);
+        RequestManager.getRequestData(getActivity(), createReqSuccessListener(requestType), createMyReqErrorListener(), param);
     }
 
     @Override

@@ -158,6 +158,7 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
             content.setText(teacherDetailInfo.getSignature());
             ImageLoader.getInstance().displayImage(teacherDetailInfo.getHeadImg(),headPhoto, ImageLoaderUtil.mHallIconLoaderOptions);
 
+            teacherDetailInfo.setIsCheck(jsonParserBase.getData().getIsCheck());
             onInitTabConfig();
         }
     }

@@ -122,7 +122,7 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
-        RequestManager.getRequestData(getActivity(), createReqSuccessListener(),createMyReqErrorListener(), param);
+        RequestManager.getRequestData(getActivity(), createReqSuccessListener(0),createMyReqErrorListener(), param);
 
     }
 
@@ -131,14 +131,13 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
         JsonParserBase jsonParserBase = (JsonParserBase)obj;
         if ((jsonParserBase != null)){
             toasetUtil.showSuccess("密码修改成功!请登录");
-            AppManager.getAppManager().finishOthersActivity(mActivity.getClass());
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    toClassActivity(ResetPassFragment.this, LoginActivity.class.getName());
-                    mActivity.finish();
-                }
-            },1000);
+            AppManager.getAppManager().finishAllActivity();
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mActivity.finish();
+//                }
+//            },1000);
 
         }
     }
