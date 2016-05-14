@@ -2,8 +2,6 @@ package com.share.teacher.utils;
 
 import android.app.Activity;
 import android.os.Handler;
-import com.alipay.sdk.pay.demo.AlipayUtil;
-import com.alipay.sdk.pay.demo.PayCallBack;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
@@ -25,13 +23,13 @@ import java.util.Map;
 public class PayUtil {
 
 
-    public static void alipay(Activity mActivity, PayInfo payInfo, PayCallBack payCallBack){
+    public static void alipay(Activity mActivity, PayInfo payInfo, Object payCallBack){
 
-        AlipayUtil alipayUtil = new AlipayUtil(mActivity,payInfo.getOrderNum(),payInfo.getContent(),payInfo.getProductDesc(),payInfo.getPrice(),payCallBack);
-        alipayUtil.alipay();
+//        AlipayUtil alipayUtil = new AlipayUtil(mActivity,payInfo.getOrderNum(),payInfo.getContent(),payInfo.getProductDesc(),payInfo.getPrice(),payCallBack);
+//        alipayUtil.alipay();
     }
 
-    public static void walletPay(final Activity mActivity, PayInfo payInfo, final PayCallBack payCallBack){
+    public static void walletPay(final Activity mActivity, PayInfo payInfo, final Object payCallBack){
         final WaitLayer waitLayer = new WaitLayer(mActivity, WaitLayer.DialogType.MODALESS);
         waitLayer.show();
         new Handler().postDelayed(new Runnable() {
@@ -57,7 +55,7 @@ public class PayUtil {
                 }.getType());
                 if(base.getRespCode().equalsIgnoreCase(URLConstants.SUCCESS_CODE)){
                     SmartToast.showText(mActivity,"支付成功");
-                    payCallBack.paySucc();
+//                    payCallBack.paySucc();
                 }else {
                     SmartToast.showText(mActivity,base.getRespDesc());
 
@@ -69,7 +67,7 @@ public class PayUtil {
             public void onErrorResponse(VolleyError volleyError) {
                 SmartToast.showText(mActivity,"支付失败");
                 waitLayer.dismiss();
-                payCallBack.payFail();
+//                payCallBack.payFail();
 
             }
         }, param);

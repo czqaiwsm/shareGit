@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import com.alipay.sdk.pay.demo.PayCallBack;
 import com.share.teacher.R;
 import com.share.teacher.activity.center.OrderDetailActivity;
 import com.share.teacher.activity.teacher.ChatMsgActivity;
@@ -40,7 +39,7 @@ import java.util.Map;
  * @creator caozhiqing
  * @data 2016/3/10
  */
-public class OrderPayFragment extends BaseFragment implements RequsetListener,CustomListView.OnLoadMoreListener ,View.OnClickListener,PayCallBack{
+public class OrderPayFragment extends BaseFragment implements RequsetListener,CustomListView.OnLoadMoreListener ,View.OnClickListener{
 
     private CustomListView customListView = null;
     private List<OrderInfo> list = new ArrayList<OrderInfo>();
@@ -81,7 +80,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
         isPrepare = true;
         setLoadingDilog(WaitLayer.DialogType.NOT_NOMAL);
         onLazyLoad();
-        payPopupwidow = new PayPopupwidow(mActivity,null,this);
+//        payPopupwidow = new PayPopupwidow(mActivity,null,this);
     }
 
     private void onLazyLoad(){
@@ -314,15 +313,15 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
         }
     }
 
-    @Override
-    public void paySucc() {
-        handler.sendEmptyMessage(OrderFragment.PAY_SUCC);
-    }
-
-    @Override
-    public void payFail() {
-      toasetUtil.showInfo("支付失败");
-    }
+//    @Override
+//    public void paySucc() {
+//        handler.sendEmptyMessage(OrderFragment.PAY_SUCC);
+//    }
+//
+//    @Override
+//    public void payFail() {
+//      toasetUtil.showInfo("支付失败");
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -333,7 +332,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                     requestTask(1);
                     break;
                 case 1:
-                    paySucc();
+//                    paySucc();
                     break;
                 case 2://完成订单
                     handler.sendEmptyMessage(OrderFragment.CONFIRM_ORDER)    ;

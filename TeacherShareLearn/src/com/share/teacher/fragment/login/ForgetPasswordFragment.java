@@ -194,13 +194,15 @@ public class ForgetPasswordFragment extends BaseFragment implements OnClickListe
 
 				Map postParams = RequestHelp.getBaseParaMap("UserFindPwd") ;
 
+
 				postParams.put("loginName", phone);
+				postParams.put("vcode",forget_inputCode.getText().toString());
+				postParams.put("sendId",verifyCode.getSendId());
+				postParams.put("password",forget_pass.getText().toString());
+
 //				postParams.put("vcode",inputCode.getText().toString());
 //				postParams.put("sendId",verifyCode.getSendId());
-				postParams.put("vcode","123456");
 //				postParams.put("sendId",verifyCode.getSendId());
-				postParams.put("password",forget_pass.getText().toString());
-				postParams.put("sendId","111111");
 				param = new RequestParam();
 //				param.setmParserClassName(BaseParse.class.getName());
 				param.setmParserClassName(new BaseParse());

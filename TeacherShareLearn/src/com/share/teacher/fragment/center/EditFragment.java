@@ -54,15 +54,15 @@ public class EditFragment extends BaseFragment implements OnClickListener{
         UserInfo userInfo = BaseApplication.getInstance().userInfo;
         if(fromIn != null ){
             switch (fromIn.getFlags()){
-                case  4:  //签名
+                case  40:  //签名
                      title =  "修改签名";
                     content = userInfo==null?"":userInfo.getSignature();
                     break;
-                case  5:
+                case  50:
                     title =  "修改简介";
                     content = userInfo==null?"":userInfo.getIntroduction();
                     break;
-                case  6:
+                case  60:
                     title =  "修改经历";
                     content = userInfo==null?"":userInfo.getExperience();
                     break;

@@ -10,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.alipay.sdk.pay.demo.PayCallBack;
 import com.google.gson.internal.LinkedTreeMap;
 import com.share.teacher.R;
 import com.share.teacher.bean.PayInfo;
@@ -34,7 +33,7 @@ import java.util.Map;
  * @time 2015年9月28日上午11:44:26
  *
  */
-public class RechargeFragment extends BaseFragment implements OnClickListener ,RequsetListener,PayCallBack {
+public class RechargeFragment extends BaseFragment implements OnClickListener ,RequsetListener {
 
     private EditText rechargePrice ;
     private TextView rechareQuery;
@@ -120,7 +119,7 @@ public class RechargeFragment extends BaseFragment implements OnClickListener ,R
         if ((jsonParserBase != null)){
             LinkedTreeMap <String,String> treeMap = (LinkedTreeMap<String, String>) jsonParserBase.getData();
              String order = treeMap.get("orderCode");
-            PayUtil.alipay(mActivity,new PayInfo(order,rechargePrice.getText().toString(),"充值","充值"),this);
+//            PayUtil.alipay(mActivity,new PayInfo(order,rechargePrice.getText().toString(),"充值","充值"),this);
 //            BaseApplication.getInstance().userInfo = jsonParserBase.getData().getUserInfo();
 //            BaseApplication.getInstance().accessToken = jsonParserBase.getData().getToken();
 //            BaseApplication.getInstance().userId = BaseApplication.getInstance().userInfo.getId();
@@ -131,14 +130,14 @@ public class RechargeFragment extends BaseFragment implements OnClickListener ,R
     }
 
 
-    @Override
-    public void paySucc() {
-        mActivity.setResult(Activity.RESULT_OK);
-        mActivity.finish();
-    }
-
-    @Override
-    public void payFail() {
-
-    }
+//    @Override
+//    public void paySucc() {
+//        mActivity.setResult(Activity.RESULT_OK);
+//        mActivity.finish();
+//    }
+//
+//    @Override
+//    public void payFail() {
+//
+//    }
 }

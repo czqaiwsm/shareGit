@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.download.base.utils.ScreenUtils;
+import com.download.update.UpdateMgr;
 import com.share.teacher.R;
 import com.share.teacher.fragment.HomePageFragment;
 import com.share.teacher.fragment.center.PCenterInfoFragment;
@@ -44,8 +46,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        ScreenUtils.getScreenSize(this);
+        UpdateMgr.getInstance(this).checkUpdateInfo(null, false);
         setContentView(R.layout.main_activity);
         fragments = new Fragment[VIEW_COUNT];
         fragments[0] = homePageFragment =new HomePageFragment();
@@ -124,16 +126,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
         transaction.show(newf);
         transaction.commitAllowingStateLoss();
-    }
-
-    /**
-     * 显示购物车界面
-     * 1.未登录
-     * 2.已登录，购物车为空
-     * 3.已登录，购物车不为空
-     */
-    private Fragment showShopCar(){
-        return null;
     }
 
     /**

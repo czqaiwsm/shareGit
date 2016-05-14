@@ -1,6 +1,7 @@
 package com.share.teacher.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,7 @@ public class ChooseTeacherAdpter extends BaseAdapter {
         if(message != null){
             ImageLoader.getInstance().displayImage(message.getHeadImg(), holder.headPhoto, ImageLoaderUtil.mHallIconLoaderOptions);
             holder.name.setText(message.getNickName());
-            holder.price.setText(String.format(mContext.getResources().getString(R.string.price),message.getPrice()));
+            holder.price.setText(String.format(mContext.getResources().getString(R.string.price), TextUtils.isEmpty(message.getPrice())?"0":message.getPrice()));
             if("1".equalsIgnoreCase(message.getIsIdCardVip())){
                 holder.idCertify.setVisibility(View.VISIBLE);
             }else {

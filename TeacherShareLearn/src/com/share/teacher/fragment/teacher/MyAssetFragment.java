@@ -153,8 +153,6 @@ public class MyAssetFragment extends BaseFragment implements RequsetListener,Cus
 
     @Override
     protected void requestData(int requestType) {
-        setTitleText(BaseApplication.getInstance().location[0]);
-
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
         Map postParams = RequestHelp.getBaseParaMap("TeacherCommentsList");

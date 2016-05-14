@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
-import com.alipay.sdk.pay.demo.PayCallBack;
 import com.share.teacher.R;
 import com.share.teacher.bean.PayInfo;
 import com.share.teacher.utils.BaseApplication;
@@ -27,10 +26,10 @@ public class PayPopupwidow implements View.OnClickListener{
     private View view;
     private PayInfo payInfo;
     private View.OnClickListener onClickListener;
-    private PayCallBack payCallBack ;
+//    private PayCallBack payCallBack ;
 
-    public PayPopupwidow(Activity activit, View.OnClickListener onClickListener,PayCallBack payCallBack){
-        this.payCallBack = payCallBack;
+    public PayPopupwidow(Activity activit, View.OnClickListener onClickListener,Object payCallBack){
+//        this.payCallBack = payCallBack;
         this.onClickListener = onClickListener;
         this.activity = activit;
         setmSortPop();
@@ -97,10 +96,10 @@ public class PayPopupwidow implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.alipay://支付宝支付
-                PayUtil.alipay(activity,payInfo,payCallBack);
+//                PayUtil.alipay(activity,payInfo,payCallBack);
                 break;
             case R.id.wxPay://微信支付
-                PayUtil.walletPay(activity,payInfo,payCallBack);
+//                PayUtil.walletPay(activity,payInfo,payCallBack);
 
                 break;
         }

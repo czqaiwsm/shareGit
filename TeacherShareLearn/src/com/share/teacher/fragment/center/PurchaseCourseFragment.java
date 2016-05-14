@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.alipay.sdk.pay.demo.AlipayUtil;
 import com.baidu.location.BDLocation;
 import com.share.teacher.R;
 import com.share.teacher.activity.ChooseCityActivity;
@@ -23,7 +22,6 @@ import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.PayCourseInfoParse;
 import com.share.teacher.service.LocationUitl;
 import com.share.teacher.utils.BaseApplication;
-import com.share.teacher.utils.PayRequestUtils;
 import com.share.teacher.utils.URLConstants;
 import com.share.teacher.view.CustomListView;
 import com.volley.req.net.HttpURL;
@@ -64,7 +62,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
     private int payType = 1;//1 alipay,  2 weixin
 //    private PayPopupwidow payPopupwidow;
-   PayRequestUtils payRequestUtils = null;
+//   PayRequestUtils payRequestUtils = null;
 
     private CoursePopupWindow coursePopupWindow ;
 
@@ -93,7 +91,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
         initTitleView();
         initView(view);
         iniData();
-        payRequestUtils = new PayRequestUtils(this,courseInfo,null);
+//        payRequestUtils = new PayRequestUtils(this,courseInfo,null);
     }
 
     private void initTitleView() {
@@ -175,7 +173,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
                 coursePopupWindow.showAtLocation(buy_layout, Gravity.BOTTOM, 0, 0);
             break;
             case R.id.login_text:// 立即支付
-                payRequestUtils.payPopShow(v,""+orderPay,trueMoey+"",account.getTag().toString(),address.getText().toString());
+//                payRequestUtils.payPopShow(v,""+orderPay,trueMoey+"",account.getTag().toString(),address.getText().toString());
             break;
             case R.id.withDraw_layout:// 提现
             intent = new Intent(mActivity, ChooseCityActivity.class);
@@ -230,8 +228,8 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
         if(payCourseInfo != null){
 
             //todo 弹出对话框,选择支付方式
-            AlipayUtil alipayUtil = new AlipayUtil(mActivity,payCourseInfo.getOrderCode(),"test",payCourseInfo.getCourseName(),payCourseInfo.getPayPrice(),null);
-            alipayUtil.alipay();
+//            AlipayUtil alipayUtil = new AlipayUtil(mActivity,payCourseInfo.getOrderCode(),"test",payCourseInfo.getCourseName(),payCourseInfo.getPayPrice(),null);
+//            alipayUtil.alipay();
         }
     }
 

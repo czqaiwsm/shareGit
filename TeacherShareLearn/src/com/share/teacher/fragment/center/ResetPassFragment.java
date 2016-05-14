@@ -131,7 +131,6 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    toClassActivity(ResetPassFragment.this, LoginActivity.class.getName());
                     mActivity.finish();
                 }
             },1000);

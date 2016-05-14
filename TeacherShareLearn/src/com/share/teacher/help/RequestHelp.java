@@ -18,14 +18,13 @@ public class RequestHelp {
     public static Map getBaseParaMap(String cmd){
         BaseApplication application = BaseApplication.getInstance();
         Map postParams = new HashMap<String, String>();
-
         postParams.put("cmd", cmd);
 //        postParams.put("userId", application.userId);
 //        postParams.put("mobile", application.mobile);
         postParams.put("appVersion", application.appVersion);
         postParams.put("clientType", 3);
         postParams.put("accessToken", application.accessToken);
-        postParams.put("deviceId", "10");
+        postParams.put("deviceId", BaseApplication.diviceId);
         return postParams;
     }
 

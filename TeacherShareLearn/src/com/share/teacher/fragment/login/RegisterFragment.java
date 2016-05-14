@@ -217,10 +217,8 @@ public class RegisterFragment extends BaseFragment implements OnClickListener,Re
 				Map postParams = RequestHelp.getBaseParaMap("UserReg") ;
 
 				postParams.put("loginName", phone);
-//				postParams.put("vcode",inputCode.getText().toString());
-//				postParams.put("sendId",verifyCode.getSendId());
-				postParams.put("vcode","123456");
-//				postParams.put("sendId",verifyCode.getSendId());
+				postParams.put("vcode",inputCode.getText().toString());
+				postParams.put("sendId",verifyCode.getSendId());
 				postParams.put("password",register_pass.getText().toString());
 				postParams.put("fInviteCode","");
 				param = new RequestParam();

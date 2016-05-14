@@ -2,7 +2,9 @@ package com.share.teacher.utils;
 
 import android.app.Application;
 import android.app.Service;
+import android.content.Context;
 import android.os.Vibrator;
+import android.telephony.TelephonyManager;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.SDKInitializer;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -37,6 +39,8 @@ public class BaseApplication extends Application {
     public String address = "";//
     public LocationUitl locationUitl = new LocationUitl();
 
+    public static String diviceId = "";
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -56,6 +60,7 @@ public class BaseApplication extends Application {
         URLConstants.SCREENH = ScreenUtils.getScreenHeight(this);
         locationUitl.startLocation();
         location[0] = "合肥市";
+        diviceId = ((TelephonyManager) this.getSystemService( Context.TELEPHONY_SERVICE )).getDeviceId();
     }
 
 

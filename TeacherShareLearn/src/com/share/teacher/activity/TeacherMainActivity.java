@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.download.base.utils.ScreenUtils;
+import com.download.update.UpdateMgr;
 import com.share.teacher.R;
 import com.share.teacher.fragment.TeacherHomePageFragment;
 import com.share.teacher.fragment.center.PCenterInfoFragment;
@@ -46,8 +48,8 @@ public class TeacherMainActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        ScreenUtils.getScreenSize(this);
+        UpdateMgr.getInstance(this).checkUpdateInfo(null, false);
         setContentView(R.layout.main_activity);
         fragments = new Fragment[VIEW_COUNT];
         fragments[0] = homePageFragment =new TeacherHomePageFragment();

@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.alipay.sdk.pay.demo.PayCallBack;
 import com.google.gson.internal.LinkedTreeMap;
 import com.share.teacher.R;
 import com.share.teacher.bean.UserInfo;
@@ -34,7 +33,7 @@ import java.util.Map;
  * @author czq
  * @time 2015年9月28日上午11:44:26
  */
-public class WidthDrawFragment extends BaseFragment implements OnClickListener, RequsetListener, PayCallBack {
+public class WidthDrawFragment extends BaseFragment implements OnClickListener, RequsetListener{
 
 
     @Bind(R.id.alipayAccount)
@@ -115,16 +114,16 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
     }
 
 
-    @Override
-    public void paySucc() {
-        mActivity.setResult(Activity.RESULT_OK);
-        mActivity.finish();
-    }
-
-    @Override
-    public void payFail() {
-
-    }
+//    @Override
+//    public void paySucc() {
+//        mActivity.setResult(Activity.RESULT_OK);
+//        mActivity.finish();
+//    }
+//
+//    @Override
+//    public void payFail() {
+//
+//    }
 
     @Override
     public void onDestroyView() {

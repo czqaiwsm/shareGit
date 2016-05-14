@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.alipay.sdk.pay.demo.PayCallBack;
 import com.share.teacher.R;
 import com.share.teacher.activity.teacher.ChatMsgActivity;
 import com.share.teacher.activity.teacher.EvaluateActivity;
@@ -40,7 +39,7 @@ import java.util.Map;
  * @author czq
  * @time 2015年9月28日上午11:44:26
  */
-public class OrederDetailFragment extends BaseFragment implements RequsetListener,View.OnClickListener,PayCallBack {
+public class OrederDetailFragment extends BaseFragment implements RequsetListener,View.OnClickListener {
 
 
     @Bind(R.id.courseName)
@@ -179,18 +178,18 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
         }
     }
 
-    @Override
-    public void paySucc() {
-//      handler.sendEmptyMessage(OrderFragment.PAY_SUCC);
-        mActivity.setResult(Activity.RESULT_OK);
-        mActivity.finish();
-    }
-    
-
-    @Override
-    public void payFail() {
-        toasetUtil.showInfo("支付失败");
-    }
+//    @Override
+//    public void paySucc() {
+////      handler.sendEmptyMessage(OrderFragment.PAY_SUCC);
+//        mActivity.setResult(Activity.RESULT_OK);
+//        mActivity.finish();
+//    }
+//
+//
+//    @Override
+//    public void payFail() {
+//        toasetUtil.showInfo("支付失败");
+//    }
 
 
     @Override

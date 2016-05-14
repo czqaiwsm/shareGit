@@ -1,9 +1,11 @@
 package com.share.teacher.activity.center;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import com.share.teacher.activity.BaseActivity;
+import com.share.teacher.activity.login.LoginActivity;
 import com.share.teacher.fragment.center.ResetPassFragment;
 
 public class ResetPassActivity extends BaseActivity {
@@ -21,5 +23,12 @@ public class ResetPassActivity extends BaseActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(android.R.id.content, mFragment);
         ft.commit();
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
+        super.finish();
     }
 }

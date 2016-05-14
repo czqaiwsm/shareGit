@@ -88,12 +88,12 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
     private String[] items2 = new String[] { "男", "女" };
     private int sex = -1;// 选择性别
     ScrollView scrollview;
-    private final int MODIFY_NAME =  1;//个人姓名
-    private final int MODIFY_GENDER =2;//个人性别
-    private final int MODIFY_CITY =  3;//城市
-    private final int MODIFY_SIGN =  4;//签名
-    private final int MODIFY_BRIEF = 5;//简历
-    private final int MODIFY_REPUT = 6;//荣誉
+    private final int MODIFY_NAME =  10;//个人姓名
+    private final int MODIFY_GENDER =20;//个人性别
+    private final int MODIFY_CITY =  30;//城市
+    private final int MODIFY_SIGN =  40;//签名
+    private final int MODIFY_BRIEF = 50;//简历
+    private final int MODIFY_REPUT = 60;//荣誉
 
 
     @Override
@@ -224,8 +224,8 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
             startActivityForResult(intent,MODIFY_BRIEF);
             break;
             case R.id.reputation_layout:// 荣耀
-            intent.setFlags(MODIFY_REPUT);
-            intent = new Intent(mActivity, EditActivity.class);
+                intent = new Intent(mActivity, EditActivity.class);
+                intent.setFlags(MODIFY_REPUT);
             startActivityForResult(intent,MODIFY_REPUT);
             break;
         }
