@@ -1,5 +1,6 @@
 package com.share.learn.fragment.login;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -70,6 +71,7 @@ public class LoginFramgent extends BaseFragment implements View.OnClickListener,
         setLoadingDilog(WaitLayer.DialogType.MODALESS);
         setTitleText(R.string.login_title);
         initView(view);
+        setLeftHeadIcon(0);
     }
     private void initView(View view){
         login_username = (EditText)view.findViewById(R.id.login_username);
@@ -127,11 +129,12 @@ public class LoginFramgent extends BaseFragment implements View.OnClickListener,
     public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<LoginInfo> jsonParserBase = (JsonParserBase<LoginInfo>)obj;
         if ((jsonParserBase != null)){
-            BaseApplication.getInstance().userInfo = jsonParserBase.getData().getUserInfo();
+            BaseApplication.saveUserInfo(jsonParserBase.getData().getUserInfo());
             BaseApplication.getInstance().accessToken = jsonParserBase.getData().getToken();
-            BaseApplication.getInstance().userId = BaseApplication.getInstance().userInfo.getId();
-            toClassActivity(LoginFramgent.this, MainActivity.class.getName());//学生
+            BaseApplication.getInstance().userId = BaseApplication.getUserInfo().getId();
+//            toClassActivity(LoginFramgent.this, MainActivity.class.getName());//学生
 //            toClassActivity(LoginFramgent.this, TeacherMainActivity.class.getName());//老师
+            mActivity.setResult(Activity.RESULT_OK);
             mActivity.finish();
         }
     }

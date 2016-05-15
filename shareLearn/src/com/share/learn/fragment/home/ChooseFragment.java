@@ -3,6 +3,7 @@ package com.share.learn.fragment.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,8 +38,8 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(BaseApplication.getInstance().userInfo != null){
-            joniorId = BaseApplication.getInstance().userInfo.getGrade();
+        if(BaseApplication.getUserInfo() != null){
+            joniorId = BaseApplication.getUserInfo().getGrade();
         }
     }
 
@@ -63,8 +64,10 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
         school = (TextView)view.findViewById(R.id.school);
         chooseCityRl.setOnClickListener(this);
         chooseJoniorRl.setOnClickListener(this);
-        joniorId =BaseApplication.getInstance().userInfo.getGrade();
-        cityId = BaseApplication.getInstance().location[0];
+        if(BaseApplication.getUserInfo() != null){
+            joniorId =BaseApplication.getUserInfo().getGrade();
+            cityId = BaseApplication.getInstance().location[0];
+        }
         setData();
     }
 
@@ -86,8 +89,10 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void setData(){
-        city_name.setText(cityId);
-        school.setText(DataMapConstants.getJoniorMap().get(joniorId));
+        if(!TextUtils.isEmpty(cityId+joniorId)){
+            city_name.setText(cityId);
+            school.setText(DataMapConstants.getJoniorMap().get(joniorId));
+        }
     }
 
     @Override

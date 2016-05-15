@@ -193,7 +193,7 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
             case R.id.contact:
                 if(flag == 1){//待支付(联系老师)
                     intent = new Intent(mActivity, ChatMsgActivity.class);
-                    UserInfo userInfo = BaseApplication.getInstance().userInfo;
+                    UserInfo userInfo = BaseApplication.getUserInfo();
                     intent.putExtra("teacherId",orderDetailInfo.getTeacherId());
 
                     ChatMsgEntity chatMsgEntity = new ChatMsgEntity();

@@ -34,6 +34,7 @@ import com.share.learn.activity.center.PCenterModifyInfoActivity;
 import com.share.learn.activity.center.ResetPassActivity;
 import com.share.learn.activity.center.ServiceProtocolActivity;
 import com.share.learn.activity.center.SettingActivity;
+import com.share.learn.activity.home.MsgChooseActivity;
 import com.share.learn.activity.login.LoginActivity;
 import com.share.learn.activity.teacher.ChooseJoinorActivity;
 import com.share.learn.fragment.BaseFragment;
@@ -166,7 +167,12 @@ public class SettingFragmentUser extends BaseFragment implements OnClickListener
         // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.changePass_layout:// 修改密码
-                toClassActivity(SettingFragmentUser.this, ResetPassActivity.class.getName());
+                if(BaseApplication.isLogin()){
+                    toClassActivity(SettingFragmentUser.this, ResetPassActivity.class.getName());
+                }else {
+                    toClassActivity(SettingFragmentUser.this,LoginActivity.class.getName());
+
+                }
                 break;
             case R.id.clear_layout:// 缓存
                 clearCache();
@@ -179,8 +185,18 @@ public class SettingFragmentUser extends BaseFragment implements OnClickListener
                 break;
             case R.id.exitLogin:// 退出登录
 //                AppManager.getAppManager().AppExit(BaseApplication.getInstance());
-                AppManager.getAppManager().finishAllActivity();
-                SettingActivity.exit = true;
+//                AppManager.getAppManager().finishAllActivity();
+//                SettingActivity.exit = true;
+                 if(BaseApplication.isLogin()){
+                     BaseApplication.saveUserInfo(null);
+                     BaseApplication.getInstance().accessToken = "00000000";
+                     BaseApplication.getInstance().userId = "0";
+                     toasetUtil.showSuccess("退出登录成功");
+                 }else {
+                     toasetUtil.showInfo("请登录!");
+
+                 }
+
             break;
         }
 

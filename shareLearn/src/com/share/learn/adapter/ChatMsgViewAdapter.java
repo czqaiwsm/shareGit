@@ -103,8 +103,8 @@ public class ChatMsgViewAdapter extends BaseAdapter {
             viewHolder.sendtime.setText(entity.getCreateTime());
             viewHolder.sendcontent.setText(entity.getContent());
 
-            if(BaseApplication.getInstance().userInfo != null){
-                viewHolder.send_username.setText(BaseApplication.getInstance().userInfo.getNickName());
+            if(BaseApplication.getUserInfo() != null){
+                viewHolder.send_username.setText(BaseApplication.getUserInfo().getNickName());
                 ImageLoader.getInstance().displayImage(entity.getStudentImg(),viewHolder.sendUserHead,ImageLoaderUtil.mHallIconLoaderOptions);
             }
 

@@ -192,8 +192,8 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
         if(flag == 1){
             postParams =  RequestHelp.getBaseParaMap("MessageChat") ;
             postParams.put("teacherId", teacherId);
-            if (BaseApplication.getInstance().userInfo != null){
-                postParams.put("studentImg", BaseApplication.getInstance().userInfo.getHeadImg());
+            if (BaseApplication.getUserInfo() != null){
+                postParams.put("studentImg", BaseApplication.getUserInfo().getHeadImg());
             }
             param.setmParserClassName(new ChatMsgParse());
         }else {
@@ -207,7 +207,7 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
             sendChatMsg.setContent(mEditTextContent.getText().toString());
             SimpleDateFormat df = new SimpleDateFormat("MM-dd HH:mm");//设置日期格式
             sendChatMsg.setCreateTime(df.format(new Date()));
-            UserInfo userInfo = BaseApplication.getInstance().userInfo;
+            UserInfo userInfo = BaseApplication.getUserInfo();
             if(userInfo != null){
                 sendChatMsg.setSenderId(userInfo.getId());
                 sendChatMsg.setStudentImg(userInfo.getHeadImg());

@@ -19,6 +19,7 @@ import com.share.learn.R;
 import com.share.learn.activity.ChooseCityActivity;
 import com.share.learn.activity.center.DetailActivity;
 import com.share.learn.activity.center.RechargeActivity;
+import com.share.learn.activity.login.LoginActivity;
 import com.share.learn.bean.CourseInfo;
 import com.share.learn.bean.PayCourseInfo;
 import com.share.learn.bean.PayInfo;
@@ -183,6 +184,11 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
                 coursePopupWindow.showAtLocation(buy_layout, Gravity.BOTTOM, 0, 0);
             break;
             case R.id.login_text:// 立即支付
+                if(!BaseApplication.isLogin()){
+                    toasetUtil.showInfo("请先登录!");
+                    toClassActivity(this, LoginActivity.class.getName());
+                    return;
+                }
                 payRequestUtils.payPopShow(v,""+orderPay,trueMoey+"",account.getTag().toString(),address.getText().toString());
             break;
             case R.id.alipay://支付宝支付
@@ -211,7 +217,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
         Map postParams = RequestHelp.getBaseParaMap("PayCourseOrder");
         postParams.put("payType", payType);
-        postParams.put("studentName", BaseApplication.getInstance().userInfo.getNickName());
+        postParams.put("studentName", BaseApplication.getUserInfo().getNickName());
         postParams.put("teacherId", courseInfo.getTeacherId());
         postParams.put("teacherName", courseInfo.getTeacherName());
         postParams.put("courseId", courseInfo.getCourseId());

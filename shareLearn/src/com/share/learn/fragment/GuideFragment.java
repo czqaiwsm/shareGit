@@ -92,9 +92,9 @@ public class GuideFragment extends Fragment {
 		public void handleMessage(Message msg) {
 			if (msg.what == TO_THE_END) {
 				if(!GuideFragment.this.isDetached() && isAdded()){
-//						startActivity(new Intent(getActivity(), MainActivity.class));
-						startActivity(new Intent(getActivity(), LoginActivity.class));
-					getActivity().finish();
+						startActivity(new Intent(getActivity(), MainActivity.class));
+//						startActivity(new Intent(getActivity(), LoginActivity.class));
+//					getActivity().finish();
 				}
 			} else if (msg.what == LEAVE_FROM_END) {
 				handler.removeMessages(TO_THE_END);

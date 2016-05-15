@@ -48,7 +48,7 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
     TextView rechargeQuery;
 
 
-    UserInfo userInfo = BaseApplication.getInstance().userInfo;
+    UserInfo userInfo = BaseApplication.getUserInfo();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,8 +105,8 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
 
         postParams.put("account", alipayAccount.getText().toString());
         postParams.put("realName", alipayName.getText().toString());
-        postParams.put("price", BaseApplication.getInstance().userInfo != null?
-                BaseApplication.getInstance().userInfo.getBalance():"");
+        postParams.put("price", BaseApplication.getUserInfo() != null?
+                BaseApplication.getUserInfo().getBalance():"");
         param.setmParserClassName(new BaseParse());
         param.setmPostarams(postParams);
         param.setmHttpURL(url);

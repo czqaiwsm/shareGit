@@ -1,5 +1,8 @@
 package com.share.learn.activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +19,7 @@ import com.share.learn.bean.VersionBean;
 import com.share.learn.fragment.*;
 import com.share.learn.fragment.center.PCenterInfoFragment;
 import com.share.learn.fragment.center.PCenterInfoFragmentUser;
+import com.share.learn.fragment.center.UnLoginPCenterFragment;
 import com.share.learn.fragment.msg.MsgInfosFragment;
 import com.share.learn.fragment.schedule.ScheduleFragment;
 import com.share.learn.help.RequestHelp;
@@ -52,8 +56,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private MsgInfosFragment msgInfosFragment;
     private ScheduleFragment scheduleFragment;
     private PCenterInfoFragment pCenterFragment;
+    private UnLoginPCenterFragment unLoginPCenterFragment;
 
-    private final int VIEW_COUNT = 4;
+    private final int VIEW_COUNT = 5;
     private int index;
     // 当前fragment的index
     private int currentTabIndex;
@@ -73,6 +78,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         fragments[1] = msgInfosFragment = new MsgInfosFragment();
         fragments[2] = scheduleFragment = new ScheduleFragment();
         fragments[3] = pCenterFragment = new PCenterInfoFragment();
+        fragments[4] = unLoginPCenterFragment = new UnLoginPCenterFragment();
+
 
         initView();
 
@@ -92,7 +99,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private void initView() {
         unreadLabel = (TextView) findViewById(R.id.unread_msg_number);
         unreadAddressLable = (TextView) findViewById(R.id.unread_address_number);
-        mTabs = new Button[VIEW_COUNT];
+        mTabs = new Button[VIEW_COUNT-1];
         mTabs[0] = (Button) findViewById(R.id.btn_conversation);
         mTabs[1] = (Button) findViewById(R.id.btn_address_list);
         mTabs[2] = (Button) findViewById(R.id.btn_setting);
@@ -117,21 +124,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 index = 0;
                 break;
             case R.id.btn_address_list:
-                currentFragment = fragments[1];
                 index = 1;
+                currentFragment = showFragment(index);
                 break;
             case R.id.btn_setting:
-                currentFragment = fragments[2];
                 index = 2;
+                currentFragment = showFragment(index);
                 break;
             case R.id.btn_center:
-                currentFragment = showSetting();
                 index = 3;
+                currentFragment = showSetting();
                 break;
         }
 
-        if(currentTabIndex != index){
-            mTabs[currentTabIndex].setSelected(false);
+        if(currentTabIndex != index ){
+            for(Button button:mTabs){
+                button.setSelected(false);
+            }
             mTabs[index].setSelected(true);
             hidShow(currentFragment);
             currentTabIndex = index;
@@ -183,14 +192,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
 
-    /**
-     * 显示购物车界面
-     * 1.未登录
-     * 2.已登录，购物车为空
-     * 3.已登录，购物车不为空
-     */
-    private Fragment showShopCar(){
-        return null;
+
+    private Fragment showFragment(int index){
+
+        if(BaseApplication.isLogin()){
+            return fragments[index];
+        }else {
+            return fragments[fragments.length-1];
+        }
     }
 
     /**
@@ -214,6 +223,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }
         }
         return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == Activity.RESULT_OK){
+            Button button = mTabs[currentTabIndex];
+            currentTabIndex = -1;
+            button.performClick();
+        }
+
     }
 
     @Override

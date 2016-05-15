@@ -149,10 +149,10 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         sex_layout.setOnClickListener(this);
         jonior_layout.setOnClickListener(this);
 
-        name.setText(BaseApplication.getInstance().userInfo.getNickName());
-        sexTxt.setText(DataMapConstants.getGender().get(BaseApplication.getInstance().userInfo.getGender()));
-        jonior.setText(DataMapConstants.getJoniorMap().get(BaseApplication.getInstance().userInfo.getGrade()));
-        ImageLoader.getInstance().displayImage(BaseApplication.getInstance().userInfo.getHeadImg(), mHeadImg, ImageLoaderUtil.mHallIconLoaderOptions);
+        name.setText(BaseApplication.getUserInfo().getNickName());
+        sexTxt.setText(DataMapConstants.getGender().get(BaseApplication.getUserInfo().getGender()));
+        jonior.setText(DataMapConstants.getJoniorMap().get(BaseApplication.getUserInfo().getGrade()));
+        ImageLoader.getInstance().displayImage(BaseApplication.getUserInfo().getHeadImg(), mHeadImg, ImageLoaderUtil.mHallIconLoaderOptions);
     }
 
 
@@ -279,15 +279,15 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
     public void handleRspSuccess(int requestType,Object obj) {
         switch (requestCode){
             case URLConstants.CHOOSE_JOINOR_REQUEST_CODE://年级选择
-                BaseApplication.getInstance().userInfo.setGrade(requstValue);
+                BaseApplication.getUserInfo().setGrade(requstValue);
                 jonior.setText(DataMapConstants.getJoniorMap().get(requstValue));
                 break;
             case MODIFY_GENDER://性别
-                BaseApplication.getInstance().userInfo.setGender(requstValue);
+                BaseApplication.getUserInfo().setGender(requstValue);
                 sexTxt.setText(DataMapConstants.getGender().get(requstValue));
                 break;
             case MODIFY_NAME://姓名
-                BaseApplication.getInstance().userInfo.setNickName(requstValue);
+                BaseApplication.getUserInfo().setNickName(requstValue);
                 name.setText(requstValue);
                 break;
 
@@ -439,7 +439,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
                     if(jsonStr != null){
 
                         if(!TextUtils.isEmpty(jsonStr.getImgPath())){
-                            BaseApplication.getInstance().userInfo.setHeadImg(jsonStr.getImgPath());
+                            BaseApplication.getUserInfo().setHeadImg(jsonStr.getImgPath());
                             myHandler.sendEmptyMessage(UPLOAD_OK);
                         }
                     }

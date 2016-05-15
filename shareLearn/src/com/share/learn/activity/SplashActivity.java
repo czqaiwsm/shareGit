@@ -98,11 +98,11 @@ public class SplashActivity extends BaseActivity {
 			@Override
 			public void onAnimationEnd(Animation arg0) {
 				if (!isFirst()) {//是否是第一次登录
-//					SplashActivity.this.startActivity(new Intent(
-//							SplashActivity.this, MainActivity.class));
-
 					SplashActivity.this.startActivity(new Intent(
-							SplashActivity.this, LoginActivity.class));
+							SplashActivity.this, MainActivity.class));
+
+//					SplashActivity.this.startActivity(new Intent(
+//							SplashActivity.this, LoginActivity.class));
 
 				} else {
 					SplashActivity.this.startActivity(new Intent(

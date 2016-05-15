@@ -122,7 +122,7 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(mActivity, ChatMsgActivity.class);
                 MsgDetail msgDetail = list.get(i-1);
-                UserInfo userInfo = BaseApplication.getInstance().userInfo;
+                UserInfo userInfo = BaseApplication.getUserInfo();
                 if( userInfo !=  null){
                      String teacherId = "";
                     if(TextUtils.equals(userInfo.getId(),list.get(i-1).getReceiverId())){

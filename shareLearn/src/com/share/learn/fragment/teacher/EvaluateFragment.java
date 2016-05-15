@@ -121,9 +121,9 @@ public class EvaluateFragment extends BaseFragment implements OnClickListener,Re
 
         postParams.put("orderId",orderInfo.getOrderId());
         postParams.put("teacherId",orderInfo.getTeacherId());
-        postParams.put("studentName", BaseApplication.getInstance().userInfo.getNickName());
-        postParams.put("grade",BaseApplication.getInstance().userInfo.getGrade());
-        postParams.put("headImg",BaseApplication.getInstance().userInfo.getHeadImg());
+        postParams.put("studentName", BaseApplication.getUserInfo().getNickName());
+        postParams.put("grade",BaseApplication.getUserInfo().getGrade());
+        postParams.put("headImg",BaseApplication.getUserInfo().getHeadImg());
         postParams.put("serviceScore",ratingBar.getRating());
         postParams.put("commentDesc",TextUtils.isEmpty(rechargePrice.getText())?"":rechargePrice.getText());
 

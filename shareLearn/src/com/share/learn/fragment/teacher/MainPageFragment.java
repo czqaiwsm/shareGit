@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.share.learn.R;
+import com.share.learn.activity.login.LoginActivity;
 import com.share.learn.activity.teacher.ChatMsgActivity;
 import com.share.learn.bean.ChatMsgEntity;
 import com.share.learn.bean.TeacherDetailBean;
@@ -111,9 +112,16 @@ public class MainPageFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+
+        if(!BaseApplication.isLogin()){
+            toasetUtil.showInfo("请先登录!");
+            toClassActivity(MainPageFragment.this, LoginActivity.class.getName());
+            return;
+        }
+
         switch (v.getId()){
             case R.id.ask_rl:
-                UserInfo userInfo = BaseApplication.getInstance().userInfo;
+                UserInfo userInfo = BaseApplication.getUserInfo();
                 Intent intent = new Intent(mActivity, ChatMsgActivity.class);
 
                 intent.putExtra("teacherId",teacherDetailInfo.getId());

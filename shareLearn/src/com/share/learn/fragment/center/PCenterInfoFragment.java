@@ -14,6 +14,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.share.learn.R;
 import com.share.learn.activity.center.*;
 import com.share.learn.activity.home.MsgChooseActivity;
+import com.share.learn.activity.login.LoginActivity;
 import com.share.learn.bean.DataMapConstants;
 import com.share.learn.bean.UserInfo;
 import com.share.learn.fragment.BaseFragment;
@@ -50,7 +51,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserInfo = BaseApplication.getInstance().userInfo;
+        mUserInfo = BaseApplication.getUserInfo();
     }
 
     @Override
@@ -72,7 +73,13 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
             @Override
             public void onClick(View v) {
                 //todo 系统消息
-                toClassActivity(PCenterInfoFragment.this,MsgChooseActivity.class.getName());
+                if(BaseApplication.isLogin()){
+                    toClassActivity(PCenterInfoFragment.this,MsgChooseActivity.class.getName());
+                }else {
+                    toClassActivity(PCenterInfoFragment.this,LoginActivity.class.getName());
+
+                }
+
             }
         });
     }
@@ -116,18 +123,33 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
         // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.pcenter_avatar_layout:// 头像
-                toClassActivity(PCenterInfoFragment.this, PCenterInfoUserActivity.class.getName());
+                if(BaseApplication.isLogin()){
+                    toClassActivity(PCenterInfoFragment.this, PCenterInfoUserActivity.class.getName());
+                }else {
+                    toClassActivity(PCenterInfoFragment.this,LoginActivity.class.getName());
+
+                }
                 break;
             case R.id.wallet_layout:// 钱包
-                toClassActivity(PCenterInfoFragment.this, WalletActivity.class.getName());
+                if(BaseApplication.isLogin()){
+                    toClassActivity(PCenterInfoFragment.this, WalletActivity.class.getName());
+                }else {
+                    toClassActivity(PCenterInfoFragment.this,LoginActivity.class.getName());
+
+                }
                 break;
             case R.id.order_layout:// 订单
-                toClassActivity(PCenterInfoFragment.this, OrderActivity.class.getName());
+                if(BaseApplication.isLogin()){
+                    toClassActivity(PCenterInfoFragment.this, OrderActivity.class.getName());
+                }else {
+                    toClassActivity(PCenterInfoFragment.this,LoginActivity.class.getName());
+
+                }
                 break;
-            case R.id.feedBace_layout:// 订单
+            case R.id.feedBace_layout:// 反馈
                 toClassActivity(PCenterInfoFragment.this, FeedBackActivity.class.getName());
                 break;
-            case R.id.set_layout:// 订单
+            case R.id.set_layout:// 设置
                 toClassActivity(PCenterInfoFragment.this, SettingActivity.class.getName());
                 break;
         }

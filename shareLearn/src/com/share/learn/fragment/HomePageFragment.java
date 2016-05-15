@@ -27,6 +27,7 @@ import com.share.learn.parse.BaseParse;
 import com.share.learn.parse.HomePageBannerParse;
 import com.share.learn.parse.LoginInfoParse;
 import com.share.learn.utils.AppLog;
+import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.DensityUtils;
 import com.share.learn.utils.URLConstants;
 import com.share.learn.view.GridViewForScrollView;
@@ -177,7 +178,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         url.setmBaseUrl(URLConstants.BASE_URL);
 
         Map postParams = RequestHelp.getBaseParaMap("Home");
-        postParams.put("cityName", "合肥市");
+        postParams.put("cityName", BaseApplication.getInstance().location[0]);
         RequestParam param = new RequestParam();
 //        param.setmParserClassName(HomePageBannerParse.class.getName());
         param.setmParserClassName(new HomePageBannerParse());

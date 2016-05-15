@@ -86,7 +86,7 @@ public class PcenterModifyInfoIAFragment extends BaseFragment {
 			sex_1 = (ImageView) view.findViewById(R.id.sex_1);
 			modify_info_1.setVisibility(View.GONE);
 			modify_info_2.setVisibility(View.VISIBLE);
-			sex = BaseApplication.getInstance().userInfo.getGender();
+			sex = BaseApplication.getUserInfo().getGender();
 			initData();
 			id_pcenterinfo_line1.setOnClickListener(new OnClickListener() {
 
@@ -137,7 +137,7 @@ public class PcenterModifyInfoIAFragment extends BaseFragment {
 		case 1:
 			setTitleText("修改昵称");
 			id_pcenterinfo_line1_et1.setFilters(new InputFilter[] { new InputFilter.LengthFilter(20) }); // 最大输入长度
-			id_pcenterinfo_line1_et1.setText(BaseApplication.getInstance().userInfo.getNickName());
+			id_pcenterinfo_line1_et1.setText(BaseApplication.getUserInfo().getNickName());
 			break;
 		case 8:
 			setTitleText("选择性别");
