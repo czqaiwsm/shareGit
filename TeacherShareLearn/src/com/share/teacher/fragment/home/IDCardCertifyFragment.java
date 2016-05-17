@@ -40,6 +40,7 @@ import com.volley.req.parser.ParserUtil;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.UUID;
 
 /**
@@ -269,7 +270,7 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
     }
 
     private void uploadFileM() {
-
+        String encode = "ISO-8859-1";
         AppLog.Loge("开始上传头像------------");
         String fore_name = UUID.randomUUID().toString();
         String fileName = fore_name + ".jpg"; // 报文中的文件名参数
@@ -282,9 +283,9 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
             postUrl = URLConstants.TEACHER_UPLOAD;
             String param = new String();
             param = "cmd=UploadIDCard" + "&appVersion=" + BaseApplication.getInstance().appVersion + "&clientType=3" +
-                    "&accessToken=" + BaseApplication.getInstance().accessToken + "&deviceId=000000" + "&spaceCode=1002"+
+                    "&accessToken=" + BaseApplication.getInstance().accessToken + "&deviceId="+BaseApplication.diviceId+ "&spaceCode=1002"+
                     "&realName="+nameEdit.getText().toString()+"&idcard="+idCardEdit.getText().toString();
-
+//            postUrl = URLEncoder.encode(postUrl + "?" + param,encode) ;
             postUrl = postUrl + "?" + param;
             URL url = new URL(postUrl);
             AppLog.Logi(IDCardCertifyFragment.class + "", "url = " + postUrl);
@@ -302,7 +303,8 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
             con.setRequestMethod("POST");
 			/* 设置请求属性 */
             con.setRequestProperty("Connection", "Keep-Alive");
-            con.setRequestProperty("Charset", "UTF-8");
+            con.setRequestProperty("Charset", encode);
+//            con.setRequestProperty("Accept-Charset", encode);
             con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
 
 			/* 设置StrictMode 否则HTTPURLConnection连接失败，因为这是在主进程中进行网络连接 */

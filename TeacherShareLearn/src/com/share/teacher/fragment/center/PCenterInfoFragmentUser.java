@@ -434,10 +434,10 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         m_obj_IconBp = Utils.compressImage(m_obj_IconBp);// 压缩到100kb
         byte[] picByte = BitMap2Byte(m_obj_IconBp);
         try {
-            postUrl = "http://120.25.171.4:80/learn-interface/interface/upload.action";
+            postUrl = URLConstants.TEACHER_UPLOAD;
             String param = new String();
             param = "cmd=UploadHead"  + "&appVersion=" + BaseApplication.getInstance().appVersion+"&clientType=3" +
-                    "&accessToken=" + BaseApplication.getInstance().accessToken+"&deviceId=000000"+"&spaceCode=1001";
+                    "&accessToken=" + BaseApplication.getInstance().accessToken+"&deviceId="+BaseApplication.diviceId+"&spaceCode=1005";
 
             postUrl = postUrl+"?"+param;
             URL url = new URL(postUrl);

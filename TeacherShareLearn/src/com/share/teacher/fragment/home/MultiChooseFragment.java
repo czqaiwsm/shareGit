@@ -90,7 +90,7 @@ public class MultiChooseFragment extends BaseFragment {
         customListView.setCanRefresh(false);
         Map<String,String>  map = new HashMap<String, String>();
         String[]  ids = null;
-        map = DataMapConstants.getJoniorMap();
+        map = DataMapConstants.getFrequency();
         ids = mActivity.getResources().getStringArray(R.array.frequency_id);
         for(int i=0;i<ids.length;i++){
             idInfo = new IdInfo();
