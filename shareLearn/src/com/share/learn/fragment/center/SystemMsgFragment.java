@@ -47,6 +47,7 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener ,
     private SystemMsgAdapter adapter;
     private TextView noData;
 
+
     private int pageNo = 1;
     private int pageCount = 0;//总页数
     private int pageSize = 10;//每页的数据量
@@ -74,7 +75,12 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener ,
     }
 
     private void initTitle(){
-        setTitleText(R.string.sys_msg);
+
+        if(MsgType == 1){
+            setTitleText(R.string.sys_msg);
+        }else {
+            setTitleText("个人消息");
+        }
         setLeftHeadIcon(0);
     }
 

@@ -27,7 +27,7 @@
                   android:layout_alignTop="@+id/msgTitle"
                   android:layout_alignParentRight="true"
                   android:layout_marginRight="6dp"
-                  android:text="delMsg"
+                  android:text="删除"
                   />
         <TextView android:id="@+id/msg_content"
                   android:layout_width="wrap_content"

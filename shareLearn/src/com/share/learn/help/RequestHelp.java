@@ -26,7 +26,7 @@ public class RequestHelp {
 //        postParams.put("mobile", application.mobile);
         postParams.put("appVersion", application.appVersion);
         postParams.put("clientType", 3);
-        postParams.put("accessToken", application.accessToken);
+        postParams.put("accessToken", BaseApplication.getMt_token());
         postParams.put("deviceId", BaseApplication.diviceId);
         return postParams;
     }

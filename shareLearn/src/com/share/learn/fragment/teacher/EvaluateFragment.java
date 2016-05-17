@@ -79,7 +79,6 @@ public class EvaluateFragment extends BaseFragment implements OnClickListener,Re
             teacherName.setText(orderInfo.getTeacherName());
         }
 
-
     }
 
 
@@ -89,7 +88,7 @@ public class EvaluateFragment extends BaseFragment implements OnClickListener,Re
         // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.recharge_query:
-                if(!TextUtils.isEmpty(rechareQuery.getText())){
+                if(!TextUtils.isEmpty(rechargePrice.getText().toString())){
                     requestTask();
                 }else {
                     toasetUtil.showInfo("请填写反馈类容!");
@@ -119,13 +118,14 @@ public class EvaluateFragment extends BaseFragment implements OnClickListener,Re
         RequestParam param = new RequestParam();
 //        param.setmParserClassName(TeacherDetailParse.class.getName());
 
+
         postParams.put("orderId",orderInfo.getOrderId());
         postParams.put("teacherId",orderInfo.getTeacherId());
         postParams.put("studentName", BaseApplication.getUserInfo().getNickName());
         postParams.put("grade",BaseApplication.getUserInfo().getGrade());
         postParams.put("headImg",BaseApplication.getUserInfo().getHeadImg());
-        postParams.put("serviceScore",ratingBar.getRating());
-        postParams.put("commentDesc",TextUtils.isEmpty(rechargePrice.getText())?"":rechargePrice.getText());
+        postParams.put("serviceScore",(int)ratingBar.getRating());
+        postParams.put("commentDesc",TextUtils.isEmpty(rechargePrice.getText().toString())?"":rechargePrice.getText().toString());
 
         param.setmParserClassName(new TeacherDetailParse());
         param.setmPostarams(postParams);

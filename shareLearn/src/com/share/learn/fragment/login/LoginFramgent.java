@@ -130,8 +130,9 @@ public class LoginFramgent extends BaseFragment implements View.OnClickListener,
         JsonParserBase<LoginInfo> jsonParserBase = (JsonParserBase<LoginInfo>)obj;
         if ((jsonParserBase != null)){
             BaseApplication.saveUserInfo(jsonParserBase.getData().getUserInfo());
-            BaseApplication.getInstance().accessToken = jsonParserBase.getData().getToken();
-            BaseApplication.getInstance().userId = BaseApplication.getUserInfo().getId();
+            BaseApplication.setMt_token(jsonParserBase.getData().getToken()); ;
+            BaseApplication.setMt_id(BaseApplication.getUserInfo().getId()
+            );
 //            toClassActivity(LoginFramgent.this, MainActivity.class.getName());//学生
 //            toClassActivity(LoginFramgent.this, TeacherMainActivity.class.getName());//老师
             mActivity.setResult(Activity.RESULT_OK);

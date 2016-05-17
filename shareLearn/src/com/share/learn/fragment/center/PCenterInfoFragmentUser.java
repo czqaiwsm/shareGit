@@ -358,7 +358,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
             postUrl = "http://120.25.171.4:80/learn-interface/interface/upload.action";
             String param = new String();
             param = "cmd=UploadHead"  + "&appVersion=" + BaseApplication.getInstance().appVersion+"&clientType=3" +
-                    "&accessToken=" + BaseApplication.getInstance().accessToken+"&deviceId=000000"+"&spaceCode=1001";
+                    "&accessToken=" + BaseApplication.getMt_token()+"&deviceId=000000"+"&spaceCode=1001";
 
             postUrl = postUrl+"?"+param;
             URL url = new URL(postUrl);

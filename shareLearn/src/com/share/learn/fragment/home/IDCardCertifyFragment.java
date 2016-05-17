@@ -253,7 +253,7 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
             postUrl = URLConstants.TEACHER_UPLOAD;
             String param = new String();
             param = "cmd=UploadIDCard" + "&appVersion=" + BaseApplication.getInstance().appVersion + "&clientType=3" +
-                    "&accessToken=" + BaseApplication.getInstance().accessToken + "&deviceId=000000" + "&spaceCode=1002";
+                    "&accessToken=" + BaseApplication.getMt_token() + "&deviceId=000000" + "&spaceCode=1002";
 
             postUrl = postUrl + "?" + param;
             URL url = new URL(postUrl);

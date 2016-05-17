@@ -34,9 +34,9 @@ public class BaseApplication extends Application {
 
     private static  UserInfo userInfo;
 
-    public String userId = "0" ;//用户Id,默认为0；
+    private static String userId = "0" ;//用户Id,默认为0；
+    private static String accessToken = "";//校验
     public String appVersion = "";//版本
-    public String accessToken = "00000000";//校验
     public String address = "";//
     public LocationUitl locationUitl = new LocationUitl();
     public static String diviceId = "";
@@ -83,6 +83,36 @@ public class BaseApplication extends Application {
     }
 
 
+    public static String getMt_id() {
+        if(TextUtils.isEmpty(userId)){
+            userId =  BaseApplication.getInstance().getApplicationContext()
+                    .getSharedPreferences("userId", Context.MODE_PRIVATE).getString("userId","");
+        }
+        return userId;
+    }
+    public static void setMt_id(String userId) {
+        BaseApplication.getInstance().getApplicationContext()
+                .getSharedPreferences("userId", Context.MODE_PRIVATE).edit().putString("userId",userId).commit();
+        BaseApplication.userId = userId;
+    }
+
+    public static String getMt_token() {
+        if(TextUtils.isEmpty(accessToken)){
+            accessToken =  BaseApplication.getInstance().getApplicationContext()
+                    .getSharedPreferences("accessToken", Context.MODE_PRIVATE).getString("accessToken","");
+        }
+        if(TextUtils.isEmpty(accessToken)){
+            accessToken = "00000000";
+        }
+        return accessToken;
+    }
+
+    public static void setMt_token(String accessToken) {
+        BaseApplication.getInstance().getApplicationContext()
+                .getSharedPreferences("accessToken", Context.MODE_PRIVATE).edit().putString("accessToken",accessToken).commit();
+        BaseApplication.accessToken = accessToken;
+    }
+    
     public static boolean isLogin(){
         if(getUserInfo() != null && !TextUtils.isEmpty(userInfo.getId())){
             return true;

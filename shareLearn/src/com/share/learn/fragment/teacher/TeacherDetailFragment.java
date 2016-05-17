@@ -45,6 +45,7 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
     private RoundImageView headPhoto;//头像
     private TextView  name;//姓名
     private TextView  content;//感想。
+    private TextView  singnature;//感想。
 
     private String teacherId = "";//id
 
@@ -88,6 +89,7 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
         headPhoto = (RoundImageView)view.findViewById(R.id.head_photo);
         name = (TextView) view.findViewById(R.id.Name);
         content = (TextView) view.findViewById(R.id.content);
+        singnature = (TextView) view.findViewById(R.id.singnature);
 
 //        onInitTabConfig();
     }
@@ -155,7 +157,7 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
                }
             }
             name.setText(teacherDetailInfo.getNickName());
-            content.setText(teacherDetailInfo.getSignature());
+            singnature.setText(teacherDetailInfo.getSignature());
             ImageLoader.getInstance().displayImage(teacherDetailInfo.getHeadImg(),headPhoto, ImageLoaderUtil.mHallIconLoaderOptions);
 
             teacherDetailInfo.setIsCheck(jsonParserBase.getData().getIsCheck());

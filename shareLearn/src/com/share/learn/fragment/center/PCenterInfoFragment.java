@@ -109,13 +109,25 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
     }
 
     private void setData(UserInfo userInfo) {
+        if(userInfo == null){
+            userInfo = mUserInfo = BaseApplication.getUserInfo();
+        }
         if(userInfo != null){
             ImageLoader.getInstance().displayImage(userInfo.getHeadImg(), mHeadImg, ImageLoaderUtil.mHallIconLoaderOptions);
             name.setText(userInfo.getNickName());
             jonior.setText(String.format(getResources().getString(R.string.pohone),userInfo.getMobile()));
+        }else {
+            ImageLoader.getInstance().displayImage("", mHeadImg, ImageLoaderUtil.mHallIconLoaderOptions);
+            name.setText("");
+            jonior.setText("");
         }
 
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setData(mUserInfo);
     }
 
     @Override
@@ -166,6 +178,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         setData(mUserInfo);
     }
 }

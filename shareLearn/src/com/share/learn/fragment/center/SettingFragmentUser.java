@@ -189,8 +189,8 @@ public class SettingFragmentUser extends BaseFragment implements OnClickListener
 //                SettingActivity.exit = true;
                  if(BaseApplication.isLogin()){
                      BaseApplication.saveUserInfo(null);
-                     BaseApplication.getInstance().accessToken = "00000000";
-                     BaseApplication.getInstance().userId = "0";
+                     BaseApplication.setMt_token("00000000");
+                     BaseApplication.setMt_id("0");
                      toasetUtil.showSuccess("退出登录成功");
                  }else {
                      toasetUtil.showInfo("请登录!");

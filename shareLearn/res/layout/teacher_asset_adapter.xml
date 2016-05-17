@@ -13,18 +13,13 @@
                 android:layout_margin="@dimen/msg_margin"
                 android:src="@drawable/default_user_portrait"
         />
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
+            <TextView android:id="@+id/Name"
                       android:layout_toRightOf="@+id/head_photo"
                       android:layout_alignTop="@+id/head_photo"
-                      android:layout_alignBottom="@+id/head_photo"
-                      android:gravity="center_vertical"
-                      android:orientation="vertical"
-        >
-            <TextView android:id="@+id/Name"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textColor="@color/black"
+                      android:layout_marginTop="6dp"
                       android:text="张山峰.一年级"
                       android:textSize="@dimen/msg_name"
             />
@@ -39,8 +34,20 @@
                       android:layout_alignTop="@+id/head_photo"
                       android:layout_marginTop="6dp"
             />
-        </LinearLayout>
-
+        <RatingBar
+                android:id="@+id/myRatingbar"
+                style="@style/CustomRatingBarSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/head_photo"
+                android:layout_marginTop="@dimen/_10dp"
+                android:numStars="5"
+                android:rating="2"
+                android:stepSize="1"
+                android:layout_below="@+id/Name"
+                android:layout_marginBottom="@dimen/_10dp"
+        >
+        </RatingBar>
 
         <TextView android:id="@+id/msg_content"
                   android:layout_width="wrap_content"

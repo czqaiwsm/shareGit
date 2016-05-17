@@ -87,13 +87,6 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
 
     }
 
-    /**
-     * 重新登录
-     */
-    private void reLogin() {
-//        startActivityForResult(new Intent(getActivity(), LoginActivity.class), Constant.RELOGIN);
-    }
-
 
     private void resetPass(){
 
@@ -130,8 +123,12 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
     public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase jsonParserBase = (JsonParserBase)obj;
         if ((jsonParserBase != null)){
+            BaseApplication.saveUserInfo(null);
+            BaseApplication.setMt_token("00000000");
+            BaseApplication.setMt_id("0");
             toasetUtil.showSuccess("密码修改成功!请登录");
-            AppManager.getAppManager().finishAllActivity();
+            mActivity.finish();
+//            AppManager.getAppManager().finishAllActivity();
 //            new Handler().postDelayed(new Runnable() {
 //                @Override
 //                public void run() {

@@ -30,7 +30,7 @@ public class ResetPassActivity extends BaseActivity {
     @Override
     public void finish() {
         super.finish();
-        Intent intent = new Intent(this,LoginActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this,LoginActivity.class);
+//        startActivity(intent);
     }
 }

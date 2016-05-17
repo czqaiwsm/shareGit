@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.share.learn.R;
@@ -46,6 +47,7 @@ public class TeacherAssetAdapter extends BaseAdapter {
             holder.name = (TextView) convertView.findViewById(R.id.Name);
             holder.time = (TextView) convertView.findViewById(R.id.time);
             holder.assetConten = (TextView) convertView.findViewById(R.id.msg_content);
+            holder.ratingBar = (RatingBar) convertView.findViewById(R.id.myRatingbar);
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder) convertView.getTag();
@@ -57,6 +59,7 @@ public class TeacherAssetAdapter extends BaseAdapter {
             holder.name.setText(map.getStudentName());
             holder.time.setText(map.getCommentTime());
             holder.assetConten.setText(map.getCommentDesc());
+            holder.ratingBar.setRating(Float.valueOf(map.getServiceScore()));
         }
         return convertView;
     }
@@ -66,6 +69,8 @@ public class TeacherAssetAdapter extends BaseAdapter {
         private TextView name;
         private TextView time;
         private TextView assetConten;//评价类容
+        private RatingBar ratingBar ;//
+
     }
 
     @Override

@@ -185,7 +185,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
             break;
             case R.id.login_text:// 立即支付
                 if(!BaseApplication.isLogin()){
-                    toasetUtil.showInfo("请先登录!");
+//                    toasetUtil.showInfo("请先登录!");
                     toClassActivity(this, LoginActivity.class.getName());
                     return;
                 }

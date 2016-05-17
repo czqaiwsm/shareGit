@@ -46,7 +46,7 @@
                       android:visibility="gone"
                     />
 
-            <TextView android:id="@+id/msg_content"
+            <TextView android:id="@+id/singnature"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textColor="@color/color_gray"
@@ -54,7 +54,6 @@
                       android:layout_marginBottom="5dp"
                       android:layout_marginTop="@dimen/_10dp"
                       android:textSize="@dimen/msg_time"
-                      android:text="路在脚下路在脚下路在脚下路在脚下。"
                       android:layout_below="@+id/Name"
                     />
 

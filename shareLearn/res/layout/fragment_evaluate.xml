@@ -16,7 +16,7 @@
               android:layout_gravity="center_horizontal"
               android:layout_marginTop="@dimen/_10dp"
               android:layout_marginBottom="@dimen/_10dp"
-              android:text="刘老师"/>
+              />
 
     <RatingBar
             android:id="@+id/myRatingbar"
