@@ -16,5 +16,14 @@
     <orderEntry type="library" name="shareLibs" level="project" />
     <orderEntry type="library" name="learnV4" level="project" />
     <orderEntry type="module" module-name="alipay_demo" />
+    <orderEntry type="module-library">
+      <library name="jpush">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/jpush-android-2.1.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

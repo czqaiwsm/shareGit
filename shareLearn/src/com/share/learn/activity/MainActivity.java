@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Response;
+import com.download.base.utils.ScreenUtils;
+import com.download.update.UpdateMgr;
 import com.google.gson.reflect.TypeToken;
 import com.share.learn.R;
 import com.share.learn.bean.LoginInfo;
@@ -70,7 +72,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        ScreenUtils.getScreenSize(this);
+        UpdateMgr.getInstance(this).checkUpdateInfo(null, false);
         setContentView(R.layout.main_activity);
         requestData(0);
         fragments = new Fragment[VIEW_COUNT];
@@ -167,7 +170,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
-        RequestManager.getRequestData(this, createReqSuccessListener(requestType),null, param);
+//        RequestManager.getRequestData(this, createReqSuccessListener(requestType),null, param);
 
     }
 

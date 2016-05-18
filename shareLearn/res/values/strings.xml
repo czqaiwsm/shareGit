@@ -127,6 +127,19 @@
     <string name="id_certify">身份认证</string>
     <string name="school_certify">学历认证</string>
     <string name="certify_seeting">认证设置</string>
+
+    <!-- 版本更新 -->
+    <string name="update_notes">更新说明:</string>
+    <string name="sdcardnotexits">SD卡不存在</string>
+    <string name="update_if_cancel">是否取消升级？</string>
+    <string name="down_if_cancel">是否取消下载？</string>
+    <string name="update_failed">升级失败！</string>
+    <string name="down_failed">下载失败！</string>
+    <string name="down_success">下载成功！</string>
+    <string name="update">更新提示</string>
+    <string name="down">下载提示</string>
+
+
     <!--年级star-->
     <string-array name="jonior_id">
         <item>1</item>
