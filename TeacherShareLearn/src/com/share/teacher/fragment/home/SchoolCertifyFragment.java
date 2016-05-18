@@ -15,6 +15,7 @@ import android.os.*;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ import com.share.teacher.utils.*;
 import com.share.teacher.view.UpdateAvatarPopupWindow;
 import com.volley.req.parser.JsonParserBase;
 import com.volley.req.parser.ParserUtil;
+import org.apache.http.protocol.HTTP;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -291,7 +293,7 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
 
     private void uploadFileM() {
 
-        String encode = "iso-8859-1";
+        String encode = "UTF-8";
         AppLog.Loge("开始上传头像------------");
         String fore_name = UUID.randomUUID().toString();
         String fileName = fore_name + ".jpg"; // 报文中的文件名参数
@@ -310,10 +312,12 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
                     "&accessToken=" + BaseApplication.getInstance().accessToken + "&deviceId="+BaseApplication.diviceId+ "&spaceCode=1003"
                +"&education="+requstValue+"&profession="+URLEncoder.encode(majorName.getText().toString(),encode)+"&college="+URLEncoder.encode(schoolName.getText().toString(),encode);
 
+            Log.i(">>>>",URLEncoder.encode(majorName.getText().toString(),encode));
+            Log.i(">>>>",URLDecoder.decode(URLEncoder.encode(majorName.getText().toString(),encode),encode));
 //            postUrl = URLEncoder.encode(postUrl + "?" + param,encode);
             postUrl = postUrl + "?" + param;
             URL url = new URL(postUrl);
-            AppLog.Logi(SchoolCertifyFragment.class + "", "url = " + postUrl);
+            AppLog.Logi(SchoolCertifyFragment.class + "", "postUrl = " + postUrl);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             /*
              * Output to the connection. Default is false, set to true because

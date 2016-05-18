@@ -270,7 +270,7 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
     }
 
     private void uploadFileM() {
-        String encode = "ISO-8859-1";
+        String encode = "UTF-8";
         AppLog.Loge("开始上传头像------------");
         String fore_name = UUID.randomUUID().toString();
         String fileName = fore_name + ".jpg"; // 报文中的文件名参数
@@ -284,7 +284,7 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
             String param = new String();
             param = "cmd=UploadIDCard" + "&appVersion=" + BaseApplication.getInstance().appVersion + "&clientType=3" +
                     "&accessToken=" + BaseApplication.getInstance().accessToken + "&deviceId="+BaseApplication.diviceId+ "&spaceCode=1002"+
-                    "&realName="+nameEdit.getText().toString()+"&idcard="+idCardEdit.getText().toString();
+                    "&realName="+URLEncoder.encode(nameEdit.getText().toString(),encode)+"&idcard="+URLEncoder.encode(idCardEdit.getText().toString(),encode);
 //            postUrl = URLEncoder.encode(postUrl + "?" + param,encode) ;
             postUrl = postUrl + "?" + param;
             URL url = new URL(postUrl);

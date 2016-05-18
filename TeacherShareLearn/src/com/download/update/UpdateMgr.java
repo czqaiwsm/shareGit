@@ -235,7 +235,12 @@ public class UpdateMgr {
 								UpdateInfo info = new UpdateInfo();
 								info.setDownloadUrl(version.getDownPath());
 								info.setUpdateDesc(version.getVersionText());
-								IS_FORCE_UPDATE = false;
+								if("0".equalsIgnoreCase(version.getIsForce())){
+									IS_FORCE_UPDATE = false;
+								}else {
+									IS_FORCE_UPDATE = true;
+
+								}
 								info.setIsForceUpdate(IS_FORCE_UPDATE);
 								update(info,autoUpdate);
 							}else {
