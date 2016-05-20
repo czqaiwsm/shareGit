@@ -229,7 +229,7 @@ public class ForgetPasswordFragment extends BaseFragment implements OnClickListe
 				break;
 			case 2:
 				toClassActivity(ForgetPasswordFragment.this, LoginActivity.class.getName());
-				SmartToast.showText(mActivity,"注册成功");
+				SmartToast.showText(mActivity,"成功找回密码!");
 				mActivity.finish();
 				break;
 		}

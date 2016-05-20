@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import cn.jpush.android.api.JPushInterface;
 import com.share.teacher.R;
 import com.share.teacher.activity.TeacherMainActivity;
 import com.share.teacher.activity.login.ForgetPassActivity;
@@ -120,9 +121,10 @@ public class LoginFramgent extends BaseFragment implements View.OnClickListener,
         if ((jsonParserBase != null)){
             BaseApplication.getInstance().userInfo = jsonParserBase.getData().getUserInfo();
             BaseApplication.getInstance().accessToken = jsonParserBase.getData().getToken();
+            toClassActivity(LoginFramgent.this, TeacherMainActivity.class.getName());//老师
 //            BaseApplication.getInstance().userId = BaseApplication.getInstance().userInfo.getId();
 //            toClassActivity(LoginFramgent.this, MainActivity.class.getName());//学生
-            toClassActivity(LoginFramgent.this, TeacherMainActivity.class.getName());//老师
+            JPushInterface.setAlias(BaseApplication.getInstance(),"t_"+BaseApplication.getInstance().userInfo.getId(),null);
             mActivity.finish();
         }
     }

@@ -51,7 +51,7 @@ public class BaseApplication extends Application {
          */
         locationService = new LocationService(getApplicationContext());
         mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
-        WriteLog.getInstance().init(); // 初始化日志
+//        WriteLog.getInstance().init(); // 初始化日志
         SDKInitializer.initialize(getApplicationContext());
 
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志

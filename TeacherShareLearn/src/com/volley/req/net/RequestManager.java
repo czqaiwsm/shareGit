@@ -2,6 +2,7 @@ package com.volley.req.net;
 
 import android.content.Context;
 import android.util.Log;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
@@ -62,6 +63,7 @@ public abstract class RequestManager {
 		Request<Object> request = null;
 		try {
 			request = new ObjectRequest(param, listener, errorListener);
+			request.setRetryPolicy(new DefaultRetryPolicy(60000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 			if (param.getmParserClassName() != null) {
 				request.setTag(param.getmParserClassName());
 			}

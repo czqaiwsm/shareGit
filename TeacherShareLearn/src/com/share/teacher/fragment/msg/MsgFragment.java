@@ -106,7 +106,7 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
         customListView = (CustomListView) view.findViewById(R.id.callListView);
         noData = (TextView) view.findViewById(R.id.noData);
 
-        customListView.setCanRefresh(false);
+        customListView.setCanRefresh(true);
         customListView.setCanLoadMore(false);
         adapter = new MsgAdpter(mActivity, list);
         customListView.setAdapter(adapter);
@@ -160,6 +160,13 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
             }
         });
 
+        customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                flag = 1;
+                requestData(0);
+            }
+        });
     }
 
 
@@ -172,6 +179,8 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
 
         Map postParams = null;
         if (flag == 1) {
+            customListView.onRefreshComplete();
+            customListView.onLoadMoreComplete();
             postParams = RequestHelp.getBaseParaMap("MessageList");
             param.setmParserClassName(new MsgDetailParse());
 
@@ -223,9 +232,9 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
     @Override
     protected void failRespone() {
         super.failRespone();
+        customListView.onRefreshComplete();
         switch (status) {
             case PULL_REFRESH:
-                customListView.onRefreshComplete();
                 break;
             default:
                 break;

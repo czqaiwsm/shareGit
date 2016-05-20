@@ -93,7 +93,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener{
         List<Fragment> orderPayFragments = new ArrayList<Fragment>();
         for(int i=0;i<viewCount;i++){
             rLayouts[i].setOnClickListener(this);
-            orderPayFragments.add(new OrderPayFragment(i+1,handler));
+            orderPayFragments.add(new OrderPayFragment(i+2,handler));
         }
         mViewPager.setAdapter(new OrderPageFragmentAdapter(getFragmentManager(), orderPayFragments));
         imageViews[0].setSelected(true);

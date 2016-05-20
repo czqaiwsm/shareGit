@@ -85,7 +85,7 @@ public class DetailFragment extends BaseFragment implements RequsetListener,Cust
         noData = (TextView)view.findViewById(R.id.noData);
 
         customListView.setCanLoadMore(false);
-        customListView.setCanRefresh(false);
+        customListView.setCanRefresh(true);
         adapter = new DetailAdapter(mActivity, list);
         customListView.setAdapter(adapter);
 
@@ -133,8 +133,11 @@ public class DetailFragment extends BaseFragment implements RequsetListener,Cust
 
     @Override
     public void handleRspSuccess(int requestType,Object obj) {
+        customListView.onRefreshComplete();
+        customListView.onLoadMoreComplete();
         JsonParserBase<ArrayList<PayDetail>> jsonParserBase = (JsonParserBase<ArrayList<PayDetail>>)obj;
         if(jsonParserBase != null){
+
             ArrayList<PayDetail> teacherInfos = jsonParserBase.getData();
 
             list.clear();
