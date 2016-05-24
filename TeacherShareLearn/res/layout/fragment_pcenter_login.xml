@@ -50,8 +50,9 @@
                     android:background="@android:color/transparent"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="13637055938"
                     />
+<!--            android:text="18456593220"-->
+
         </LinearLayout>
 
         <View
@@ -92,8 +93,8 @@
                     android:background="@android:color/transparent"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="123456"
                     />
+           <!-- android:text="111111"-->
 
         </LinearLayout>
 

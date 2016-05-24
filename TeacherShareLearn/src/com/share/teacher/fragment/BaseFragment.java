@@ -10,12 +10,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.share.teacher.R;
 import com.share.teacher.activity.BaseActivity;
 import com.share.teacher.help.RequsetListener;
 import com.share.teacher.utils.AppLog;
+import com.share.teacher.utils.BaseApplication;
 import com.share.teacher.utils.URLConstants;
 import com.share.teacher.utils.WaitLayer;
 import com.toast.ToasetUtil;
@@ -345,10 +347,13 @@ public abstract class BaseFragment extends Fragment{
                         }
 
                     }else{
-                        failRespone();
                         if(!isDetached()){
-                            toasetUtil.showInfo(jsonParserBase!=null?jsonParserBase.getRespDesc():"无有效数据!");
+
+                            Toast.makeText(BaseApplication.getInstance(),jsonParserBase!=null?jsonParserBase.getRespDesc():"无有效数据!",Toast.LENGTH_SHORT).show();
+//                            toasetUtil.showInfo(jsonParserBase!=null?jsonParserBase.getRespDesc():"无有效数据!");
                         }
+                        failRespone();
+
                     }
 
 
@@ -366,11 +371,11 @@ public abstract class BaseFragment extends Fragment{
             @Override
             public void onErrorResponse(VolleyError error) {
                 AppLog.Loge(" data failed to load " + error.getMessage());
-                errorRespone();
                 dismissLoadingDilog();
                 if(!isDetached()){
                     toasetUtil.showErro(R.string.loading_fail_server);
                 }
+                errorRespone();
             }
         };
     }

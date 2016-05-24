@@ -25,6 +25,8 @@ import com.volley.req.net.HttpURL;
 import com.volley.req.net.RequestManager;
 import com.volley.req.net.RequestParam;
 import com.volley.req.parser.JsonParserBase;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -79,6 +81,18 @@ public class LoginFramgent extends BaseFragment implements View.OnClickListener,
     public void onClick(View v) {
       switch (v.getId()){
           case R.id.login_text:
+
+//              String json = "{\"respCode\":200,\"respDesc\":\"\",\"respScore\":0,\"respCoin\":0,\"serviceTime\":\"2016-05-23 14:28:02\",\"data\":{\"auditStatus\":2,\"idcardInfo\":[],\"auditInfo\":{\"imgUrl\":\"http://120.25.171.4:80/learn-resource/rest/bz\",\"profession\":\"那个那个看过\",\"college\":\"那个那个看过\",\"education\":2},\"idcardStatus\":1}}";
+//              try {
+//                  JSONObject jsonObject = new JSONObject(json);
+//                  jsonObject = jsonObject.getJSONObject("data");
+//                  if(jsonObject.isNull("idcardInfo")) {
+////                jsonObject = jsonObject.getJSONObject("idcardInfo");
+//                      System.out.println("is null");
+//                  }
+//              } catch (JSONException e) {
+//                  e.printStackTrace();
+//              }
               if(TextUtils.isEmpty(login_username.getText()) || TextUtils.isEmpty(login_pass.getText())){
                   toasetUtil.showInfo( R.string.passname_empty);
               }else if (!PhoneUitl.isPhone(login_username.getText().toString())){

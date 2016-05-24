@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.google.android.maps.MapController;
@@ -25,7 +26,9 @@ import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.BaseParse;
 import com.share.teacher.parse.HomePageBannerParse;
 import com.share.teacher.parse.QueryStudentParse;
+import com.share.teacher.utils.BaseApplication;
 import com.share.teacher.utils.DataCleanManager;
+import com.share.teacher.utils.SmartToast;
 import com.share.teacher.utils.URLConstants;
 import com.share.teacher.view.SingelPickerView;
 import com.volley.req.net.HttpURL;
@@ -179,13 +182,20 @@ public class ScheduleSettingFragment extends BaseFragment implements View.OnClic
                 timePickerView.show();
                 break;
             case R.id.sure:
+                if(names == null || names.isEmpty()){
+                    SmartToast.showText("数据不完整!");
+                    return;
+                }
+
                  if(TextUtils.isEmpty(getFreId())){
+                     SmartToast.showText("请选择课程!");
+
                      toasetUtil.showInfo("请选择课程");
                      return;
                  }
 
                 if(TextUtils.isEmpty(time.getText())){
-                    toasetUtil.showInfo("请设置时间");
+                    SmartToast.showText("请设置时间!");
                     return;
                 }
 
@@ -211,7 +221,7 @@ public class ScheduleSettingFragment extends BaseFragment implements View.OnClic
                 postParams = RequestHelp.getBaseParaMap("ScheduleSetting");
                 postParams.put("courseId",courseIdList.get(courseSelect));   //课程id
                 postParams.put("studentId",queryStudentInfos.get(nameSelect).getStudentId());  //学生id
-                postParams.put("studentName",queryStudentInfos.get(nameSelect).getCourseName());//学生姓名
+                postParams.put("studentName",queryStudentInfos.get(nameSelect).getStudentName());//学生姓名
                 postParams.put("grade",queryStudentInfos.get(nameSelect).getGrade());      // 年级
                 postParams.put("weeks",getFreId());      // 上课周
                 postParams.put("startTime",time.getText().toString());  //开始时间
@@ -257,7 +267,10 @@ public class ScheduleSettingFragment extends BaseFragment implements View.OnClic
                 break;
 
             case 2:
-                toasetUtil.showInfo("课程设置成功");
+                SmartToast.showText("课程设置成功");
+//                toasetUtil.showInfo("课程设置成功");
+                mActivity.setResult(Activity.RESULT_OK);
+                mActivity.finish();
                 break;
         }
 
@@ -268,9 +281,9 @@ public class ScheduleSettingFragment extends BaseFragment implements View.OnClic
         String frequency = "";
         for(int i=0;i<selectList.size();i++){
             if(i==selectList.size()){
-                frequency += selectList.get(i)+"";
+                frequency += DataMapConstants.getFrequency().get(selectList.get(i))+"";
             }else {
-                frequency += selectList.get(i)+",";
+                frequency += DataMapConstants.getFrequency().get(selectList.get(i))+",";
             }
         }
 

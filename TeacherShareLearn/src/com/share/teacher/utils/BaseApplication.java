@@ -16,6 +16,8 @@ import com.share.teacher.bean.UserInfo;
 import com.share.teacher.service.LocationService;
 import com.share.teacher.service.LocationUitl;
 import com.share.teacher.service.WriteLog;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * @author czq
@@ -84,6 +86,9 @@ public class BaseApplication extends Application {
                 .build();
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config);
+
+
+
 
     }
 

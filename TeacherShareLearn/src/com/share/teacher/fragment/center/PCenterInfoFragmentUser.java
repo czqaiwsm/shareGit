@@ -296,7 +296,9 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
                     requestTask(2);
                     break;
                 case MODIFY_CITY://城市
+                    requstValue = data.getStringExtra("city");
                     city.setText(SharePreferenceUtils.getInstance(BaseApplication.getInstance()).getCityName());
+                    requestTask(3);
                     break;
                 case URLConstants.CHOOSE_JOINOR_REQUEST_CODE:
                 requstValue = data.getStringExtra(URLConstants.CHOOSE);

@@ -37,7 +37,7 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/color_small_gray"
                     android:text="上课学生"
-                    android:textSize="@dimen/pc_txt_size" />
+                    android:textSize="@dimen/teach_font_size" />
                 <TextView
                     android:id="@+id/courseName"
                     android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                     android:gravity="center_vertical|right"
                     android:singleLine="true"
                     android:textColor="@color/color_small_gray"
-                    android:textSize="@dimen/pc_txt_size" />
+                    android:textSize="@dimen/teach_font_size" />
 
             </RelativeLayout>
             <View
@@ -71,7 +71,7 @@
                     android:layout_centerVertical="true"
                     android:text="上课名称"
                     android:textColor="@color/color_small_gray"
-                    android:textSize="@dimen/pc_txt_size" />
+                    android:textSize="@dimen/teach_font_size" />
 
                 <TextView
                     android:id="@+id/course_duration"
@@ -83,7 +83,7 @@
                     android:gravity="center_vertical|right"
                     android:singleLine="true"
                     android:textColor="@color/color_small_gray"
-                    android:textSize="@dimen/pc_txt_size"
+                    android:textSize="@dimen/teach_font_size"
                     />
             </RelativeLayout>
             <View
@@ -106,7 +106,7 @@
                     android:layout_centerVertical="true"
                     android:text="上课次数"
                     android:textColor="@color/color_small_gray"
-                    android:textSize="@dimen/pc_txt_size" />
+                    android:textSize="@dimen/teach_font_size" />
 
                 <TextView
                     android:id="@+id/count_time"
@@ -118,7 +118,7 @@
                     android:gravity="center_vertical|right"
                     android:singleLine="true"
                     android:textColor="@color/color_small_gray"
-                    android:textSize="@dimen/pc_txt_size"
+                    android:textSize="@dimen/teach_font_size"
                     />
             </RelativeLayout>
 
@@ -142,7 +142,7 @@
                     android:layout_centerVertical="true"
                     android:text="购买时间"
                     android:textColor="@color/color_small_gray"
-                    android:textSize="@dimen/pc_txt_size" />
+                    android:textSize="@dimen/teach_font_size" />
                 <TextView
                     android:id="@+id/date_time"
                     android:layout_width="wrap_content"
@@ -153,7 +153,7 @@
                     android:gravity="center_vertical|right"
                     android:singleLine="true"
                     android:textColor="@color/color_small_gray"
-                    android:textSize="@dimen/pc_txt_size"
+                    android:textSize="@dimen/teach_font_size"
                     />
             </RelativeLayout>
             <View
@@ -177,7 +177,7 @@
                     android:layout_centerVertical="true"
                     android:text="订单金额"
                     android:textColor="@color/color_small_gray"
-                    android:textSize="@dimen/pc_txt_size" />
+                    android:textSize="@dimen/teach_font_size" />
                 <TextView
                     android:id="@+id/orderPrice"
                     android:layout_width="wrap_content"
@@ -188,7 +188,7 @@
                     android:gravity="center_vertical|right"
                     android:singleLine="true"
                     android:textColor="@color/color_small_gray"
-                    android:textSize="@dimen/pc_txt_size"
+                    android:textSize="@dimen/teach_font_size"
                     />
             </RelativeLayout>
             <View
@@ -211,7 +211,7 @@
                         android:layout_centerVertical="true"
                         android:text="优惠金额"
                         android:textColor="@color/color_small_gray"
-                        android:textSize="@dimen/pc_txt_size" />
+                        android:textSize="@dimen/teach_font_size" />
                 <TextView
                         android:id="@+id/discount"
                         android:layout_width="wrap_content"
@@ -222,7 +222,7 @@
                         android:gravity="center_vertical|right"
                         android:singleLine="true"
                         android:textColor="@color/color_small_gray"
-                        android:textSize="@dimen/pc_txt_size"
+                        android:textSize="@dimen/teach_font_size"
                         />
             </RelativeLayout>
             <View
@@ -244,7 +244,7 @@
                         android:layout_centerVertical="true"
                         android:text="实付金额"
                         android:textColor="@color/color_small_gray"
-                        android:textSize="@dimen/pc_txt_size" />
+                        android:textSize="@dimen/teach_font_size" />
                 <TextView
                         android:id="@+id/payPrice"
                         android:layout_width="wrap_content"
@@ -255,7 +255,7 @@
                         android:gravity="center_vertical|right"
                         android:singleLine="true"
                         android:textColor="@color/color_small_gray"
-                        android:textSize="@dimen/pc_txt_size"
+                        android:textSize="@dimen/teach_font_size"
                         />
             </RelativeLayout>
             <View

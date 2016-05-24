@@ -21,7 +21,7 @@ import java.util.List;
 public class OrderFragment extends BaseFragment implements View.OnClickListener{
 
     private ViewPager mViewPager;
-    private final int  viewCount = 3;
+    private final int  viewCount = 2;
     private ImageView[] imageViews = new ImageView[viewCount];
     private RelativeLayout[] rLayouts = new RelativeLayout[viewCount];
     private TextView[] textViews = new TextView[viewCount];
@@ -76,15 +76,15 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener{
     private void initView(View view) {
         mViewPager = (ViewPager) view.findViewById(R.id.order_viewpager);
         rLayouts[0] = (RelativeLayout)view.findViewById(R.id.hasPayRl);
-        rLayouts[1] = (RelativeLayout)view.findViewById(R.id.hasCancelRl);
-        rLayouts[2] = (RelativeLayout)view.findViewById(R.id.donePayRl);
+//        rLayouts[1] = (RelativeLayout)view.findViewById(R.id.hasCancelRl);
+        rLayouts[1] = (RelativeLayout)view.findViewById(R.id.donePayRl);
 
         imageViews[0] = (ImageView)view.findViewById(R.id.hasPayImg);
-        imageViews[1] = (ImageView)view.findViewById(R.id.hasCancelImg);
-        imageViews[2] = (ImageView)view.findViewById(R.id.donePayImg);
+//        imageViews[1] = (ImageView)view.findViewById(R.id.hasCancelImg);
+        imageViews[1] = (ImageView)view.findViewById(R.id.donePayImg);
         textViews[0] = (TextView)view.findViewById(R.id.hasPayTxt);
-        textViews[1] = (TextView)view.findViewById(R.id.hasCancelTxt);
-        textViews[2] = (TextView)view.findViewById(R.id.donePayTxt);
+//        textViews[1] = (TextView)view.findViewById(R.id.hasCancelTxt);
+        textViews[1] = (TextView)view.findViewById(R.id.donePayTxt);
         mViewPager.setOffscreenPageLimit(0);
         onInitTabConfig();
     }
@@ -93,7 +93,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener{
         List<Fragment> orderPayFragments = new ArrayList<Fragment>();
         for(int i=0;i<viewCount;i++){
             rLayouts[i].setOnClickListener(this);
-            orderPayFragments.add(new OrderPayFragment(i+2,handler));
+            orderPayFragments.add(new OrderPayFragment((i+1)*2,handler));
         }
         mViewPager.setAdapter(new OrderPageFragmentAdapter(getFragmentManager(), orderPayFragments));
         imageViews[0].setSelected(true);
@@ -125,11 +125,11 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener{
             case R.id.hasPayRl:
                 index = 0;
                 break;
-            case R.id.hasCancelRl:
-                index = 1;
-                break;
+//            case R.id.hasCancelRl:
+//                index = 1;
+//                break;
             case R.id.donePayRl:
-                index = 2;
+                index = 1;
                 break;
             default:break;
         }

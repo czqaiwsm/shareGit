@@ -14,16 +14,17 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:weightSum="5"
+        android:weightSum="3"
         android:orientation="horizontal">
+        <!--android:weightSum="5"-->
 
         <com.pickerview.lib.WheelView
             android:id="@+id/year"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:layout_weight="5" />
-
+            android:layout_weight="5"
+             />
         <com.pickerview.lib.WheelView
             android:id="@+id/month"
             android:layout_width="fill_parent"

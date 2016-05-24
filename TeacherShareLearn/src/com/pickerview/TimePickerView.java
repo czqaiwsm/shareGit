@@ -66,7 +66,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         minWV = (WheelView)findViewById(R.id.min);
         segWV = (WheelView)findViewById(R.id.sege);
 
-        dayWV.setVisibility(View.VISIBLE);
+        dayWV.setVisibility(View.GONE);
         hourWV.setVisibility(View.VISIBLE);
         minWV.setVisibility(View.VISIBLE);
         segWV.setVisibility(View.VISIBLE);
@@ -170,10 +170,31 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         } else {
             if (timeSelectListener != null) {
                 try {
-                     String ymd = dateBeans.get(dayWV.getCurrentItem()).getYmd();
-                     int hour = hourWV.getCurrentItem()+1;
-                    System.out.println(ymd+" "+hour);
-                    timeSelectListener.onTimeSelect(ymd+" "+hour);
+//                     String ymd = dateBeans.get(dayWV.getCurrentItem()).getYmd();
+                    int hour = hourWV.getCurrentItem()+1;
+                    int min = minWV.getCurrentItem()+1;
+
+                    String hourStr = ""+hour;
+                    String minStr = ""+min;
+                    if(segWV.getCurrentItem() == 0){//AM
+                        if(hour<10){
+                            hourStr = "0"+hour;
+                        }
+                    }else {
+                        hour = hour + 12;
+                        hourStr = hour+"";
+                        if(hour == 24){
+                            hourStr = "00";
+                        }
+                    }
+
+                    if(min<10){
+                        minStr = "0"+min;
+                    }
+
+                    System.out.println(hourStr+":"+minStr);
+
+                    timeSelectListener.onTimeSelect(hourStr+":"+minStr);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

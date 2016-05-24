@@ -18,6 +18,7 @@ import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.BaseParse;
+import com.share.teacher.utils.BaseApplication;
 import com.share.teacher.utils.URLConstants;
 import com.volley.req.net.HttpURL;
 import com.volley.req.net.RequestManager;
@@ -120,6 +121,7 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
             break;
             case R.id.withDraw_layout:// 提现
             intent = new Intent(mActivity, WidthDrawActivity.class);
+                intent.putExtra("balance",balance);
             startActivityForResult(intent,withDraw);
             break;
         }
@@ -150,6 +152,7 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
         RequestManager.getRequestData(getActivity(), createReqSuccessListener(), createMyReqErrorListener(), param);
     }
 
+    int balance = 0;
     @Override
     public void handleRspSuccess(int requestType,Object obj)  {
         String json = (String)((JsonParserBase)obj).getData().toString();
@@ -158,7 +161,7 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
             if(!TextUtils.isEmpty(json)){
                 JSONObject jsonObject = new JSONObject(json);
                 if(jsonObject != null && jsonObject.has("balance")){
-                    int balance = jsonObject.optInt("balance");
+                    balance  = jsonObject.optInt("balance");
                         account_balance.setText(String.format(getResources().getString(R.string.balance_has),balance+"") );
                 }
             }

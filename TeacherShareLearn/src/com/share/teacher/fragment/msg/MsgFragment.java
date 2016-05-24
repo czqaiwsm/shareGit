@@ -186,8 +186,15 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
 
         } else if (flag == 2) {
             postParams = RequestHelp.getBaseParaMap("MessageDel");
-            postParams.put("senderId", senderId);
-            postParams.put("receiverId", receiverId);
+//            postParams.put("senderId", senderId);
+            UserInfo userInfo = BaseApplication.getInstance().userInfo;
+            String tepId= receiverId;
+            if(userInfo != null){
+                if(receiverId.equalsIgnoreCase(userInfo.getId())){
+                    tepId = senderId;
+                }
+            }
+            postParams.put("receiverId", tepId);
             param.setmParserClassName(new BaseParse());
 
         }

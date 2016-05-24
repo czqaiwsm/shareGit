@@ -3,6 +3,7 @@ package com.share.teacher.fragment.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +36,9 @@ import org.json.JSONObject;
 import java.util.Map;
 
 /**
- * @desc 教师首页
- * @creator caozhiqing
- * @data 2016/3/10
+ * @DESC 教师首页
+ * @CREATOR CAOZHIQING
+ * @DATA 2016/3/10
  */
 public class TeacherCertifyFragment extends BaseFragment implements View.OnClickListener ,RequsetListener,IParser{
 
@@ -49,6 +50,8 @@ public class TeacherCertifyFragment extends BaseFragment implements View.OnClick
     TextView schoolCertifyStatus;
     @Bind(R.id.chooseCertifyRl)
     RelativeLayout chooseCertifyRl;
+
+    private  CertifyStatus certifyStatus;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,11 +70,11 @@ public class TeacherCertifyFragment extends BaseFragment implements View.OnClick
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initTitle();
-        initView(view);
+//        initView();
         requestTask();
     }
 
-    private void initView(View view) {
+    private void initView() {
         idCertifyRl.setOnClickListener(this);
         chooseCertifyRl.setOnClickListener(this);
     }
@@ -98,11 +101,13 @@ public class TeacherCertifyFragment extends BaseFragment implements View.OnClick
         switch (v.getId()) {
             case R.id.idCertifyRl:
                 intent = new Intent(mActivity, IDCardCertifyActivity.class);
+                intent.putExtra("idcardInfo",certifyStatus.getIdcardInfo());
                 startActivityForResult(intent, URLConstants.CHOOSE_CITY_REQUEST_CODE);
                 break;
             case R.id.chooseCertifyRl:
 //                intent = new Intent(mActivity, ChooseJoinorActivity.class);
                 intent = new Intent(mActivity, SchoolCertifyActivity.class);
+                intent.putExtra("auditInfo",certifyStatus.getAuditInfo());
                 startActivityForResult(intent, URLConstants.CHOOSE_JOINOR_REQUEST_CODE);
                 break;
             default:
@@ -136,10 +141,11 @@ public class TeacherCertifyFragment extends BaseFragment implements View.OnClick
     @Override
     public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<CertifyStatus> jsonParserBase = (JsonParserBase<CertifyStatus>)obj;
-        CertifyStatus certifyStatus = jsonParserBase.getData();
+        certifyStatus = jsonParserBase.getData();
 //        idcardStatus;//	身份认证状态	是	Int	0.未认证 1.认证审核中 2.认证通过 3.认证不通过
 //        auditStatus;//	学历认证状态	是	Int	0.未认证 1.认证审核中 2.认证通过 3.认证不通过
         String satus = certifyStatus.getIdcardStatus();
+        initView();
         idCertifyRl.setClickable(true);
         if("0".equalsIgnoreCase(satus)){
             idCertifyStatus.setText("未认证");
@@ -151,7 +157,6 @@ public class TeacherCertifyFragment extends BaseFragment implements View.OnClick
         }else if("3".equalsIgnoreCase(satus)){
             idCertifyStatus.setText("认证不通过");
         }
-
 
         satus = certifyStatus.getAuditStatus();
         chooseCertifyRl.setClickable(true);
@@ -165,7 +170,6 @@ public class TeacherCertifyFragment extends BaseFragment implements View.OnClick
         }else if("3".equalsIgnoreCase(satus)){
             schoolCertifyStatus.setText("认证不通过");
         }
-
 
     }
 
@@ -192,4 +196,6 @@ public class TeacherCertifyFragment extends BaseFragment implements View.OnClick
         }
         return result;
     }
+
+
 }

@@ -3,6 +3,8 @@ package com.share.teacher.bean;
 import android.content.Context;
 import com.share.teacher.R;
 import com.share.teacher.utils.BaseApplication;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -91,6 +93,19 @@ public class DataMapConstants {
             }
         }
         return frequency;
+
+    }
+
+    public static void main(String args[]){
+
+        String json = "{\"respCode\":200,\"respDesc\":\"\",\"respScore\":0,\"respCoin\":0,\"serviceTime\":\"2016-05-23 14:28:02\",\"data\":{\"auditStatus\":2,\"idcardInfo\":[],\"auditInfo\":{\"imgUrl\":\"http://120.25.171.4:80/learn-resource/rest/bz\",\"profession\":\"那个那个看过\",\"college\":\"那个那个看过\",\"education\":2},\"idcardStatus\":1}}";
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            jsonObject = jsonObject.getJSONObject("data");
+            jsonObject = jsonObject.getJSONObject("idcardInfo");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 

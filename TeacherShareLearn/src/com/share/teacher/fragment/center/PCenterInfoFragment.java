@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.share.teacher.R;
 import com.share.teacher.activity.center.*;
+import com.share.teacher.activity.home.MsgChooseActivity;
 import com.share.teacher.activity.teacher.MyAssetActivity;
 import com.share.teacher.bean.UserInfo;
 import com.share.teacher.fragment.BaseFragment;
@@ -69,8 +70,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
         setRightHeadIcon(R.drawable.pc_search_right,new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo 系统消息
-                toClassActivity(PCenterInfoFragment.this,SystemMsgActivity.class.getName());
+                toClassActivity(PCenterInfoFragment.this,MsgChooseActivity.class.getName());
             }
         });
     }

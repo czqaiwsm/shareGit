@@ -35,6 +35,13 @@ public class SmartToast extends Toast {
 	public static void showText(Context context, String str) {
 		makeText(context, str, Toast.LENGTH_LONG).show();
 	}
+	public static void showText(int resId) {
+		makeText(BaseApplication.getInstance(), resId, Toast.LENGTH_LONG).show();
+	}
+
+	public static void showText(String str) {
+		makeText(BaseApplication.getInstance(), str, Toast.LENGTH_LONG).show();
+	}
 
 	@Override
 	public void show() {

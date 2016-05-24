@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.share.teacher.R;
+import com.share.teacher.adapter.DetailAdapter;
 import com.share.teacher.adapter.SystemMsgAdapter;
+import com.share.teacher.adapter.TeacherAssetAdapter;
+import com.share.teacher.bean.SystemMsg;
+import com.share.teacher.bean.CommentInfo;
 import com.share.teacher.bean.SystemMsg;
 import com.share.teacher.bean.SystemMsgListBean;
 import com.share.teacher.fragment.BaseFragment;
@@ -15,7 +19,9 @@ import com.share.teacher.help.PullRefreshStatus;
 import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.BaseParse;
+import com.share.teacher.parse.CommentParse;
 import com.share.teacher.parse.SystemMsgParse;
+import com.share.teacher.utils.BaseApplication;
 import com.share.teacher.utils.URLConstants;
 import com.share.teacher.view.CustomListView;
 import com.volley.req.net.HttpURL;
@@ -33,8 +39,9 @@ import java.util.Map;
  * @creator caozhiqing
  * @data 2016/3/10
  */
-public class SystemMsgFragment extends BaseFragment implements RequsetListener,CustomListView.OnLoadMoreListener {
+public class SystemMsgFragment extends BaseFragment implements RequsetListener ,CustomListView.OnLoadMoreListener{
 
+    public static int MsgType = 1;//系统消息  2个人消息
     private CustomListView customListView = null;
     private List<SystemMsg> list = new ArrayList<SystemMsg>();
     private SystemMsgAdapter adapter;
@@ -45,6 +52,7 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener,C
     private int pageCount = 0;//总页数
     private int pageSize = 10;//每页的数据量
     private PullRefreshStatus status = PullRefreshStatus.NORMAL;
+    private int requestType = 1;//请求信息 1  \ 2删除信息
     private String delMsgId = "";
 
     @Override
@@ -67,7 +75,12 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener,C
     }
 
     private void initTitle(){
-        setTitleText(R.string.sys_msg);
+
+        if(MsgType == 1){
+            setTitleText(R.string.sys_msg);
+        }else {
+            setTitleText("个人消息");
+        }
         setLeftHeadIcon(0);
     }
 
@@ -86,6 +99,7 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener,C
             public void onRefresh() {
                 status = PullRefreshStatus.PULL_REFRESH;
                 pageNo = 1;
+                requestType = 1;
                 requestData(1);
             }
         });
@@ -97,12 +111,14 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener,C
     public void onLoadMore() {
         status = PullRefreshStatus.LOAD_MORE;
         pageNo++;
+        requestType = 1;
         requestData(1);
     }
 
     public void delMsgReq(String id){
         if(!TextUtils.isEmpty(id)){
             delMsgId = id;
+            requestType = 2;
             requestTask(2);
         }
 
@@ -112,11 +128,11 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener,C
         Iterator<SystemMsg> msgIterator = list.iterator();
         while (msgIterator.hasNext()){
             SystemMsg systemMsg = msgIterator.next();
-           if (systemMsg.getId().equalsIgnoreCase(delMsgId)){
-               msgIterator.remove();
-               adapter.notifyDataSetChanged();
-               return;
-           }
+            if (systemMsg.getId().equalsIgnoreCase(delMsgId)){
+                msgIterator.remove();
+                adapter.notifyDataSetChanged();
+                return;
+            }
         }
     }
 
@@ -126,19 +142,28 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener,C
         RequestParam param = new RequestParam();
         Map postParams  = null;
         switch (requestType){
-           case 1:
-               postParams = RequestHelp.getBaseParaMap("SysMsgList");
+            case 1:
+                if(MsgType == 1){
+                    postParams = RequestHelp.getBaseParaMap("SysMsgList");
+                }else if(MsgType == 2) {
+                    postParams = RequestHelp.getBaseParaMap("PersonMsgList");
+
+                }
 //        param.setmParserClassName(SystemMsgParse.class.getName());
-               postParams.put("pageNo",pageNo);
-               param.setmParserClassName(new SystemMsgParse());
-               break;
-           case 2:
-               postParams = RequestHelp.getBaseParaMap("DelSysMsg");
+                postParams.put("pageNo",pageNo);
+                param.setmParserClassName(new SystemMsgParse());
+                break;
+            case 2:
+                if(MsgType == 1){
+                    postParams = RequestHelp.getBaseParaMap("DelSysMsg");
+                }else if(MsgType == 2) {
+                    postParams = RequestHelp.getBaseParaMap("DelPersonMsg");
+                }
 //        param.setmParserClassName(SystemMsgParse.class.getName());
-               postParams.put("msgId",delMsgId);
-               param.setmParserClassName(new BaseParse());
-               break;
-       }
+                postParams.put("msgId",delMsgId);
+                param.setmParserClassName(new BaseParse());
+                break;
+        }
 
 
         url.setmBaseUrl(URLConstants.BASE_URL);
@@ -193,6 +218,7 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener,C
     @Override
     protected void failRespone() {
         super.failRespone();
+        if(requestType == 1){
             switch (status) {
                 case PULL_REFRESH:
                     customListView.onRefreshComplete();
@@ -204,6 +230,7 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener,C
                 default:
                     break;
             }
+        }
 
     }
 

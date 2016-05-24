@@ -26,10 +26,13 @@ import butterknife.ButterKnife;
 import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.share.teacher.R;
 import com.share.teacher.activity.ChooseCityActivity;
 import com.share.teacher.activity.teacher.ChooseJoinorActivity;
 import com.share.teacher.activity.teacher.SchoolCertifyActivity;
+import com.share.teacher.bean.AuditInfo;
 import com.share.teacher.bean.DataMapConstants;
 import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.utils.*;
@@ -72,9 +75,12 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
 
     private String requstValue = "";
 
+    private AuditInfo auditInfo;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        auditInfo = (AuditInfo) mActivity.getIntent().getSerializableExtra("auditInfo");
     }
 
     @Override
@@ -89,20 +95,47 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initTitle();
-        initView(view);
+        initView();
     }
 
-    private void initView(View view) {
-
+    private void initView() {
         uploadLL.setOnClickListener(this);
         schoolCertifyImg.setOnClickListener(this);
         schoolCertifyImg.setVisibility(View.GONE);
-
         degreeRl.setOnClickListener(this);
         schoolRl.setOnClickListener(this);
         majorRl.setOnClickListener(this);
-    }
+        if(auditInfo != null){
+            requstValue = auditInfo.getEducation();
+            degreeName.setText(DataMapConstants.getDegree().get(auditInfo.getEducation()));
+            schoolName.setText(auditInfo.getCollege());
+            majorName.setText(auditInfo.getProfession());
+//            ImageLoader.getInstance().displayImage(auditInfo.getImgUrl(),schoolCertifyImg,ImageLoaderUtil.mHallIconLoaderOptions);
+            ImageLoader.getInstance().loadImage(auditInfo.getImgUrl(), ImageLoaderUtil.mHallIconLoaderOptions, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String s, View view) {
 
+                }
+
+                @Override
+                public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                    m_obj_IconBp = bitmap;
+                    schoolCertifyImg.setImageBitmap(bitmap);
+                }
+
+                @Override
+                public void onLoadingCancelled(String s, View view) {
+
+                }
+            });
+            schoolCertifyImg.setVisibility(View.VISIBLE);
+        }
+    }
 
     private void initTitle() {
         setTitleText(R.string.school_certify);
@@ -110,17 +143,15 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
         setHeaderRightText(R.string.sure, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 if (TextUtils.isEmpty(requstValue)) {
                     toasetUtil.showInfo("请选择学历");
                     return;
                 }
-                if (TextUtils.isEmpty(schoolName.getText())) {
+                if (TextUtils.isEmpty(schoolName.getText().toString())) {
                     toasetUtil.showInfo("请输入院校");
                     return;
                 }
-                if (TextUtils.isEmpty(majorName.getText())) {
+                if (TextUtils.isEmpty(majorName.getText().toString())) {
                     toasetUtil.showInfo("请输入专业");
                     return;
                 }
@@ -197,7 +228,7 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
                             File tempFile = new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME);
                             startPhotoZoom(Uri.fromFile(tempFile));
                         } else {
-                            Toast.makeText(getActivity(), "未找到存储卡，无法存储照片！", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "未找到存储卡，无法存储照片!", Toast.LENGTH_LONG).show();
                         }
                     } else if (data.getExtras() != null) {
                         if (SDCardUtils.checkSDCardStatus()) {
@@ -312,9 +343,6 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
                     "&accessToken=" + BaseApplication.getInstance().accessToken + "&deviceId="+BaseApplication.diviceId+ "&spaceCode=1003"
                +"&education="+requstValue+"&profession="+URLEncoder.encode(majorName.getText().toString(),encode)+"&college="+URLEncoder.encode(schoolName.getText().toString(),encode);
 
-            Log.i(">>>>",URLEncoder.encode(majorName.getText().toString(),encode));
-            Log.i(">>>>",URLDecoder.decode(URLEncoder.encode(majorName.getText().toString(),encode),encode));
-//            postUrl = URLEncoder.encode(postUrl + "?" + param,encode);
             postUrl = postUrl + "?" + param;
             URL url = new URL(postUrl);
             AppLog.Logi(SchoolCertifyFragment.class + "", "postUrl = " + postUrl);
@@ -390,11 +418,14 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
                 JsonParserBase<Object> result = ParserUtil.fromJsonBase(data, new TypeToken<JsonParserBase<Object>>() {
                 }.getType());
                 if (result != null && URLConstants.SUCCESS_CODE.equals(result.getRespCode())) {
-                    LinkedTreeMap<String,String> linkedTreeMap = (LinkedTreeMap<String,String>)result.getData();
-                    schoolCertifyImg.setImageBitmap(m_obj_IconBp);// 上传成功设置头像
+
+//                    LinkedTreeMap<String,String> linkedTreeMap = (LinkedTreeMap<String,String>)result.getData();
+//                    schoolCertifyImg.setImageBitmap(m_obj_IconBp);// 上传成功设置头像
                     schoolCertifyImg.setVisibility(View.VISIBLE);
-                    ImageLoader.getInstance().displayImage(linkedTreeMap.get("url").toString(),schoolCertifyImg, ImageLoaderUtil.mHallIconLoaderOptions);
+//                    ImageLoader.getInstance().displayImage(linkedTreeMap.get("url").toString(),schoolCertifyImg, ImageLoaderUtil.mHallIconLoaderOptions);
                     toasetUtil.showSuccess(R.string.upload_success);
+                    mActivity.setResult(Activity.RESULT_OK);
+                    mActivity.finish();
                 } else {
                     toasetUtil.showInfo(result.getRespDesc());
                 }

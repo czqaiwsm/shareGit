@@ -28,9 +28,12 @@ import butterknife.ButterKnife;
 import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.share.teacher.R;
 import com.share.teacher.activity.ChooseCityActivity;
 import com.share.teacher.activity.teacher.ChooseJoinorActivity;
+import com.share.teacher.bean.IdcardInfo;
 import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.utils.*;
 import com.share.teacher.view.UpdateAvatarPopupWindow;
@@ -60,6 +63,8 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
     @Bind(R.id.idImg)
     ImageView idImg;
 
+    private IdcardInfo idcardInfo;
+
     @Override
     protected void requestData(int requestType) {
 
@@ -68,6 +73,7 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        idcardInfo = (IdcardInfo) mActivity.getIntent().getSerializableExtra("idcardInfo");
     }
 
     @Override
@@ -82,15 +88,43 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initTitle();
-        initView(view);
+        initView();
     }
 
-    private void initView(View view) {
+    private void initView() {
 
         uploadLL.setOnClickListener(this);
         idImg.setOnClickListener(this);
         idImg.setVisibility(View.GONE);
 
+        if(idcardInfo != null){
+            nameEdit.setText(idcardInfo.getRealName());
+            idCardEdit.setText(idcardInfo.getIdcard());
+            idImg.setVisibility(View.VISIBLE);
+//            ImageLoader.getInstance().displayImage(idcardInfo.getIdcardImg(),idImg,ImageLoaderUtil.mHallIconLoaderOptions);
+            ImageLoader.getInstance().loadImage(idcardInfo.getIdcardImg(), ImageLoaderUtil.mHallIconLoaderOptions, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String s, View view) {
+
+                }
+
+                @Override
+                public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                    m_obj_IconBp = bitmap;
+                    idImg.setImageBitmap(bitmap);
+                }
+
+                @Override
+                public void onLoadingCancelled(String s, View view) {
+
+                }
+            });
+        }
     }
 
 
@@ -112,7 +146,7 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
                 }
 
                 if (m_obj_IconBp == null) {
-                    toasetUtil.showInfo("请选择身份证");
+                    toasetUtil.showInfo("请选择身份证照片!");
                     return;
                 }
 
@@ -361,10 +395,10 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
                 JsonParserBase<Object> result = ParserUtil.fromJsonBase(data, new TypeToken<JsonParserBase<Object>>() {
                 }.getType());
                 if (result != null && URLConstants.SUCCESS_CODE.equals(result.getRespCode())) {
-                    LinkedTreeMap<String, String> linkedTreeMap = (LinkedTreeMap<String, String>) result.getData();
-                    idImg.setImageBitmap(m_obj_IconBp);// 上传成功设置头像
+//                    LinkedTreeMap<String, String> linkedTreeMap = (LinkedTreeMap<String, String>) result.getData();
+//                    idImg.setImageBitmap(m_obj_IconBp);// 上传成功设置头像
                     idImg.setVisibility(View.VISIBLE);
-                    ImageLoader.getInstance().displayImage(linkedTreeMap.get("url").toString(), idImg, ImageLoaderUtil.mHallIconLoaderOptions);
+//                    ImageLoader.getInstance().displayImage(linkedTreeMap.get("url").toString(), idImg, ImageLoaderUtil.mHallIconLoaderOptions);
                     toasetUtil.showSuccess(R.string.upload_success);
                 } else {
                     toasetUtil.showInfo(result.getRespDesc());

@@ -52,12 +52,12 @@ public class ChooseCitytFragment extends BaseFragment implements OnClickListener
         cityName = (TextView) view.findViewById(R.id.city_name);
         listView = (CustomListView) view.findViewById(R.id.callListView);
         cityName.setText(BaseApplication.getInstance().location[0]);
-        list.add("上海");
-        list.add("南京");
-        list.add("合肥");
-        list.add("南昌");
-        list.add("芜湖");
-        list.add("六安");
+//        list.add("上海");
+//        list.add("南京");
+        list.add("合肥市");
+//        list.add("南昌");
+//        list.add("芜湖");
+//        list.add("六安");
 
         listView.setCanLoadMore(false);
         listView.setCanRefresh(false);

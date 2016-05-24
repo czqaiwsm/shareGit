@@ -18,6 +18,7 @@ import com.share.teacher.bean.DataMapConstants;
 import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
+import com.share.teacher.utils.SmartToast;
 import com.share.teacher.utils.URLConstants;
 import com.volley.req.net.HttpURL;
 import com.volley.req.net.RequestManager;
@@ -146,7 +147,7 @@ public class TeacherCourseSettingFragment extends BaseFragment implements View.O
     @Override
     public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<CertifyStatus> jsonParserBase = (JsonParserBase<CertifyStatus>)obj;
-                           toasetUtil.showSuccess("设置成功");
+                           SmartToast.showText("设置成功");
         mActivity.finish();
     }
 

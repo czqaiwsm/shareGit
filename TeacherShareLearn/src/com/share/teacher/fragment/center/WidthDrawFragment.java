@@ -1,7 +1,10 @@
 package com.share.teacher.fragment.center;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,18 +12,19 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.google.gson.internal.LinkedTreeMap;
 import com.share.teacher.R;
 import com.share.teacher.bean.UserInfo;
+import com.share.teacher.bean.VerifyCode;
 import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.BaseParse;
-import com.share.teacher.utils.BaseApplication;
-import com.share.teacher.utils.URLConstants;
-import com.share.teacher.utils.WaitLayer;
+import com.share.teacher.parse.VerifyCodeParse;
+import com.share.teacher.utils.*;
 import com.volley.req.net.HttpURL;
 import com.volley.req.net.RequestManager;
 import com.volley.req.net.RequestParam;
@@ -43,11 +47,27 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
     @Bind(R.id.recharge_query)
     TextView rechargeQuery;
 
+    @Bind(R.id.drawMoney)
+    EditText drawMoney;
+    @Bind(R.id.register_passCode)
+    EditText register_passCode;
+    @Bind(R.id.register_getCode)
+    TextView register_getCode;
 
+
+
+    private int MSG_TOTAL_TIME;
+    private final int MSG_UPDATE_TIME = 500;
+    private VerifyCode verifyCode;
+    private int balance;
     UserInfo userInfo = BaseApplication.getInstance().userInfo;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = mActivity.getIntent();
+        if(intent != null){
+            balance = intent.getIntExtra("balance",0);
+        }
     }
 
     @Override
@@ -70,22 +90,35 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
         setLeftHeadIcon(0);
 
         rechargeQuery.setOnClickListener(this);
+        register_getCode.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
         // TODO Auto-generated method stub
         switch (v.getId()) {
+            case R.id.register_getCode:
+                register_getCode();
+                break;
             case R.id.recharge_query:
 
-                if (TextUtils.isEmpty(alipayAccount.getText()) || TextUtils.isEmpty(alipayName.getText())) {
+                if (TextUtils.isEmpty(alipayAccount.getText().toString()) || TextUtils.isEmpty(alipayName.getText().toString())) {
                     toasetUtil.showInfo("请输入账号和姓名!");
+                }else
+                if (TextUtils.isEmpty(drawMoney.getText().toString())) {
+                    toasetUtil.showInfo("提现金额!");
+                }else
+                if (TextUtils.isEmpty(register_passCode.getText().toString()) || verifyCode==null) {
+                    toasetUtil.showInfo("获取验证码!");
                 }
-//                else if(userInfo == null || Integer.valueOf(userInfo.getBalance())<=0){
-//                    toasetUtil.showInfo("账号没有足够余额!");
-//                }
+                else if(Integer.valueOf(drawMoney.getText().toString())<=0){
+                    toasetUtil.showInfo("提现金额不能小于0");
+                }else if(Integer.valueOf(drawMoney.getText().toString())> balance){
+                    toasetUtil.showInfo("超出账号余额!");
+                }
                 else {
-                    requestTask();
+                    requestTask(1);
                 }
                 break;
         }
@@ -97,19 +130,31 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
     protected void requestData(int requestType) {
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
-        Map postParams = RequestHelp.getBaseParaMap("Withdraw");
-
+        Map postParams = null;
         RequestParam param = new RequestParam();
-
-        postParams.put("account", alipayAccount.getText().toString());
-        postParams.put("realName", alipayName.getText().toString());
+        
+        switch (requestType){
+            
+            case  1:
+                postParams = RequestHelp.getBaseParaMap("Withdraw");
+                postParams.put("realName", alipayName.getText().toString());
+                postParams.put("account", alipayAccount.getText().toString());
+                postParams.put("price", drawMoney.getText().toString());
+                postParams.put("sendId",verifyCode.getSendId());
+                param.setmParserClassName(new BaseParse());
+                param.setmPostarams(postParams);
+                break;
+            case  2:
+                param = RequestHelp.getVcodePara("VCode",userInfo.getMobile(),4);
+//				param.setmParserClassName(VerifyCodeParse.class.getName());
+                param.setmParserClassName(new VerifyCodeParse());
+                break;
+        }
 //        postParams.put("price", BaseApplication.getInstance().userInfo != null?
 //                BaseApplication.getInstance().userInfo.getBalance():"");
-        param.setmParserClassName(new BaseParse());
-        param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
-        RequestManager.getRequestData(getActivity(), createReqSuccessListener(), createMyReqErrorListener(), param);
+        RequestManager.getRequestData(getActivity(), createReqSuccessListener(requestType), createMyReqErrorListener(), param);
 
     }
 
@@ -125,6 +170,64 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
 //
 //    }
 
+    /**
+     *
+     * 获取验证码
+     */
+    private void register_getCode() {
+        if(userInfo == null || TextUtils.isEmpty(userInfo.getMobile())){
+            SmartToast.makeText(mActivity, R.string.input_error, Toast.LENGTH_SHORT).show();
+        }
+        if (TextUtils.isEmpty(userInfo.getMobile())) {
+            SmartToast.makeText(mActivity, R.string.input_error, Toast.LENGTH_SHORT).show();
+        } else {
+            if (!PhoneUitl.isPhone(userInfo.getMobile())) {
+                SmartToast.makeText(mActivity, R.string.phone_error, Toast.LENGTH_SHORT).show();
+            } else {
+                register_getCode.setEnabled(false);
+                MSG_TOTAL_TIME = 60;
+                // Toast.makeText(mActivity, "短信已发送，请稍候！",
+                // Toast.LENGTH_SHORT).show();
+                Message message = new Message();
+                message.what = MSG_UPDATE_TIME;
+                timeHandler.sendMessage(message);
+                requestData(2);// ----------发送请求
+                register_getCode.requestFocus();
+            }
+        }
+    }
+
+    // 验证码倒计时
+    private Handler timeHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            if(isDetached()){
+                return;
+            }
+            switch (msg.what) {
+                case MSG_UPDATE_TIME:
+                    MSG_TOTAL_TIME--;
+                    if (MSG_TOTAL_TIME > 0) {
+                        register_getCode.setText(String.format(getResources().getString(R.string.has_minuter,MSG_TOTAL_TIME+"")));
+                        Message message = obtainMessage();
+                        message.what = MSG_UPDATE_TIME;
+                        sendMessageDelayed(message, 1000);
+                    } else if (MSG_TOTAL_TIME < -10) {
+                        register_getCode.setText(R.string.addcode_resend);
+                        register_getCode.setEnabled(true);
+                    } else {
+                        register_getCode.setText(R.string.addcode_code);
+                        register_getCode.setEnabled(true);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -133,12 +236,34 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
 
     @Override
     public void handleRspSuccess(int requestType, Object obj) {
-        JsonParserBase jsonParserBase = (JsonParserBase) obj;
-        if ((jsonParserBase != null)) {
-            LinkedTreeMap<String, String> treeMap = (LinkedTreeMap<String, String>) jsonParserBase.getData();
-            String order = treeMap.get("tips");
-            toasetUtil.showInfo(order);
-            mActivity.finish();
+        switch (requestType){
+            case  1:
+                JsonParserBase jsonParserBase = (JsonParserBase) obj;
+                if ((jsonParserBase != null)) {
+                    LinkedTreeMap<String, String> treeMap = (LinkedTreeMap<String, String>) jsonParserBase.getData();
+                    String order = treeMap.get("tips");
+                    SmartToast.showText(order);
+                    mActivity.setResult(Activity.RESULT_OK);
+                    mActivity.finish();
+                }
+                break;
+            case  2:
+                MSG_TOTAL_TIME = -1;
+                JsonParserBase<VerifyCode> jsonParserBase1 = (JsonParserBase<VerifyCode>)obj;
+                verifyCode = jsonParserBase1.getData();
+                register_passCode.setText(verifyCode !=null?verifyCode.getSmsCode():"");
+                break;
+            
+            
+        }
+        
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK){
+
         }
     }
 }

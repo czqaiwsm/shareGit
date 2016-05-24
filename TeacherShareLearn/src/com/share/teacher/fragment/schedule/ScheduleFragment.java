@@ -1,5 +1,7 @@
 package com.share.teacher.fragment.schedule;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -43,10 +45,9 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
     private boolean isPrepare = false;
     private boolean isHiden = true;
 
-    private ArrayList<ArrayList<CourseInfo>> weekCourseList ;
+    public static ArrayList<ArrayList<CourseInfo>> weekCourseList ;
 
     private String weeks[] = new String[]{"周一","周二","周三","周四","周五","周六","周日"};
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -73,7 +74,6 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
         setRightHeadIcon(R.drawable.pc_search_right,new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo 系统消息
                 toClassActivity(ScheduleFragment.this,CourseSettingActivity.class.getName());
             }
         });
@@ -92,31 +92,41 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
         onLoadData();
     }
 
+    private boolean isFalse = true;
     private void onInitTabConfig() {
-        mTabContainerView.removeAllTabs();
-        TabsActionBar tabsActionBar = new TabsActionBar(getActivity(), mTabContainerView);
-        mTabsAdapter = new TabsAdapter(getActivity(), mViewPager, tabsActionBar);
+//        mTabContainerView.removeAllTabs();
+        ArrayList<CourseInfo> courseInfos = null;
+        if(mTabsAdapter == null){
 
-        View inflateViwe = null;
-        for(int i=0;i<weeks.length;i++){
+            TabsActionBar tabsActionBar = new TabsActionBar(getActivity(), mTabContainerView);
+            mTabsAdapter = new TabsAdapter(getActivity(), mViewPager, tabsActionBar);
 
-            ArrayList<CourseInfo> courseInfos = null;
-            if(weekCourseList != null && i<weekCourseList.size()){
-                courseInfos = weekCourseList.get(i);
-            }
-
-            inflateViwe = LayoutInflater.from(getActivity()).inflate(R.layout.schedule, null);
-            ((TextView)inflateViwe.findViewById(R.id.scheduleTxt)).setText(String.format(getString(R.string.schedule),weeks[i]));
-
-            Bundle bundle = new Bundle();
-            bundle.putInt("position",i);
-            if(courseInfos != null){
-                bundle.putSerializable("courList",courseInfos);
-            }
-            mTabsAdapter.addTab(tabsActionBar.newTab().setCustomView(inflateViwe)
+            View inflateViwe = null;
+            for(int i=0;i<weeks.length;i++){
+                if(weekCourseList != null && i<weekCourseList.size()){
+                    courseInfos = weekCourseList.get(i);
+                }
+                inflateViwe = LayoutInflater.from(getActivity()).inflate(R.layout.schedule, null);
+                ((TextView)inflateViwe.findViewById(R.id.scheduleTxt)).setText(String.format(getString(R.string.schedule),weeks[i]));
+                Bundle bundle = new Bundle();
+                bundle.putInt("position",i);
+                if(courseInfos != null){
+                    bundle.putSerializable("courList",courseInfos);
+                }
+                mTabsAdapter.addTab(tabsActionBar.newTab().setCustomView(inflateViwe)
                         .setmTabbgDrawableId(R.drawable.login_tab), WeeksFragment.class,bundle);
 
+            }
+//        mViewPager.setOffscreenPageLimit(7);
         }
+//        else {
+//            for(int i=0;i<weeks.length;i++) {
+//                    if(weekCourseList != null && i<weekCourseList.size()){
+//                        courseInfos = weekCourseList.get(i);
+//                    }
+//                    ((WeeksFragment) mTabsAdapter.getItem(i)).notifyData(courseInfos);
+//            }
+//        }
 
     }
 
@@ -172,7 +182,7 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
         if(jsonParserBase != null){
             weekCourseList = jsonParserBase.getData();
         }
-        onInitTabConfig();
+            onInitTabConfig();
     }
 
     @Override
@@ -185,5 +195,13 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
     public void onStop() {
         super.onStop();
         LocationUitl.removeListener(this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK){
+            requestTask();
+        }
     }
 }
