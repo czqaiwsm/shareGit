@@ -89,6 +89,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_purchase_course, container, false);
@@ -164,7 +165,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
         {
             cheapMone = 300;
         }
-        else
+        else if(buyCount >= 100)
         {
             cheapMone = 800;
         }
@@ -238,14 +239,16 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
     @Override
     public void handleRspSuccess(int requestType,Object obj) {
-        PayCourseInfo payCourseInfo =( (JsonParserBase<PayCourseInfo>)obj).getData();
+        PayCourseInfo payCourseInfo =((JsonParserBase<PayCourseInfo>)obj).getData();
 
         PayInfo payInfo = new PayInfo(payCourseInfo.getOrderCode(),payCourseInfo.getPayPrice(),payCourseInfo.getCourseName(),payCourseInfo.getCreateTime());
         if(payCourseInfo != null){
             if (payType == 1){
                 PayUtil.alipay(mActivity,payInfo,null);
             }else {
-                PayUtil.walletPay(mActivity,payInfo,null);
+
+                SmartToast.makeText(BaseApplication.getInstance(),"支付成功!",Toast.LENGTH_LONG).show();
+//                PayUtil.walletPay(mActivity,payInfo,null);
             }
         }
     }
@@ -330,11 +333,11 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     account.setText(datas.get(i-1));
-                    account.setTag(i-1);
+                    account.setTag(i);
 
                     orderPay = priceMoney * (i);
                     trueMoey = orderPay - getDiscontPrice(i);
-                    favourable.setText(String.format(getResources().getString(R.string.balance_has,getDiscontPrice(i+1))));
+                    favourable.setText(String.format(getResources().getString(R.string.balance_has,getDiscontPrice(i))));
                     truePay.setText(String.format(getResources().getString(R.string.balance_has,trueMoey)));
                     dismiss();
                 }

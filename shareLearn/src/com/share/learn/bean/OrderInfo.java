@@ -21,8 +21,9 @@ public class OrderInfo implements Serializable {
     private String teacherId ;
    private String evaluateStatus ;
    private String         grade  ;
+   private String orderCode     ;
    private String teacherImg     ;
-    private String refundtatus;//		0-正常 1-退款中 2-退款完成
+    private String refundStatus;//		0-正常 1-退款中 2-退款完成
 
 
     public String getTeacherId() {
@@ -98,11 +99,19 @@ public class OrderInfo implements Serializable {
         this.teacherImg = teacherImg;
     }
 
-    public String getRefundtatus() {
-        return refundtatus;
+    public String getRefundStatus() {
+        return refundStatus;
     }
 
-    public void setRefundtatus(String refundtatus) {
-        this.refundtatus = refundtatus;
+    public void setRefundStatus(String refundStatus) {
+        this.refundStatus = refundStatus;
+    }
+
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
     }
 }

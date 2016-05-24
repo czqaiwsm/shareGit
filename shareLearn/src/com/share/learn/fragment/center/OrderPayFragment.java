@@ -123,9 +123,10 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(mActivity,OrderDetailActivity.class);
-                intent.putExtra("orderId",list.get(i-1).getOrderId());
+                intent.putExtra("order",list.get(i-1));
                 intent.putExtra("flag",flag);
-                intent.putExtra("orderStatus",list.get(i-1).getEvaluateStatus());
+//                intent.putExtra("orderStatus",list.get(i-1).getEvaluateStatus());
+//                intent.putExtra("refundSatus",list.get(i-1).getRefundtatus());
                 startActivityForResult(intent,flag);
             }
         });
@@ -221,14 +222,13 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                 }
                 break;
 
-            case 3:
+            case 3://完成订单成功
                     handler.sendEmptyMessage(OrderFragment.CONFIRM_ORDER)    ;
             case 4://申请退款成功
-
                     for(OrderInfo orderInfo:list){
                         if(orderInfo.getOrderId().equalsIgnoreCase(orderId)){
 
-                            orderInfo.setRefundtatus("1");
+                            orderInfo.setRefundStatus("1");
                             adapter.notifyDataSetChanged();
                             break;
                         }
@@ -320,7 +320,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                 break;
             case R.id.right_tv:
                 if(flag == 1){//待支付(立即支付)
-                    PayInfo payInfo = new PayInfo(orderInfo.getOrderId(),orderInfo.getPayPrice(),orderInfo.getCourseName(),orderInfo.getTeacherName());
+                    PayInfo payInfo = new PayInfo(orderInfo.getOrderCode(),orderInfo.getPayPrice(),orderInfo.getCourseName(),orderInfo.getTeacherName());
                     payPopupwidow.payPopShow(v,payInfo);
                 }else if(flag == 2){//已支付(申请退款)
 
@@ -373,6 +373,11 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                     break;
 
             }
-        }
+        }else
+            if(resultCode == 151){//退款完成
+                requestTask(1);
+            }
+
+
     }
 }

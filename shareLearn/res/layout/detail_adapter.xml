@@ -14,7 +14,6 @@
         <TextView android:id="@+id/detailContent"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="支付张老师课程"
                   android:layout_centerVertical="true"
                   android:textColor="@color/color_small_gray"
                   android:layout_marginLeft="@dimen/msg_margin"
@@ -28,7 +27,6 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textSize="@dimen/app_text_size_min"
-                      android:text="2016-03-13"
                       android:layout_alignParentRight="true"
                       android:textColor="@color/color_small_gray"
             />
@@ -38,7 +36,6 @@
                       android:textSize="@dimen/app_text_size_min"
                       android:layout_alignEnd="@+id/time"
                       android:layout_marginTop="4dp"
-                      android:text="-30"
                       android:textColor="@color/login_normal"
                       android:layout_below="@+id/time"
             />

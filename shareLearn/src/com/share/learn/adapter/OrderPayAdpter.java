@@ -111,11 +111,12 @@ public class OrderPayAdpter extends BaseAdapter {
                     holder.right_tv.setClickable(true);
 
                     //0-正常 1-退款中 2-退款完成
-                    if("1".equalsIgnoreCase(message.getRefundtatus())){
+                    if("1".equalsIgnoreCase(message.getRefundStatus())){
                         holder.right_tv.setText("退款中");
                         holder.right_tv.setClickable(false);
+                        holder.right_tv.setVisibility(View.GONE);
                     }
-                    if("2".equalsIgnoreCase(message.getRefundtatus())){
+                    if("2".equalsIgnoreCase(message.getRefundStatus())){
                         holder.right_tv.setText("退款完成");
                         holder.right_tv.setClickable(false);
                     }

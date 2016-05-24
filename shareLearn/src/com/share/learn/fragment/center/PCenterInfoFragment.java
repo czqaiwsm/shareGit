@@ -120,6 +120,8 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
             ImageLoader.getInstance().displayImage("", mHeadImg, ImageLoaderUtil.mHallIconLoaderOptions);
             name.setText("");
             jonior.setText("");
+
+
         }
 
     }
@@ -179,6 +181,6 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        setData(mUserInfo);
+        setData(BaseApplication.getUserInfo());
     }
 }

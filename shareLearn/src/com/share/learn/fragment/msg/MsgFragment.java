@@ -111,7 +111,7 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
         customListView = (CustomListView) view.findViewById(R.id.callListView);
         noData = (TextView) view.findViewById(R.id.noData);
 
-        customListView.setCanRefresh(false);
+        customListView.setCanRefresh(true);
         customListView.setCanLoadMore(false);
         adapter = new MsgAdpter(mActivity, list);
         customListView.setAdapter(adapter);
@@ -164,6 +164,13 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
             }
         });
 
+        customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                flag = 1;
+                requestData(0);
+            }
+        });
     }
 
 
@@ -181,8 +188,15 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
 
         } else if (flag == 2) {
             postParams = RequestHelp.getBaseParaMap("MessageDel");
-            postParams.put("senderId", senderId);
-            postParams.put("receiverId", receiverId);
+//            postParams.put("senderId", senderId);
+            UserInfo userInfo = BaseApplication.getUserInfo();
+            String tepId= receiverId;
+            if(userInfo != null){
+                if(receiverId.equalsIgnoreCase(userInfo.getId())){
+                    tepId = senderId;
+                }
+            }
+            postParams.put("receiverId", tepId);
             param.setmParserClassName(new BaseParse());
 
         }
@@ -195,6 +209,8 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
     @Override
     public void handleRspSuccess(int requestType,Object obj) {
         if (flag == 1) {
+            customListView.onRefreshComplete();
+            customListView.onLoadMoreComplete();
         JsonParserBase<ArrayList<MsgDetail>> jsonParserBase = (JsonParserBase<ArrayList<MsgDetail>>) obj;
         ArrayList<MsgDetail> chooseTeachBean = jsonParserBase.getData();
         if (chooseTeachBean != null) {
@@ -227,9 +243,10 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
     @Override
     protected void failRespone() {
         super.failRespone();
+        customListView.onRefreshComplete();
+        customListView.onLoadMoreComplete();
         switch (status) {
             case PULL_REFRESH:
-                customListView.onRefreshComplete();
                 break;
             default:
                 break;
@@ -250,10 +267,12 @@ public class MsgFragment extends BaseFragment implements RequsetListener {
     private void refresh(ArrayList<MsgDetail> teacherInfos) {
         if (teacherInfos == null || teacherInfos.size() == 0) {//显示无数据
             if (list.size() == 0) {
+                customListView.setVisibility(View.GONE);
                 noData.setVisibility(View.VISIBLE);
             }
         } else {
             noData.setVisibility(View.GONE);
+            customListView.setVisibility(View.VISIBLE);
             list.clear();
             list.addAll(teacherInfos);
             adapter.notifyDataSetChanged();

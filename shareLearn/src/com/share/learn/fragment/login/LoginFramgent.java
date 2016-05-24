@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.jpush.android.api.JPushInterface;
 import com.android.volley.Response;
 import com.share.learn.R;
 import com.share.learn.activity.MainActivity;
@@ -135,6 +136,7 @@ public class LoginFramgent extends BaseFragment implements View.OnClickListener,
             );
 //            toClassActivity(LoginFramgent.this, MainActivity.class.getName());//学生
 //            toClassActivity(LoginFramgent.this, TeacherMainActivity.class.getName());//老师
+            JPushInterface.setAlias(BaseApplication.getInstance(),"s_"+BaseApplication.getMt_id(),null);
             mActivity.setResult(Activity.RESULT_OK);
             mActivity.finish();
         }

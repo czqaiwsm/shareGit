@@ -65,8 +65,8 @@ public abstract class RequestManager {
 			if (param.getmParserClassName() != null) {
 				request.setTag(param.getmParserClassName());
 			}
-
-			request.setRetryPolicy(new DefaultRetryPolicy(10000,20000,2.0f));
+//			request.setRetryPolicy(new DefaultRetryPolicy());
+			request.setRetryPolicy(new DefaultRetryPolicy(50000,0,50f));
 		} catch (JSONException e) {
 			Log.e("JSON","JSONException" + e.getMessage());
 			return;

@@ -82,6 +82,8 @@ public class RechargeFragment extends BaseFragment implements OnClickListener ,R
             case R.id.recharge_query:
                  if(TextUtils.isEmpty(rechargePrice.getText()) || TextUtils.equals("0",rechargePrice.getText())){
                      toasetUtil.showInfo("请输入金额");
+                 }else if(Integer.valueOf(rechargePrice.getText().toString())<=0){
+                     toasetUtil.showInfo("金额不能小于0!");
                  }else {
                      requestTask();
                  }

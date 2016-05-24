@@ -27,10 +27,7 @@ import com.share.learn.help.RequsetListener;
 import com.share.learn.parse.BaseParse;
 import com.share.learn.parse.OrderDetailBeanParse;
 import com.share.learn.parse.OrderListBeanParse;
-import com.share.learn.utils.AppLog;
-import com.share.learn.utils.BaseApplication;
-import com.share.learn.utils.URLConstants;
-import com.share.learn.utils.WaitLayer;
+import com.share.learn.utils.*;
 import com.share.learn.view.FlowScrollView;
 import com.share.learn.view.PayPopupwidow;
 import com.volley.req.net.HttpURL;
@@ -83,10 +80,12 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
     @Bind(R.id.container)
     LinearLayout container;
 
-    private String orderId = "";
-    private String orderStatus = "";
+//    private String orderId = "";
+//    private String orderStatus = "";
+//    private String refundSatus = "";
     private OrderDetailInfo orderDetailInfo ;
 
+    private OrderInfo orderInfo = null;
     private int flag = 0 ;//1 待支付\2 已支付\ 3 已取消\ 4 已完成
     private PayPopupwidow payPopupwidow;
 
@@ -95,9 +94,11 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
         super.onCreate(savedInstanceState);
         Intent intent = mActivity.getIntent();
         if(intent != null ){
-            orderId = intent.getStringExtra("orderId");
+//            orderId = intent.getStringExtra("orderId");
             flag = intent.getIntExtra("flag",0);
-            orderStatus = intent.getStringExtra("orderStatus");
+//            orderStatus = intent.getStringExtra("orderStatus");
+//            refundSatus = intent.getStringExtra("refundSatus");
+            orderInfo = (OrderInfo) intent.getSerializableExtra("order");
         }
     }
 
@@ -137,16 +138,22 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
         switch (requestType){
             case 0://详情
                 postParams = RequestHelp.getBaseParaMap("OrderDetail");
-                postParams.put("orderId",orderId);
+                postParams.put("orderId",orderInfo.getOrderId());
                 param.setmParserClassName(new OrderDetailBeanParse());
 
                 break;
             case 3://确认订单
-        postParams = RequestHelp.getBaseParaMap("ConfirmOrder");
-        postParams.put("orderId",orderId);
-        postParams.put("teacherId",orderDetailInfo.getTeacherId());
-        param.setmParserClassName(new OrderListBeanParse());
-        break;
+                postParams = RequestHelp.getBaseParaMap("ConfirmOrder");
+                postParams.put("orderId",orderInfo.getOrderId());
+                postParams.put("teacherId",orderDetailInfo.getTeacherId());
+                param.setmParserClassName(new OrderListBeanParse());
+                break;
+            case 4:
+                postParams = RequestHelp.getBaseParaMap("Refund");
+//                orderId = orderInfo.getOrderId();
+                postParams.put("orderId",orderInfo.getOrderId());
+                param.setmParserClassName(new OrderListBeanParse());
+                break;
         }
 
         param.setmPostarams(postParams);
@@ -173,12 +180,17 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
                         accountDuration.setText((orderDetailInfo.getPayCount()*2)+"");
                         contact.setOnClickListener(this);
                         buy.setOnClickListener(this);
+                        setStatue();
                     }
                 }
 
                 break;
             case 3:
                 mActivity.setResult(Activity.RESULT_OK);
+                mActivity.finish();
+                break;
+            case 4:
+                mActivity.setResult(151);
                 mActivity.finish();
                 break;
         }
@@ -212,24 +224,22 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
             case R.id.buy:
                 if(flag == 1){//待支付(立即支付)
                     if(orderDetailInfo != null){
-                        PayInfo payInfo = new PayInfo(orderId,orderDetailInfo.getPayPrice()+"",orderDetailInfo.getCourseName(),orderDetailInfo.getTeacherName());
+                        PayInfo payInfo = new PayInfo(orderInfo.getOrderCode(),orderDetailInfo.getPayPrice()+"",orderDetailInfo.getCourseName(),orderDetailInfo.getTeacherName());
                         payPopupwidow.payPopShow(v,payInfo);
                     }
 
                 }else if(flag == 2){//已支付(申请退款)
 
+                    AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "您正在申请退款", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            requestTask(4);
+                        }
+                    },null);
+
                 }else if(flag==4){//已完成(立即评价)
                     intent = new Intent(mActivity, EvaluateActivity.class);
                     Bundle bundle = new Bundle();
-                    OrderInfo orderInfo = new OrderInfo();
-                    orderInfo.setOrderId(orderId);
-                    orderInfo.setTeacherName(orderDetailInfo.getTeacherName());
-                    orderInfo.setTeacherImg(orderDetailInfo.getTeacherImg());
-                    orderInfo.setCourseName(orderDetailInfo.getCourseName());
-                    orderInfo.setEvaluateStatus(orderDetailInfo.getEvaluateStatus());
-                    orderInfo.setGrade(orderDetailInfo.getGrade());
-                    orderInfo.setPayPrice(orderDetailInfo.getPayPrice()+"");
-                    orderInfo.setTeacherId(orderDetailInfo.getTeacherId());
                     bundle.putSerializable("orderInfo",orderInfo);
                     intent.putExtra("bundle",bundle);
                     startActivityForResult(intent,200);
@@ -270,8 +280,17 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
             case 2:
                buy.setVisibility(View.VISIBLE);
                 contact.setVisibility(View.VISIBLE);
-               buy.setText(mActivity.getResources().getString(R.string.feed_money));
+                buy.setText(mActivity.getResources().getString(R.string.feed_money));
                 contact.setText("完成订单");
+
+                if("1".equalsIgnoreCase(orderInfo.getRefundStatus())){
+                    buy.setText("退款中");
+                    buy.setClickable(false);
+                }
+                if("2".equalsIgnoreCase(orderInfo.getRefundStatus())){
+                    buy.setText("退款完成");
+                    buy.setClickable(false);
+                }
                 break;
             case 3:
                 buy.setVisibility(View.GONE);
@@ -281,7 +300,7 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
                 contact.setVisibility(View.GONE);
                buy.setText(mActivity.getResources().getString(R.string.assert_now));
 
-                if(TextUtils.equals(orderStatus,"0")){
+                if(TextUtils.equals(orderInfo.getEvaluateStatus(),"0")){
                    buy.setVisibility(View.VISIBLE);
                 }else {
                    buy.setVisibility(View.GONE);

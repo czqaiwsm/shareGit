@@ -7,6 +7,7 @@ import android.os.Vibrator;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.SDKInitializer;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -17,6 +18,8 @@ import com.share.learn.bean.UserInfo;
 import com.share.learn.service.LocationService;
 import com.share.learn.service.LocationUitl;
 import com.share.learn.service.WriteLog;
+
+import java.util.Set;
 
 /**
  * @author czq
@@ -57,6 +60,15 @@ public class BaseApplication extends Application {
         SDKInitializer.initialize(getApplicationContext());
 
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        if(getUserInfo() != null){
+            JPushInterface.setAlias(BaseApplication.getInstance(), "s_" + getUserInfo().getId(), new TagAliasCallback() {
+                @Override
+                public void gotResult(int i, String s, Set<String> set) {
+                    AppLog.Logi("jpush alias:"+s+"   "+(set!=null?set.toString():""));
+                }
+            });
+            ;
+        }
         JPushInterface.init(this);     		// 初始化 JPush
 
 

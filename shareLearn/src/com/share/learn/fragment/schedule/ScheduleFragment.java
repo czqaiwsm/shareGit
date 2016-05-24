@@ -46,7 +46,8 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
     private boolean isPrepare = false;
     private boolean isHiden = true;
 
-    private ArrayList<ArrayList<CourseInfo>> weekCourseList ;
+
+    public static ArrayList<ArrayList<CourseInfo>> weekCourseList ;
 
     private String weeks[] = new String[]{"周一","周二","周三","周四","周五","周六","周日"};
 
@@ -87,29 +88,30 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
     }
 
     private void onInitTabConfig() {
-        mTabContainerView.removeAllTabs();
-        TabsActionBar tabsActionBar = new TabsActionBar(getActivity(), mTabContainerView);
-        mTabsAdapter = new TabsAdapter(getActivity(), mViewPager, tabsActionBar);
 
-        View inflateViwe = null;
-        for(int i=0;i<weeks.length;i++){
+        if(mTabsAdapter == null){
+            TabsActionBar tabsActionBar = new TabsActionBar(getActivity(), mTabContainerView);
+            mTabsAdapter = new TabsAdapter(getActivity(), mViewPager, tabsActionBar);
+            View inflateViwe = null;
+            for(int i=0;i<weeks.length;i++){
 
-            ArrayList<CourseInfo> courseInfos = null;
-            if(weekCourseList != null && i<weekCourseList.size()){
-                courseInfos = weekCourseList.get(i);
-            }
+                ArrayList<CourseInfo> courseInfos = null;
+                if(weekCourseList != null && i<weekCourseList.size()){
+                    courseInfos = weekCourseList.get(i);
+                }
 
-            inflateViwe = LayoutInflater.from(getActivity()).inflate(R.layout.schedule, null);
-            ((TextView)inflateViwe.findViewById(R.id.scheduleTxt)).setText(String.format(getString(R.string.schedule),weeks[i]));
+                inflateViwe = LayoutInflater.from(getActivity()).inflate(R.layout.schedule, null);
+                ((TextView)inflateViwe.findViewById(R.id.scheduleTxt)).setText(String.format(getString(R.string.schedule),weeks[i]));
 
-            Bundle bundle = new Bundle();
-            bundle.putInt("position",i);
-            if(courseInfos != null){
-                bundle.putSerializable("courList",courseInfos);
-            }
-            mTabsAdapter.addTab(tabsActionBar.newTab().setCustomView(inflateViwe)
+                Bundle bundle = new Bundle();
+                bundle.putInt("position",i);
+                if(courseInfos != null){
+                    bundle.putSerializable("courList",courseInfos);
+                }
+                mTabsAdapter.addTab(tabsActionBar.newTab().setCustomView(inflateViwe)
                         .setmTabbgDrawableId(R.drawable.login_tab), WeeksFragment.class,bundle);
 
+            }
         }
 
     }

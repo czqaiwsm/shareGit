@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -18,6 +19,7 @@ import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
 import com.share.learn.parse.TeacherDetailParse;
 import com.share.learn.utils.AppLog;
+import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.URLConstants;
 import com.volley.req.net.HttpURL;
 import com.volley.req.net.RequestManager;
@@ -106,6 +108,8 @@ public class FeedBackFragment extends BaseFragment implements OnClickListener,Re
 
     @Override
     public void handleRspSuccess(int requestType,Object obj)  {
+        Toast.makeText(BaseApplication.getInstance(),"感谢您的反馈!",Toast.LENGTH_LONG).show();
+
         mActivity.finish();
 
     }

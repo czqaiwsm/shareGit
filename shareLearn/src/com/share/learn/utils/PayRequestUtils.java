@@ -76,7 +76,7 @@ public class PayRequestUtils {
 //        }
 //    }
 
-    public void requestData() {
+    /*public void requestData() {
         // TODO Auto-generated method stub
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
@@ -157,5 +157,5 @@ public class PayRequestUtils {
             }
         };
     }
-
+*/
 }
