@@ -148,6 +148,7 @@ public class TeacherCourseSettingFragment extends BaseFragment implements View.O
     public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<CertifyStatus> jsonParserBase = (JsonParserBase<CertifyStatus>)obj;
                            SmartToast.showText("设置成功");
+        mActivity.setResult(Activity.RESULT_OK);
         mActivity.finish();
     }
 

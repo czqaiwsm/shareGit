@@ -120,6 +120,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.teacher.ChatMsgActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".activity.teacher.Cour"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.RegisterActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.LoginActivity"
@@ -139,6 +141,8 @@
         <activity android:name=".activity.teacher.MyAssetActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.home.MsgChooseActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.teacher.CourseListActivity"
                   android:screenOrientation="portrait"/>
 
 

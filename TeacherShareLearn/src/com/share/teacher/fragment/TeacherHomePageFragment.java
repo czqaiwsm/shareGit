@@ -15,6 +15,7 @@ import com.share.teacher.activity.home.CourseSettingActivity;
 import com.share.teacher.activity.home.SearchActivity;
 import com.share.teacher.activity.home.TeaCourseSettingActivity;
 import com.share.teacher.activity.home.TeacherCertifyActivity;
+import com.share.teacher.activity.teacher.CourseListActivity;
 import com.share.teacher.adapter.GuideViewPagerAdapter;
 import com.share.teacher.bean.BannerImgInfo;
 import com.share.teacher.bean.HomeInfo;
@@ -202,7 +203,7 @@ public class TeacherHomePageFragment extends BaseFragment implements View.OnClic
 //            case R.id.head_seach_txt:
 //                homeSearch.performClick();
             case R.id.courseSettingImg:
-                 toClassActivity(this, TeaCourseSettingActivity.class.getName());
+                 toClassActivity(this, CourseListActivity.class.getName());
                 break;
             case R.id.certifySettingImg:
                 toClassActivity(this, TeacherCertifyActivity.class.getName());
