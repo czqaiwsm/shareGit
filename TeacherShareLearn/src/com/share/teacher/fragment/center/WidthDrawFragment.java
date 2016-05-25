@@ -111,6 +111,8 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
                 }else
                 if (TextUtils.isEmpty(register_passCode.getText().toString()) || verifyCode==null) {
                     toasetUtil.showInfo("获取验证码!");
+                }else if(!verifyCode.getSmsCode().equalsIgnoreCase(register_passCode.getText().toString())){
+                    toasetUtil.showInfo("请输入正确的验证码!");
                 }
                 else if(Integer.valueOf(drawMoney.getText().toString())<=0){
                     toasetUtil.showInfo("提现金额不能小于0");
@@ -140,7 +142,7 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
                 postParams.put("realName", alipayName.getText().toString());
                 postParams.put("account", alipayAccount.getText().toString());
                 postParams.put("price", drawMoney.getText().toString());
-                postParams.put("sendId",verifyCode.getSendId());
+//                postParams.put("sendId",verifyCode.getSendId());
                 param.setmParserClassName(new BaseParse());
                 param.setmPostarams(postParams);
                 break;
@@ -251,7 +253,7 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
                 MSG_TOTAL_TIME = -1;
                 JsonParserBase<VerifyCode> jsonParserBase1 = (JsonParserBase<VerifyCode>)obj;
                 verifyCode = jsonParserBase1.getData();
-                register_passCode.setText(verifyCode !=null?verifyCode.getSmsCode():"");
+//                register_passCode.setText(verifyCode !=null?verifyCode.getSmsCode():"");
                 break;
             
             

@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * @data 2016/3/30
  */
 public class HomeInfo {
+    private String servicePhone;
 
     private ArrayList<HomePagerBanner> topAdList;
 
@@ -17,5 +18,13 @@ public class HomeInfo {
 
     public void setTopAdList(ArrayList<HomePagerBanner> topAdList) {
         this.topAdList = topAdList;
+    }
+
+    public String getServicePhone() {
+        return servicePhone;
+    }
+
+    public void setServicePhone(String servicePhone) {
+        this.servicePhone = servicePhone;
     }
 }

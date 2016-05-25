@@ -144,11 +144,17 @@ public class SettingFragmentUser extends BaseFragment implements OnClickListener
             case R.id.clear_layout://缓存
                 clearCache();
             break;
-            case R.id.about_layout:// 关于我们
+            case R.id.about_layout://
+                Intent intent = new Intent(mActivity, ServiceProtocolActivity.class);
+                intent.setFlags(12);
+                intent.putExtra("url","http://www.leishangnet.com/learn-wap/html/about.html");
+                mActivity.startActivity(intent);
 
-            break;
-            case R.id.service_pro_layout://
-                toClassActivity(SettingFragmentUser.this, ServiceProtocolActivity.class.getName());
+                break;
+            case R.id.service_pro_layout:
+                Intent intent1 = new Intent(mActivity, ServiceProtocolActivity.class);
+                intent1.putExtra("url","http://www.leishangnet.com/learn-wap/html/service_agreement.html");
+                mActivity.startActivity(intent1);
                 break;
             case R.id.exitLogin:// 退出登录
 

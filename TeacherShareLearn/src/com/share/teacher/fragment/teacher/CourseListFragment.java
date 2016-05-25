@@ -3,9 +3,11 @@ package com.share.teacher.fragment.teacher;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import com.share.teacher.R;
 import com.share.teacher.activity.home.CourseSettingActivity;
@@ -19,7 +21,10 @@ import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.help.PullRefreshStatus;
 import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
+import com.share.teacher.parse.BaseParse;
 import com.share.teacher.parse.CommentParse;
+import com.share.teacher.parse.CourseListParse;
+import com.share.teacher.utils.AlertDialogUtils;
 import com.share.teacher.utils.URLConstants;
 import com.share.teacher.utils.WaitLayer;
 import com.share.teacher.view.CustomListView;
@@ -52,15 +57,11 @@ public class CourseListFragment extends BaseFragment implements RequsetListener,
     private int pageSize = 10;//每页的数据量
     private PullRefreshStatus status = PullRefreshStatus.NORMAL;
 
-    private String teacherId = "";
+    private String id = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Bundle bundle = getArguments();
-        if(bundle != null ){
-            teacherId = bundle.getString("teacherId");
-        }
     }
 
     @Override
@@ -77,7 +78,7 @@ public class CourseListFragment extends BaseFragment implements RequsetListener,
         setLoadingDilog(WaitLayer.DialogType.NOT_NOMAL);
         isPrepare = true;
 //        onLazyLoad();
-        requestTask();
+        requestTask(1);
     }
 
 
@@ -87,6 +88,7 @@ public class CourseListFragment extends BaseFragment implements RequsetListener,
         noData = (TextView)view.findViewById(R.id.noData);
 
         customListView.setCanRefresh(true);
+        customListView.setCanLoadMore(false);
         adapter = new CourseItemAdpter(mActivity, list);
         customListView.setAdapter(adapter);
         customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
@@ -94,29 +96,24 @@ public class CourseListFragment extends BaseFragment implements RequsetListener,
             public void onRefresh() {
                 status = PullRefreshStatus.PULL_REFRESH;
                 pageNo = 1;
-                requestData(0);
+                requestData(1);
             }
         });
 
-       /* customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(mActivity, ChatMsgActivity.class);
-                UserInfo userInfo = BaseApplication.getInstance().userInfo;
-                intent.putExtra("teacherId",teacherId);
-
-                ChatMsgEntity chatMsgEntity = new ChatMsgEntity();
-                chatMsgEntity.setDirection("2");
-                chatMsgEntity.setReceiverId(teacherId);
-                chatMsgEntity.setSenderId(userInfo.getId());
-
-                chatMsgEntity.setTeacherName(teacherName);
-                chatMsgEntity.setTeacherImg(teacherImg);
-                intent.putExtra("bundle",chatMsgEntity);
-                startActivity(intent);
+            public void onItemClick(AdapterView<?> adapterView, View view,final int i, long l) {
+                AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "是否删除此信息?", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        id = list.get(i-1).getId();
+                        requestTask(2);
+                    }
+                }, null);
             }
-        });*/
+        });
     }
+
 
     private void initTitle(){
         setTitleText("我设置的课程");
@@ -135,7 +132,7 @@ public class CourseListFragment extends BaseFragment implements RequsetListener,
         if(!isPrepare || !isVisible){
             return;
         }
-        requestTask();
+        requestTask(1);
 
     }
 
@@ -159,53 +156,84 @@ public class CourseListFragment extends BaseFragment implements RequsetListener,
     public void onLoadMore() {
         status = PullRefreshStatus.LOAD_MORE;
         pageNo++;
-        requestData(0);
+        requestData(1);
     }
 
     @Override
     protected void requestData(int requestType) {
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
-        Map postParams = RequestHelp.getBaseParaMap("CourseList");
-//        @"cityName", [ @"pageNo",@"courseId",@"grade", @"cmd",@"123456",@"vcode",@"",@"fInviteCode",@"000000",@"deviceId",@"10",@"appversion",@"4",@"clientType",[[UserInfoManage shareInstance] token],@"accessToken", nil];
         RequestParam param = new RequestParam();
-//        param.setmParserClassName(CommentParse.class.getName());
-        param.setmParserClassName(new CommentParse());
+        Map postParams = null;
+        switch (requestType){
+            case 1:
+                postParams = RequestHelp.getBaseParaMap("CourseList");
+                param.setmParserClassName(new CourseListParse());
+                break;
+            case 2:
+                postParams = RequestHelp.getBaseParaMap("DeleteCourse");
+                postParams.put("id",id);
+                param.setmParserClassName(new BaseParse());
+                break;
+
+        }
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
-        RequestManager.getRequestData(getActivity(), createReqSuccessListener(), createMyReqErrorListener(), param);
+        RequestManager.getRequestData(getActivity(), createReqSuccessListener(requestType), createMyReqErrorListener(), param);
     }
 
     @Override
     public void handleRspSuccess(int requestType,Object obj) {
-        JsonParserBase<ArrayList<CourseItem>> jsonParserBase = (JsonParserBase<ArrayList<CourseItem>>)obj;
-        ArrayList<CourseItem> courseItems = jsonParserBase.getData();
-        if(courseItems != null){
+        switch (requestType){
 
-            switch (status){
-                case NORMAL:
-                    refresh(courseItems);
-                    break;
+            case  1:
+                JsonParserBase<ArrayList<CourseItem>> jsonParserBase = (JsonParserBase<ArrayList<CourseItem>>)obj;
+                ArrayList<CourseItem> courseItems = jsonParserBase.getData();
+                if(courseItems != null){
 
-                case PULL_REFRESH:
-                    refresh(courseItems);
-                    customListView.onRefreshComplete();
-                    break;
-                case LOAD_MORE:
-                    if(courseItems != null && courseItems.size()>0){//有数据
-                        list.addAll(courseItems);
-                        customListView.onLoadMoreComplete(CustomListView.ENDINT_MANUAL_LOAD_DONE);
-                        adapter.notifyDataSetInvalidated();
-                    }else {
-                        pageNo--;
-                        customListView.onLoadMoreComplete(CustomListView.ENDINT_AUTO_LOAD_NO_DATA);
+                    switch (status){
+                        case NORMAL:
+                            refresh(courseItems);
+                            break;
+
+                        case PULL_REFRESH:
+                            refresh(courseItems);
+                            customListView.onRefreshComplete();
+                            break;
+                        case LOAD_MORE:
+                            if(courseItems != null && courseItems.size()>0){//有数据
+                                list.addAll(courseItems);
+                                customListView.onLoadMoreComplete();
+                                adapter.notifyDataSetInvalidated();
+                            }else {
+                                pageNo--;
+                                customListView.onLoadMoreComplete();
+                            }
+                            break;
+                        default:break;
                     }
-                    break;
-                default:break;
-            }
+
+                }
+                break;
+            case 2:
+                CourseItem selectMsg = null;
+                for (CourseItem msgDetail : list) {
+                    if (TextUtils.equals(id, msgDetail.getId())) {
+                        selectMsg = msgDetail;
+                        break;
+                    }
+                }
+
+                if (selectMsg != null) {
+                    list.remove(selectMsg);
+                }
+                adapter.notifyDataSetChanged();
+                toasetUtil.showSuccess("删除成功!");
+                break;
 
         }
+
     }
 
     @Override
@@ -217,7 +245,7 @@ public class CourseListFragment extends BaseFragment implements RequsetListener,
                 break;
             case LOAD_MORE:
                 pageNo--;
-                customListView.onLoadMoreComplete(CustomListView.ENDINT_MANUAL_LOAD_DONE);
+                customListView.onLoadMoreComplete();
                 break;
             default:
                 break;
@@ -258,7 +286,7 @@ public class CourseListFragment extends BaseFragment implements RequsetListener,
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == Activity.RESULT_OK){
-            requestTask(0);
+            requestTask(1);
         }
     }
 }

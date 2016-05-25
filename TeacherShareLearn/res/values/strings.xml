@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">学生端</string>
+    <string name="app_name">我享学-老师版</string>
     <string name="session">首页</string>
     <string name="address_book">消息</string>
     <string name="schedule_tab">课表</string>

@@ -55,7 +55,7 @@ public class TeacherHomePageFragment extends BaseFragment implements View.OnClic
 //    private LinearLayout homeSearch;
 //    private EditText head_seach_txt;
 
-
+    public static HomeInfo homeInfo;
     private View converView;
     private ViewPager viewpager = null;
     private GuideViewPagerAdapter guideAdapter = null;
@@ -162,7 +162,7 @@ public class TeacherHomePageFragment extends BaseFragment implements View.OnClic
     public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<HomeInfo> jsonParserBase = (JsonParserBase<HomeInfo>) obj;
         if (jsonParserBase != null) {
-            HomeInfo homeInfo = jsonParserBase.getData();
+            homeInfo = jsonParserBase.getData();
             ArrayList<HomePagerBanner> pagerBanners = homeInfo.getTopAdList();
             BannerImgInfo imgInfo = null;
             bannerImgInfos.clear();

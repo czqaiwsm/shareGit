@@ -2,6 +2,7 @@ package com.share.teacher.fragment.center;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.share.teacher.activity.home.MsgChooseActivity;
 import com.share.teacher.activity.teacher.MyAssetActivity;
 import com.share.teacher.bean.UserInfo;
 import com.share.teacher.fragment.BaseFragment;
+import com.share.teacher.fragment.TeacherHomePageFragment;
 import com.share.teacher.utils.BaseApplication;
 import com.share.teacher.utils.ImageLoaderUtil;
 import com.share.teacher.view.RoundImageView;
@@ -39,6 +41,10 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
     private RelativeLayout setting_layout;
 
     private UserInfo mUserInfo;
+    private TextView account_customname;
+
+    private boolean isPrepare = false;
+    private boolean isVisible = false;
 
 
     @Override
@@ -63,6 +69,8 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
         super.onViewCreated(view, savedInstanceState);
         initTitleView();
         initView(view);
+        isPrepare = true;
+        onLazyLoad();
     }
 
     private void initTitleView() {
@@ -73,6 +81,39 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
                 toClassActivity(PCenterInfoFragment.this,MsgChooseActivity.class.getName());
             }
         });
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            isVisible = true;
+        }else {
+            isVisible = false;
+        }
+
+        onLazyLoad();
+    }
+
+    private void onLazyLoad(){
+
+        if(!isPrepare || !isVisible){
+            return;
+        }
+        if(TeacherHomePageFragment.homeInfo != null){
+            account_customname.setText(TeacherHomePageFragment.homeInfo.getServicePhone());
+        }
+
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            if(TeacherHomePageFragment.homeInfo != null){
+                account_customname.setText(TeacherHomePageFragment.homeInfo.getServicePhone());
+            }
+        }
     }
 
     private void initView(View v) {
@@ -86,6 +127,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
         setting_layout = (RelativeLayout) v.findViewById(R.id.set_layout);
         name = (TextView)v.findViewById(R.id.name);
         phone = (TextView)v.findViewById(R.id.jonior);
+        account_customname = (TextView)v.findViewById(R.id.account_customname);
 
         pcenter_avatar_layout.setOnClickListener(this);
         wallet_layout.setOnClickListener(this);
@@ -128,6 +170,11 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
                 break;
             case R.id.feedBace_layout:// 反馈
                 toClassActivity(PCenterInfoFragment.this, FeedBackActivity.class.getName());
+                break;
+            case R.id.custom_layout:// 设置
+                //用intent启动拨打电话
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+account_customname.getText().toString()));
+                startActivity(intent);
                 break;
             case R.id.set_layout:// 设置
                 toClassActivity(PCenterInfoFragment.this, SettingActivity.class.getName());

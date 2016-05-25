@@ -19,7 +19,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-
+    <!--添加可以向外拨打电话的权限  -->
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
     <permission
             android:name="com.share.teacher.permission.JPUSH_MESSAGE"
             android:protectionLevel="signature" />

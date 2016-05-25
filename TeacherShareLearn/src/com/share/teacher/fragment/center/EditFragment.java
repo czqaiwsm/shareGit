@@ -76,7 +76,7 @@ public class EditFragment extends BaseFragment implements OnClickListener{
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 if(TextUtils.isEmpty(rechargePrice.getText())){
-                    toasetUtil.showInfo("请输入类容");
+                    toasetUtil.showInfo("请输入内容");
                     return;
                 }
                 Intent intent = new Intent();
@@ -104,7 +104,7 @@ public class EditFragment extends BaseFragment implements OnClickListener{
                 if(!TextUtils.isEmpty(rechargePrice.getText())){
                     requestTask();
                 }else {
-                    toasetUtil.showInfo("请填写反馈类容!");
+                    toasetUtil.showInfo("请填写内容!");
                 }
                 break;
         }
