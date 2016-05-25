@@ -69,7 +69,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     private int ids[] = { R.drawable.aot,R.drawable.aot,R.drawable.aot};
 
     private ArrayList<BannerImgInfo> bannerImgInfos = new ArrayList<BannerImgInfo>();
-
+    public static  HomeInfo homeInfo = null;
     private int courseId = 100;//课程名称
       /*语文	101
         数学	102
@@ -192,7 +192,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<HomeInfo> jsonParserBase = (JsonParserBase<HomeInfo>)obj;
         if(jsonParserBase != null){
-            HomeInfo homeInfo = jsonParserBase.getData();
+            homeInfo = jsonParserBase.getData();
             ArrayList<HomePagerBanner> pagerBanners = homeInfo.getTopAdList();
             BannerImgInfo imgInfo = null;
             bannerImgInfos.clear();

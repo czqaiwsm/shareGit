@@ -99,7 +99,7 @@ public class OrderPayAdpter extends BaseAdapter {
                     statuStr = "待支付";
                     holder.left_tv.setVisibility(View.VISIBLE);
                     holder.right_tv.setVisibility(View.VISIBLE);
-                    holder.left_tv.setText(mContext.getResources().getString(R.string.contact_tea));
+                    holder.left_tv.setText("取消订单");
                     holder.right_tv.setText(mContext.getResources().getString(R.string.pay_now));
                     break;
                 case 2:
@@ -114,7 +114,7 @@ public class OrderPayAdpter extends BaseAdapter {
                     if("1".equalsIgnoreCase(message.getRefundStatus())){
                         holder.right_tv.setText("退款中");
                         holder.right_tv.setClickable(false);
-                        holder.right_tv.setVisibility(View.GONE);
+                        holder.left_tv.setVisibility(View.GONE);
                     }
                     if("2".equalsIgnoreCase(message.getRefundStatus())){
                         holder.right_tv.setText("退款完成");

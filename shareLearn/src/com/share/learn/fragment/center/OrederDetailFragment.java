@@ -142,6 +142,10 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
                 param.setmParserClassName(new OrderDetailBeanParse());
 
                 break;
+            case 2://取消订单
+                postParams = RequestHelp.getBaseParaMap("CancelOrder");
+                postParams.put("orderId",orderInfo.getOrderId());
+                param.setmParserClassName(new BaseParse());
             case 3://确认订单
                 postParams = RequestHelp.getBaseParaMap("ConfirmOrder");
                 postParams.put("orderId",orderInfo.getOrderId());
@@ -185,6 +189,11 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
                 }
 
                 break;
+
+            case 2:
+                mActivity.setResult(OrderFragment.CANCEL_ORDER);
+                mActivity.finish();
+                break;
             case 3:
                 mActivity.setResult(Activity.RESULT_OK);
                 mActivity.finish();
@@ -203,20 +212,21 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
         Intent intent = null;
         switch (v.getId()){
             case R.id.contact:
-                if(flag == 1){//待支付(联系老师)
-                    intent = new Intent(mActivity, ChatMsgActivity.class);
-                    UserInfo userInfo = BaseApplication.getUserInfo();
-                    intent.putExtra("teacherId",orderDetailInfo.getTeacherId());
-
-                    ChatMsgEntity chatMsgEntity = new ChatMsgEntity();
-                    chatMsgEntity.setDirection("2");
-                    chatMsgEntity.setReceiverId(orderDetailInfo.getTeacherId());
-                    chatMsgEntity.setSenderId(userInfo.getId());
-
-                    chatMsgEntity.setTeacherName(orderDetailInfo.getTeacherName());
-                    chatMsgEntity.setTeacherImg(orderDetailInfo.getTeacherImg());
-                    intent.putExtra("bundle",chatMsgEntity);
-                    startActivity(intent);
+                if(flag == 1){//待支付(取消订单)
+//                    intent = new Intent(mActivity, ChatMsgActivity.class);
+//                    UserInfo userInfo = BaseApplication.getUserInfo();
+//                    intent.putExtra("teacherId",orderDetailInfo.getTeacherId());
+//
+//                    ChatMsgEntity chatMsgEntity = new ChatMsgEntity();
+//                    chatMsgEntity.setDirection("2");
+//                    chatMsgEntity.setReceiverId(orderDetailInfo.getTeacherId());
+//                    chatMsgEntity.setSenderId(userInfo.getId());
+//
+//                    chatMsgEntity.setTeacherName(orderDetailInfo.getTeacherName());
+//                    chatMsgEntity.setTeacherImg(orderDetailInfo.getTeacherImg());
+//                    intent.putExtra("bundle",chatMsgEntity);
+//                    startActivity(intent);
+                    requestTask(2);
                 }else if(flag == 2){//已支付(完成订单)
                     requestTask(3);
                 }
@@ -274,7 +284,7 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
             case 1:
                 contact.setVisibility(View.VISIBLE);
                buy.setVisibility(View.VISIBLE);
-                contact.setText(mActivity.getResources().getString(R.string.contact_tea));
+                contact.setText("取消订单");
                buy.setText(mActivity.getResources().getString(R.string.pay_now));
                 break;
             case 2:

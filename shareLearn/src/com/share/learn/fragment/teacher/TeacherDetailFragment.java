@@ -1,6 +1,7 @@
 package com.share.learn.fragment.teacher;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ import java.util.Map;
 /**
  * 教师详情界面
  */
-public class TeacherDetailFragment extends BaseFragment implements RequsetListener{
+public class TeacherDetailFragment extends BaseFragment implements RequsetListener ,View.OnClickListener{
 
     private String key;
     private ViewPager mViewPager;
@@ -44,7 +45,7 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
 
     private RoundImageView headPhoto;//头像
     private TextView  name;//姓名
-    private TextView  content;//感想。
+    private TextView  phone;//电话。
     private TextView  singnature;//感想。
 
     private String teacherId = "";//id
@@ -88,8 +89,10 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
         mTabContainerView = (ScrollingTabContainerView) view.findViewById(R.id.tab_container);
         headPhoto = (RoundImageView)view.findViewById(R.id.head_photo);
         name = (TextView) view.findViewById(R.id.Name);
-        content = (TextView) view.findViewById(R.id.content);
+        phone = (TextView) view.findViewById(R.id.phone);
         singnature = (TextView) view.findViewById(R.id.singnature);
+        phone.setOnClickListener(this);
+        phone.setVisibility(View.GONE);
 
 //        onInitTabConfig();
     }
@@ -161,7 +164,19 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
             ImageLoader.getInstance().displayImage(teacherDetailInfo.getHeadImg(),headPhoto, ImageLoaderUtil.mHallIconLoaderOptions);
 
             teacherDetailInfo.setIsCheck(jsonParserBase.getData().getIsCheck());
+            phone.setVisibility(View.VISIBLE);
             onInitTabConfig();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.phone:
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+teacherDetailInfo.getMobile()));
+                startActivity(intent);
+                break;
+
         }
     }
 }

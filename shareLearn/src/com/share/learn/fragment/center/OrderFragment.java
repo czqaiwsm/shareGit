@@ -32,6 +32,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener{
     private TextView[] textViews = new TextView[viewCount];
 
     public  static final int PAY_SUCC = 0X12;
+    public  static final int CANCEL_ORDER = 0X13;
     public  static final int CONFIRM_ORDER = 0X22;
 
     private Handler handler = new Handler(){
@@ -40,10 +41,13 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener{
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case PAY_SUCC:
-                    mViewPager.setCurrentItem(1,true);
+                    mViewPager.setCurrentItem(1,false);
+                    break;
+                case CANCEL_ORDER:
+                    mViewPager.setCurrentItem(2,false);
                     break;
                 case CONFIRM_ORDER:
-                    mViewPager.setCurrentItem(3,true);
+                    mViewPager.setCurrentItem(3,false);
                     break;
             }
 
@@ -106,6 +110,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener{
         mViewPager.setAdapter(new OrderPageFragmentAdapter(getFragmentManager(), orderPayFragments));
         imageViews[0].setSelected(true);
         textViews[0].setSelected(true);
+        mViewPager.setOffscreenPageLimit(viewCount);
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {

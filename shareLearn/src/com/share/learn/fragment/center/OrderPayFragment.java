@@ -22,6 +22,7 @@ import com.share.learn.fragment.BaseFragment;
 import com.share.learn.help.PullRefreshStatus;
 import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
+import com.share.learn.parse.BaseParse;
 import com.share.learn.parse.OrderListBeanParse;
 import com.share.learn.utils.AlertDialogUtils;
 import com.share.learn.utils.BaseApplication;
@@ -83,8 +84,8 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
         initView(view);
         isPrepare = true;
         setLoadingDilog(WaitLayer.DialogType.NOT_NOMAL);
-        onLazyLoad();
         payPopupwidow = new PayPopupwidow(mActivity,null,this);
+        onLazyLoad();
     }
 
     private void onLazyLoad(){
@@ -93,7 +94,6 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
             return;
         }
          requestTask(1);
-
     }
 
 
@@ -108,7 +108,6 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                 dismissLoadingDilog();
             }
         }
-
         onLazyLoad();
     }
 
@@ -163,9 +162,14 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
             case 1:
                 postParams = RequestHelp.getBaseParaMap("OrderList");
                 postParams.put("status",flag);
-                postParams.put("vcode", "123456");
+//                postParams.put("vcode", "123456");
                 postParams.put("pageNo",pageNo);
                 param.setmParserClassName(new OrderListBeanParse());
+                break;
+            case 2://取消订单
+                postParams = RequestHelp.getBaseParaMap("CancelOrder");
+                postParams.put("orderId",orderInfo.getOrderId());
+                param.setmParserClassName(new BaseParse());
                 break;
             case 3:
                 postParams = RequestHelp.getBaseParaMap("ConfirmOrder");
@@ -222,8 +226,13 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                 }
                 break;
 
+            case 2://取消订单成功
+                    toasetUtil.showSuccess("订单取消成功!");
+                    handler.sendEmptyMessage(OrderFragment.CANCEL_ORDER);
+                break;
             case 3://完成订单成功
                     handler.sendEmptyMessage(OrderFragment.CONFIRM_ORDER)    ;
+                break;
             case 4://申请退款成功
                     for(OrderInfo orderInfo:list){
                         if(orderInfo.getOrderId().equalsIgnoreCase(orderId)){
@@ -292,20 +301,21 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
          orderInfo= list.get((Integer)v.getTag());
         switch (v.getId()){
             case R.id.left_tv:
-                if(flag == 1){//待支付(联系老师)
-                    intent = new Intent(mActivity, ChatMsgActivity.class);
-                    UserInfo userInfo = BaseApplication.getUserInfo();
-                    intent.putExtra("teacherId",orderInfo.getTeacherId());
-
-                    ChatMsgEntity chatMsgEntity = new ChatMsgEntity();
-                    chatMsgEntity.setDirection("2");
-                    chatMsgEntity.setReceiverId(orderInfo.getTeacherId());
-                    chatMsgEntity.setSenderId(userInfo.getId());
-
-                    chatMsgEntity.setTeacherName(orderInfo.getTeacherName());
-                    chatMsgEntity.setTeacherImg(orderInfo.getTeacherImg());
-                    intent.putExtra("bundle",chatMsgEntity);
-                    startActivity(intent);
+                if(flag == 1){//待支付(取消订单)
+//                    intent = new Intent(mActivity, ChatMsgActivity.class);
+//                    UserInfo userInfo = BaseApplication.getUserInfo();
+//                    intent.putExtra("teacherId",orderInfo.getTeacherId());
+//
+//                    ChatMsgEntity chatMsgEntity = new ChatMsgEntity();
+//                    chatMsgEntity.setDirection("2");
+//                    chatMsgEntity.setReceiverId(orderInfo.getTeacherId());
+//                    chatMsgEntity.setSenderId(userInfo.getId());
+//
+//                    chatMsgEntity.setTeacherName(orderInfo.getTeacherName());
+//                    chatMsgEntity.setTeacherImg(orderInfo.getTeacherImg());
+//                    intent.putExtra("bundle",chatMsgEntity);
+//                    startActivity(intent);
+                      requestTask(2);
                 }else if(flag == 2){//已支付(完成订单)
                     AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "您确定完成订单?", new View.OnClickListener() {
                         @Override
@@ -366,17 +376,18 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
                     paySucc();
                     break;
                 case 2://完成订单
-                    handler.sendEmptyMessage(OrderFragment.CONFIRM_ORDER)    ;
+                    handler.sendEmptyMessage(OrderFragment.CONFIRM_ORDER);
                     break;
                 case 4://立即评价
                     requestTask(1);
                     break;
 
             }
-        }else
-            if(resultCode == 151){//退款完成
+        }else if(resultCode == 151){//退款完成
                 requestTask(1);
-            }
+        }else if(resultCode == OrderFragment.CANCEL_ORDER){//取消订单
+            handler.sendEmptyMessage(OrderFragment.CANCEL_ORDER);
+        }
 
 
     }

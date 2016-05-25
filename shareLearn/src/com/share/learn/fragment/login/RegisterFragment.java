@@ -1,5 +1,6 @@
 package com.share.learn.fragment.login;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.share.learn.R;
+import com.share.learn.activity.center.ServiceProtocolActivity;
 import com.share.learn.activity.login.LoginActivity;
 import com.share.learn.bean.VerifyCode;
 import com.share.learn.fragment.BaseFragment;
@@ -86,6 +88,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener,Re
 		protocol.setText(Html.fromHtml("<u>此软件的用户协议</u>"));
 		getCode.setOnClickListener(this);
 		register.setOnClickListener(this);
+		protocol.setOnClickListener(this);
 	}
 
 	/**
@@ -135,6 +138,11 @@ public class RegisterFragment extends BaseFragment implements OnClickListener,Re
 		case R.id.register_getCode:// 获取验证码
 			mIsCode = true;
 			getCode();
+			break;
+		case R.id.protocol:// 服务协议
+			Intent intent1 = new Intent(mActivity, ServiceProtocolActivity.class);
+			intent1.putExtra("url","http://www.leishangnet.com/learn-wap/html/service_agreement.html");
+			mActivity.startActivity(intent1);
 			break;
 		default:
 			break;

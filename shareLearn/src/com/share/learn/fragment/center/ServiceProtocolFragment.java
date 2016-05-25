@@ -37,8 +37,9 @@ public class ServiceProtocolFragment extends BaseFragment {
                 case 11:
                     title = "我享学";
                     break;
-
-
+                case 12:
+                    title = "关于我们";
+                    break;
             }
         }
 

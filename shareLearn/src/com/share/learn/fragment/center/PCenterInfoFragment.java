@@ -2,7 +2,9 @@ package com.share.learn.fragment.center;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +20,7 @@ import com.share.learn.activity.login.LoginActivity;
 import com.share.learn.bean.DataMapConstants;
 import com.share.learn.bean.UserInfo;
 import com.share.learn.fragment.BaseFragment;
+import com.share.learn.fragment.HomePageFragment;
 import com.share.learn.utils.BaseApplication;
 import com.share.learn.utils.ImageLoaderUtil;
 import com.share.learn.view.RoundImageView;
@@ -33,6 +36,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
 
     private TextView name;
     private TextView jonior;
+    private TextView account_customname;
     private RelativeLayout wallet_layout;
     private RelativeLayout order_layout;
     private RelativeLayout caution_layout;
@@ -42,7 +46,8 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
 
     private UserInfo mUserInfo;
 
-
+    private boolean isPrepare = false;
+    private boolean isVisible = false;
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -65,6 +70,8 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
         super.onViewCreated(view, savedInstanceState);
         initTitleView();
         initView(view);
+        isPrepare = true;
+        onLazyLoad();
     }
 
     private void initTitleView() {
@@ -95,6 +102,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
         setting_layout = (RelativeLayout) v.findViewById(R.id.set_layout);
         name = (TextView)v.findViewById(R.id.name);
         jonior = (TextView)v.findViewById(R.id.jonior);
+        account_customname = (TextView)v.findViewById(R.id.account_customname);
 
         pcenter_avatar_layout.setOnClickListener(this);
         wallet_layout.setOnClickListener(this);
@@ -106,6 +114,37 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
 
         setData(mUserInfo);
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            isVisible = true;
+        }else {
+            isVisible = false;
+        }
+
+        onLazyLoad();
+    }
+
+    private void onLazyLoad(){
+
+        if(!isPrepare || !isVisible){
+            return;
+        }
+
+
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            if(HomePageFragment.homeInfo != null){
+                account_customname.setText(HomePageFragment.homeInfo.getServicePhone());
+            }
+        }
     }
 
     private void setData(UserInfo userInfo) {
@@ -162,6 +201,16 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
                 break;
             case R.id.feedBace_layout:// 反馈
                 toClassActivity(PCenterInfoFragment.this, FeedBackActivity.class.getName());
+                break;
+            case R.id.custom_layout:// 客服电话
+                if(TextUtils.isEmpty(account_customname.getText().toString())){
+                    toasetUtil.showInfo("暂无客服电话!");
+                    return;
+                }
+                //用intent启动拨打电话
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+account_customname.getText().toString()));
+                startActivity(intent);
+//                toClassActivity(PCenterInfoFragment.this, FeedBackActivity.class.getName());
                 break;
             case R.id.set_layout:// 设置
                 toClassActivity(PCenterInfoFragment.this, SettingActivity.class.getName());

@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 public class HomeInfo {
 
+    private String servicePhone;
     private ArrayList<HomePagerBanner> topAdList;
 
     public ArrayList<HomePagerBanner> getTopAdList() {
@@ -19,5 +20,14 @@ public class HomeInfo {
 
     public void setTopAdList(ArrayList<HomePagerBanner> topAdList) {
         this.topAdList = topAdList;
+    }
+
+
+    public String getServicePhone() {
+        return servicePhone;
+    }
+
+    public void setServicePhone(String servicePhone) {
+        this.servicePhone = servicePhone;
     }
 }
