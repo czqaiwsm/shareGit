@@ -10,16 +10,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/white_round_ee_bg"
-            android:layout_marginRight="@dimen/submit_check_mar"
-            android:layout_marginLeft="@dimen/submit_check_mar"
-            android:layout_marginTop="@dimen/submit_check_mar"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical" >
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="16dp"
-                      android:layout_marginRight="@dimen/submit_check_mar"
-                      android:layout_marginLeft="@dimen/submit_check_mar"
+                      android:layout_marginRight="20dp"
+                      android:layout_marginLeft="20dp"
                       android:orientation="vertical">
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content">
@@ -34,12 +34,12 @@
                         />
             </LinearLayout>
 
-            <TextView android:layout_width="match_parent"
+            <TextView android:id="@+id/contentTip"
+                      android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:textSize="@dimen/app_text_size_first"
                       android:layout_marginTop="@dimen/_10dp"
                       android:textColor="@color/main_txt_black"
-                      android:text="我们已收到您的申请,工作人员会在24小时内审核完毕,感谢您对我们的关注"
                     />
             <RelativeLayout android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -51,7 +51,7 @@
                         android:id="@+id/commit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/pink_press"
+                        android:background="@drawable/login_selector2"
                         android:gravity="center"
                         android:paddingBottom="12dp"
                         android:paddingTop="12dp"

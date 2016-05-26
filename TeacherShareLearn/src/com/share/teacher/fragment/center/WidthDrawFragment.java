@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,7 @@ import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.BaseParse;
 import com.share.teacher.parse.VerifyCodeParse;
 import com.share.teacher.utils.*;
+import com.share.teacher.view.Bec_nurse_Window;
 import com.volley.req.net.HttpURL;
 import com.volley.req.net.RequestManager;
 import com.volley.req.net.RequestParam;
@@ -122,6 +124,10 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
                 else {
                     requestTask(1);
                 }
+                break;
+            case R.id.commit:
+                mActivity.setResult(Activity.RESULT_OK);
+                mActivity.finish();
                 break;
         }
 
@@ -236,6 +242,7 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
         ButterKnife.unbind(this);
     }
 
+    private Bec_nurse_Window becNursePop ;
     @Override
     public void handleRspSuccess(int requestType, Object obj) {
         switch (requestType){
@@ -244,9 +251,13 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
                 if ((jsonParserBase != null)) {
                     LinkedTreeMap<String, String> treeMap = (LinkedTreeMap<String, String>) jsonParserBase.getData();
                     String order = treeMap.get("tips");
-                    SmartToast.showText(order);
-                    mActivity.setResult(Activity.RESULT_OK);
-                    mActivity.finish();
+                    if(becNursePop == null){
+                        becNursePop = new Bec_nurse_Window(mActivity,register_getCode,this);
+                    }
+
+                    becNursePop.showAtLocation(register_getCode, Gravity.CENTER, 0, 0);
+                    becNursePop.setContent(order);
+
                 }
                 break;
             case  2:

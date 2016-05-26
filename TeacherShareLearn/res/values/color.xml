@@ -7,6 +7,7 @@
     <color name="common_botton_bar_blue">#2ea7e0</color>
     <color name="common_bg">#fcfcfc</color>
     <color name="bottom_bar_normal_bg">#2D2F31</color>
+    <color name="main_txt_black">#5E5E5E</color>
 
     <color name="found_focus">#FFbebebe</color>
     <color name="found_press">#FFb17f67</color>
