@@ -100,7 +100,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener,Re
 			return;
 		}
 		if (!register_phone.getText().toString().equalsIgnoreCase(phone)) {
-			SmartToast.showText(mActivity,"手机号不一致,请重新获取验证码!");
+			SmartToast.showText(mActivity, "手机号不一致,请重新获取验证码!");
 			return;
 		}
 		if (!register_passAgain.getText().toString().equals(register_pass.getText().toString())) {
@@ -113,7 +113,11 @@ public class RegisterFragment extends BaseFragment implements OnClickListener,Re
 		}
 
 		if(!box.isChecked()){
-			SmartToast.showText(mActivity,"请同意协议");
+			SmartToast.showText(mActivity, "请同意协议");
+			return;
+		}
+		if(!verifyCode.getSmsCode().equalsIgnoreCase(inputCode.getText().toString())){
+			toasetUtil.showInfo("请输入正确的验证码!");
 			return;
 		}
 		requetType = 2;

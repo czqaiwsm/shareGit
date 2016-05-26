@@ -254,10 +254,8 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
                     if(becNursePop == null){
                         becNursePop = new Bec_nurse_Window(mActivity,register_getCode,this);
                     }
-
                     becNursePop.showAtLocation(register_getCode, Gravity.CENTER, 0, 0);
                     becNursePop.setContent(order);
-
                 }
                 break;
             case  2:
