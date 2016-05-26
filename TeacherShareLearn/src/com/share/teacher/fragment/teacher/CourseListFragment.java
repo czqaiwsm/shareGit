@@ -103,7 +103,7 @@ public class CourseListFragment extends BaseFragment implements RequsetListener,
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view,final int i, long l) {
-                AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "是否删除此信息?", new View.OnClickListener() {
+                AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "是否删除此课程?", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         id = list.get(i-1).getId();

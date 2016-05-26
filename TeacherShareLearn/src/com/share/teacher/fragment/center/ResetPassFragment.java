@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class ResetPassFragment extends BaseFragment implements OnClickListener,RequsetListener{
 
-    private EditText loginPass,resetPass;
+    private EditText loginPass,resetPass,sure_pass;
     private TextView rechareQuery;
 
     @Override
@@ -65,7 +65,9 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
     private void initView(View v) {
         loginPass = (EditText)v.findViewById(R.id.login_pass);
         resetPass = (EditText)v.findViewById(R.id.new_pass);
+        sure_pass = (EditText) v.findViewById(R.id.sure_pass);
         rechareQuery = (TextView)v.findViewById(R.id.recharge_query);
+
         rechareQuery.setOnClickListener(this);
 
     }
@@ -98,6 +100,9 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
             return;
         }else if(loginPass.getText().toString().equals(resetPass.getText().toString())){
             SmartToast.showText(mActivity,"新旧密码不能一致!");
+            return;
+        }else if(!resetPass.getText().toString().equals(sure_pass.getText().toString())){
+            toasetUtil.showInfo("两次输入的密码不一致!");
             return;
         }
         requestTask();

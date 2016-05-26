@@ -14,7 +14,8 @@ import com.share.teacher.R;
 /**
  * 订单取消弹出框
  */
-public class Bec_nurse_Window extends PopupWindow {
+public class
+Bec_nurse_Window extends PopupWindow {
 
 	private View mPopView;
 	private String content = "";

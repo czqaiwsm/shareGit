@@ -136,4 +136,5 @@
         <item name="android:windowEnterAnimation">@anim/city_in_center</item>
         <item name="android:windowExitAnimation">@anim/city_out_center</item>
     </style>
+
 </resources>
