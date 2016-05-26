@@ -135,15 +135,16 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
     private void iniData(){
         if(courseInfo == null) return;
         orderPay = trueMoey = priceMoney = Integer.valueOf(courseInfo.getPrice());
-        account.setTag(1);
+        account.setTag(2);
 
         couseName.setText(courseInfo.getCourseName());
         price.setText(String.format(getResources().getString(R.string.price,courseInfo.getPrice())));
 
         address.setText(BaseApplication.getInstance().location[0]);
 
-        favourable.setText(String.format(getResources().getString(R.string.balance_has,0)));
-        truePay.setText(String.format(getResources().getString(R.string.balance_has,courseInfo.getPrice())));
+        favourable.setText(String.format(getResources().getString(R.string.balance_has,getDiscontPrice((Integer)account.getTag()))));
+        trueMoey = priceMoney*((Integer)account.getTag()) - getDiscontPrice((Integer)account.getTag());
+        truePay.setText(String.format(getResources().getString(R.string.balance_has,trueMoey)));
 
     }
 
@@ -270,7 +271,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
         private View mPopView;
         private CustomListView customListView;
-        private ArrayList<String> datas = new ArrayList<String>();
+        private ArrayList<Integer> datas = new ArrayList<Integer>();
 
         public CoursePopupWindow(Activity context, View view, OnClickListener itemsOnClick) {
             super(view);
@@ -287,8 +288,8 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
             customListView.setCanLoadMore(false);
             customListView.setCanRefresh(false);
-            for(int i=1;i<20;i++){
-                datas.add((i)+"次");
+            for(int i=2;i<40;i++){
+                datas.add((i));
             }
 
             customListView.setAdapter(new BaseAdapter() {
@@ -317,7 +318,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
                     }else {
                         textView =(TextView) view.getTag();
                     }
-                    textView.setText(datas.get(i));
+                    textView.setText(datas.get(i)+"次");
                     return view;
                 }
             });
@@ -332,12 +333,12 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
             customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    account.setText(datas.get(i-1));
-                    account.setTag(i);
+                    account.setText(datas.get(i-1)+"次");
+                    account.setTag(datas.get(i-1));
 
-                    orderPay = priceMoney * (i);
-                    trueMoey = orderPay - getDiscontPrice(i);
-                    favourable.setText(String.format(getResources().getString(R.string.balance_has,getDiscontPrice(i))));
+                    orderPay = priceMoney * datas.get(i-1);
+                    trueMoey = orderPay - getDiscontPrice(datas.get(i-1));
+                    favourable.setText(String.format(getResources().getString(R.string.balance_has,getDiscontPrice(datas.get(i-1)))));
                     truePay.setText(String.format(getResources().getString(R.string.balance_has,trueMoey)));
                     dismiss();
                 }

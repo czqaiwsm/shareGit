@@ -11,6 +11,7 @@
     <color name="found_focus">#FFbebebe</color>
     <color name="found_press">#FFb17f67</color>
     <color name="found_normal">#FF757069</color>
+    <color name="main_txt_black">#5E5E5E</color>
 
     <!--<color name="bg_header">#004D93</color>
     <color name="bg_header_focus">#003B93</color>

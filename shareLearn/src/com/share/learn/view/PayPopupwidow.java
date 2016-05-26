@@ -119,12 +119,4 @@ public class PayPopupwidow implements View.OnClickListener{
 
     }
 
-    public static void main(String arg[]){
-
-        System.out.println("4".compareTo("10"));
-        System.out.println("8".compareTo("10"));
-        System.out.println("11".compareTo("10"));
-
-    }
-
 }

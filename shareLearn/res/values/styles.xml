@@ -132,5 +132,9 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-
+    <!-- 弹出cancel_reason -->
+    <style name="AnimCenter" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/city_in_center</item>
+        <item name="android:windowExitAnimation">@anim/city_out_center</item>
+    </style>
 </resources>

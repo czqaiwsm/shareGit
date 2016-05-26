@@ -296,6 +296,7 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
                 if("1".equalsIgnoreCase(orderInfo.getRefundStatus())){
                     buy.setText("退款中");
                     buy.setClickable(false);
+                    contact.setVisibility(View.GONE);
                 }
                 if("2".equalsIgnoreCase(orderInfo.getRefundStatus())){
                     buy.setText("退款完成");
