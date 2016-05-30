@@ -18,6 +18,7 @@ import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.TeacherDetailParse;
 import com.share.teacher.utils.BaseApplication;
+import com.share.teacher.utils.SmartToast;
 import com.share.teacher.utils.URLConstants;
 import com.volley.req.net.HttpURL;
 import com.volley.req.net.RequestManager;
@@ -92,7 +93,7 @@ public class EvaluateFragment extends BaseFragment implements OnClickListener,Re
                 if(!TextUtils.isEmpty(rechareQuery.getText())){
                     requestTask();
                 }else {
-                    toasetUtil.showInfo("请填写反馈类容!");
+                    toasetUtil.showInfo("请填写评价内容!");
                 }
                 break;
         }
@@ -134,6 +135,7 @@ public class EvaluateFragment extends BaseFragment implements OnClickListener,Re
 
     @Override
     public void handleRspSuccess(int requestType,Object obj)  {
+        SmartToast.showText("评价成功!");
         mActivity.setResult(Activity.RESULT_OK);
         mActivity.finish();
 

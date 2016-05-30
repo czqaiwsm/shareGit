@@ -10,8 +10,6 @@ import com.share.teacher.fragment.center.SettingFragmentUser;
 
 public class SettingActivity extends BaseActivity {
     private SettingFragmentUser mFragment ;
-    int count = 0;
-    public static boolean exit = false;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -26,7 +24,8 @@ public class SettingActivity extends BaseActivity {
         ft.add(android.R.id.content, mFragment);
         ft.commit();
     }
-
+    int count = 0;
+    public static boolean exit = false;
     @Override
     public void finish() {
         super.finish();

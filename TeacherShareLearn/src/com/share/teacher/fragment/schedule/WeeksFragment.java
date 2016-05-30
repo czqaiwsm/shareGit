@@ -99,6 +99,7 @@ public class WeeksFragment extends BaseFragment {
 
         customListView.setVisibility(View.VISIBLE);
         noData.setVisibility(View.GONE);
+        noData.setText("暂无课程安排");
         if(list == null || list.size()==0){
             customListView.setVisibility(View.GONE);
             noData.setVisibility(View.VISIBLE);

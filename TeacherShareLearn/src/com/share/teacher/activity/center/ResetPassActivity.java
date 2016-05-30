@@ -15,6 +15,8 @@ public class ResetPassActivity extends BaseActivity {
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         onInitContent();
+        count++;
+
     }
 
     private void onInitContent() {
@@ -25,10 +27,15 @@ public class ResetPassActivity extends BaseActivity {
         ft.commit();
     }
 
+    int count = 0;
+    public static boolean exit = false;
+
     @Override
     public void finish() {
-        Intent intent = new Intent(this,LoginActivity.class);
-        startActivity(intent);
         super.finish();
+        if(count == 1 && exit) {
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        exit = false;
     }
 }

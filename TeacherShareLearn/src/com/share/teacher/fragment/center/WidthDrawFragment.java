@@ -21,6 +21,7 @@ import com.share.teacher.R;
 import com.share.teacher.bean.UserInfo;
 import com.share.teacher.bean.VerifyCode;
 import com.share.teacher.fragment.BaseFragment;
+import com.share.teacher.fragment.TeacherHomePageFragment;
 import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.BaseParse;
@@ -93,6 +94,12 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
 
         rechargeQuery.setOnClickListener(this);
         register_getCode.setOnClickListener(this);
+        if(TeacherHomePageFragment.homeInfo != null){
+            String temp = TeacherHomePageFragment.homeInfo.getAlipay();
+            alipayAccount.setText(TextUtils.isEmpty(temp)?"":temp);
+            temp = TeacherHomePageFragment.homeInfo.getRealName();
+            alipayName.setText(TextUtils.isEmpty(temp)?"":temp);
+        }
 
     }
 
@@ -262,6 +269,7 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
                 MSG_TOTAL_TIME = -1;
                 JsonParserBase<VerifyCode> jsonParserBase1 = (JsonParserBase<VerifyCode>)obj;
                 verifyCode = jsonParserBase1.getData();
+                toasetUtil.showInfo("信息已发生!");
 //                register_passCode.setText(verifyCode !=null?verifyCode.getSmsCode():"");
                 break;
             

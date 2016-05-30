@@ -71,7 +71,7 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
 
         String city = BaseApplication.getInstance().location[0];
         setTitleText( city!=null?city:"");
-        setRightHeadIcon(R.drawable.pc_search_right,new View.OnClickListener() {
+        setRightHeadIcon(R.drawable.add_course,new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toClassActivity(ScheduleFragment.this,CourseSettingActivity.class.getName());

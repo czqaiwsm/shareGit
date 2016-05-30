@@ -253,7 +253,8 @@ public class RegisterFragment extends BaseFragment implements OnClickListener,Re
 				MSG_TOTAL_TIME = -1;
 				JsonParserBase<VerifyCode> jsonParserBase1 = (JsonParserBase<VerifyCode>)obj;
 				verifyCode = jsonParserBase1.getData();
-				inputCode.setText(verifyCode !=null?verifyCode.getSmsCode():"");
+				toasetUtil.showInfo("信息已发生!");
+//				inputCode.setText(verifyCode !=null?verifyCode.getSmsCode():"");
 //				AlertDialogUtils.displayMyAlertChoice(mActivity,"验证码",verifyCode.getSmsCode()+"",null,null);
 				break;
 			case 2:

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.share.teacher.R;
+import com.share.teacher.activity.center.ResetPassActivity;
 import com.share.teacher.activity.login.LoginActivity;
 import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.help.RequestHelp;
@@ -96,7 +97,7 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
     private void resetPass(){
 
         if(loginPass.length()==0 || resetPass.length() == 0){
-            SmartToast.showText(mActivity,R.string.passname_empty);
+            SmartToast.showText(mActivity,"新旧密码不能为空");
             return;
         }else if(loginPass.getText().toString().equals(resetPass.getText().toString())){
             SmartToast.showText(mActivity,"新旧密码不能一致!");
@@ -132,14 +133,8 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
         JsonParserBase jsonParserBase = (JsonParserBase)obj;
         if ((jsonParserBase != null)){
             toasetUtil.showSuccess("密码修改成功!请登录");
-            AppManager.getAppManager().finishOthersActivity(mActivity.getClass());
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mActivity.finish();
-                }
-            },1000);
-
+            ResetPassActivity.exit = true;
+            AppManager.getAppManager().finishAllActivity();
         }
     }
 

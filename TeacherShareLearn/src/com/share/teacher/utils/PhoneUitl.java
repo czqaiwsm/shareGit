@@ -13,7 +13,7 @@ public class PhoneUitl {
 
     // 判断是否为手机号码
     public static boolean isPhone(String strPhone) {
-        String str = "^1[3|4|5|8][0-9]\\d{8}$";
+        String str = "^1[3|4|5|7|8][0-9]\\d{8}$";
         Pattern p = Pattern.compile(str);
         Matcher m = p.matcher(strPhone);
         return m.matches();

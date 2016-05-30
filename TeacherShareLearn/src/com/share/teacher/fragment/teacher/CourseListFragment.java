@@ -118,7 +118,7 @@ public class CourseListFragment extends BaseFragment implements RequsetListener,
     private void initTitle(){
         setTitleText("我设置的课程");
         setLeftHeadIcon(0);
-        setRightHeadIcon(R.drawable.pc_search_right, new View.OnClickListener() {
+        setRightHeadIcon(R.drawable.add_course, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toClassActivity(CourseListFragment.this, TeaCourseSettingActivity.class.getName());

@@ -183,19 +183,21 @@ public class ScheduleSettingFragment extends BaseFragment implements View.OnClic
                 break;
             case R.id.sure:
                 if(names == null || names.isEmpty()){
-                    SmartToast.showText("数据不完整!");
+//                    SmartToast.showText("数据不完整!");
+                    toasetUtil.showInfo("数据不完整");
+
                     return;
                 }
 
                  if(TextUtils.isEmpty(getFreId())){
-                     SmartToast.showText("请选择课程!");
-
+//                     SmartToast.showText("请选择课程!");
                      toasetUtil.showInfo("请选择课程");
                      return;
                  }
 
                 if(TextUtils.isEmpty(time.getText())){
-                    SmartToast.showText("请设置时间!");
+                    toasetUtil.showInfo("请设置时间");
+//                    SmartToast.showText("请设置时间!");
                     return;
                 }
 
