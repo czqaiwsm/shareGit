@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="@dimen/app_text_size_first"
-            android:textColor="@color/tab_color_selector"
+            android:textColor="@color/tab_color_msg"
             android:text="&#032;&#032;&#032;&#032;消息&#032;&#032;&#032;&#032;"
             android:background="@drawable/head_left_selector"
             android:onClick="@null"

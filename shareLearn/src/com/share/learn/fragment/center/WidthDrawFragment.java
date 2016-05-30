@@ -21,6 +21,7 @@ import com.share.learn.R;
 import com.share.learn.bean.UserInfo;
 import com.share.learn.bean.VerifyCode;
 import com.share.learn.fragment.BaseFragment;
+import com.share.learn.fragment.HomePageFragment;
 import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
 import com.share.learn.parse.BaseParse;
@@ -93,6 +94,13 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
 
         rechargeQuery.setOnClickListener(this);
         register_getCode.setOnClickListener(this);
+
+        if(HomePageFragment.homeInfo != null){
+            String temp = HomePageFragment.homeInfo.getAlipay();
+            alipayAccount.setText(TextUtils.isEmpty(temp)?"":temp);
+            temp = HomePageFragment.homeInfo.getRealName();
+            alipayName.setText(TextUtils.isEmpty(temp)?"":temp);
+        }
 
     }
 
@@ -251,7 +259,7 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
                 if ((jsonParserBase != null)) {
                     LinkedTreeMap<String, String> treeMap = (LinkedTreeMap<String, String>) jsonParserBase.getData();
                     String order = treeMap.get("tips");
-                    SmartToast.showText(order);
+//                    SmartToast.showText(order);
                     if(becNursePop == null){
                         becNursePop = new Bec_nurse_Window(mActivity,register_getCode,this);
                     }
@@ -263,6 +271,7 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
                 MSG_TOTAL_TIME = -1;
                 JsonParserBase<VerifyCode> jsonParserBase1 = (JsonParserBase<VerifyCode>)obj;
                 verifyCode = jsonParserBase1.getData();
+                toasetUtil.showInfo("信息已发生!");
 //                register_passCode.setText(verifyCode !=null?verifyCode.getSmsCode():"");
                 break;
             

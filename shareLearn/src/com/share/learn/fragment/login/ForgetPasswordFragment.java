@@ -121,6 +121,10 @@ public class ForgetPasswordFragment extends BaseFragment implements OnClickListe
 			toasetUtil.showInfo("手机号不一致,请重新获取验证码!");
 			return;
 		}
+		if(!verifyCode.getSmsCode().equalsIgnoreCase(forget_inputCode.getText().toString())){
+			toasetUtil.showInfo("请输入正确的验证码!");
+			return;
+		}
 		requetType = 2;
 		requestTask();
 	}
@@ -221,6 +225,7 @@ public class ForgetPasswordFragment extends BaseFragment implements OnClickListe
 				JsonParserBase<VerifyCode> jsonParserBase1 = (JsonParserBase<VerifyCode>)obj;
 				verifyCode = jsonParserBase1.getData();
 				forget_inputCode.setText(verifyCode !=null?verifyCode.getSmsCode():"");
+				toasetUtil.showInfo("信息已发生!");
 //				AlertDialogUtils.displayMyAlertChoice(mActivity,"验证码",verifyCode.getSmsCode()+"",null,null);
 				break;
 			case 2:

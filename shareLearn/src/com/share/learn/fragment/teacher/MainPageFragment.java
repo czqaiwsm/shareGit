@@ -106,9 +106,17 @@ public class MainPageFragment extends BaseFragment implements View.OnClickListen
             certify.setText(str);
             apputation.setText(teacherDetailInfo.getExperience());
            seek_btn.setSelected("2".equalsIgnoreCase(teacherDetailInfo.getIsCheck()));
+            attention(seek_btn.isSelected());
+
         }
     }
 
+    private void attention(boolean isAtten){
+        seek_txt.setText("关注");
+        if(isAtten){
+            seek_txt.setText("已关注");
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -166,7 +174,7 @@ public class MainPageFragment extends BaseFragment implements View.OnClickListen
         cliclAble(true);
         seek_btn.setSelected(!seek_btn.isSelected());
         seek_txt.setSelected(!seek_txt.isSelected());
-
+        attention(seek_btn.isSelected());
     }
 
     @Override

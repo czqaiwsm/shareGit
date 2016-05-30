@@ -136,6 +136,8 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
         if(courseInfo == null) return;
         orderPay = trueMoey = priceMoney = Integer.valueOf(courseInfo.getPrice());
         account.setTag(2);
+        account.setText("2"+"次");
+        orderPay = priceMoney *(Integer)account.getTag() ;
 
         couseName.setText(courseInfo.getCourseName());
         price.setText(String.format(getResources().getString(R.string.price,courseInfo.getPrice())));

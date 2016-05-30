@@ -20,6 +20,8 @@ import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
 import com.share.learn.parse.ContactorBeanParse;
 import com.share.learn.parse.OrderListBeanParse;
+import com.share.learn.parse.TeacherDetailParse;
+import com.share.learn.utils.AlertDialogUtils;
 import com.share.learn.utils.URLConstants;
 import com.share.learn.utils.WaitLayer;
 import com.share.learn.view.CustomListView;
@@ -43,7 +45,7 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
     private List<Contactor> list = new ArrayList<Contactor>();
     private ContactAdpter adapter;
     private TextView noData;
-
+    private Contactor contactor = null;
 
     private boolean isPrepare = false;
     private boolean isVisible = false;
@@ -83,7 +85,7 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
         if(!isPrepare || !isVisible){
             return;
         }
-        requestTask();
+        requestTask(1);
 
     }
 
@@ -123,66 +125,109 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
             public void onRefresh() {
                 status = PullRefreshStatus.PULL_REFRESH;
                 pageNo = 1;
-                requestData(0);
+                requestData(1);
+            }
+        });
+
+        customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                  contactor = list.get(position-1);
+                AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "是取消关注此老师?", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        requestTask(2);
+                    }
+                }, null);
+
+                return true;
             }
         });
     }
+
+
 
     @Override
     public void onLoadMore() {
         status = PullRefreshStatus.LOAD_MORE;
         pageNo++;
-        requestData(0);
+        requestData(1);
     }
 
 
     @Override
     protected void requestData(int requestType) {
 
+
         HttpURL url = new HttpURL();
-        url.setmBaseUrl(URLConstants.BASE_URL);
-        Map postParams = RequestHelp.getBaseParaMap("ContactList");
         RequestParam param = new RequestParam();
-        postParams.put("pageNo",pageNo);
-        param.setmParserClassName(new ContactorBeanParse());
+
+        url.setmBaseUrl(URLConstants.BASE_URL);
+        Map postParams = null;
+        switch (requestType){
+            case 1:
+                postParams = RequestHelp.getBaseParaMap("ContactList");
+                postParams.put("pageNo",pageNo);
+                param.setmParserClassName(new ContactorBeanParse());
+                break;
+            case 2:
+                postParams = RequestHelp.getBaseParaMap("Attention");//关注
+                postParams.put("teacherId",contactor.getTeacberId());
+                postParams.put("isCheck",1+"");//Int	1-取消，2-关注
+//        param.setmParserClassName(TeacherDetailParse.class.getName());
+                param.setmParserClassName(new TeacherDetailParse());
+                break;
+
+        }
+
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
-        RequestManager.getRequestData(getActivity(), createReqSuccessListener(), createMyReqErrorListener(), param);
+        RequestManager.getRequestData(getActivity(), createReqSuccessListener(requestType), createMyReqErrorListener(), param);
     }
 
     @Override
     public void handleRspSuccess(int requestType,Object obj) {
-        JsonParserBase<ContactorBean> jsonParserBase = (JsonParserBase<ContactorBean>)obj;
-        ContactorBean chooseTeachBean = jsonParserBase.getData();
-        if(chooseTeachBean != null){
-            pageCount = chooseTeachBean.getTotalPages();
-            pageSize = chooseTeachBean.getPageSize();
-            ArrayList<Contactor> teacherInfos = chooseTeachBean.getElements();
+        switch (requestType){
 
-            switch (status){
-                case NORMAL:
-                    refresh(teacherInfos);
-                    break;
+            case 1:
+                JsonParserBase<ContactorBean> jsonParserBase = (JsonParserBase<ContactorBean>)obj;
+                ContactorBean chooseTeachBean = jsonParserBase.getData();
+                if(chooseTeachBean != null){
+                    pageCount = chooseTeachBean.getTotalPages();
+                    pageSize = chooseTeachBean.getPageSize();
+                    ArrayList<Contactor> teacherInfos = chooseTeachBean.getElements();
 
-                case PULL_REFRESH:
-                    refresh(teacherInfos);
-                    customListView.onRefreshComplete();
-                    break;
-                case LOAD_MORE:
-                    if(teacherInfos != null && teacherInfos.size()>0){//有数据
-                        list.addAll(teacherInfos);
-                        customListView.onLoadMoreComplete(CustomListView.ENDINT_MANUAL_LOAD_DONE);
-                        adapter.notifyDataSetInvalidated();
-                    }else {
-                        pageNo--;
-                        customListView.onLoadMoreComplete(CustomListView.ENDINT_AUTO_LOAD_NO_DATA);
+                    switch (status){
+                        case NORMAL:
+                            refresh(teacherInfos);
+                            break;
+
+                        case PULL_REFRESH:
+                            refresh(teacherInfos);
+                            customListView.onRefreshComplete();
+                            break;
+                        case LOAD_MORE:
+                            if(teacherInfos != null && teacherInfos.size()>0){//有数据
+                                list.addAll(teacherInfos);
+                                customListView.onLoadMoreComplete(CustomListView.ENDINT_MANUAL_LOAD_DONE);
+                                adapter.notifyDataSetInvalidated();
+                            }else {
+                                pageNo--;
+                                customListView.onLoadMoreComplete(CustomListView.ENDINT_AUTO_LOAD_NO_DATA);
+                            }
+                            break;
+                        default:break;
                     }
-                    break;
-                default:break;
-            }
+
+                }
+                break;
+            case  2:
+                toasetUtil.showSuccess("成功取消关注!");
+                break;
 
         }
+
     }
 
     @Override

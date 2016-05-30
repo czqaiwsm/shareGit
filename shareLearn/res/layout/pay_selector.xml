@@ -1,35 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rl"
-        >
+                android:layout_height="match_parent"
+                android:id="@+id/rl">
 
+<LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="8dp"
+        android:background="@drawable/login_text_bg2"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <!--<View android:layout_width="match_parent"
-          android:layout_height="match_parent"
-            />-->
-    <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:background="@drawable/pop_bottom">
+    <!--<TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="选择"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/pop_select_size" />-->
 
-        <ImageView android:id="@+id/alipay"
-                   android:layout_width="70dp"
-                   android:layout_height="70dp"
-                   android:src="@drawable/alipy"
-                   android:layout_marginLeft="8dp"
-                   android:layout_alignParentLeft="true"/>
-        <ImageView android:id="@+id/wxPay"
-                   android:layout_width="70dp"
-                   android:layout_height="70dp"
-                   android:layout_toRightOf="@+id/alipay"
-                   android:layout_alignBottom="@+id/alipay"
-                   android:layout_marginLeft="8dp"
-                   android:src="@drawable/weixin_selector"/>
-    </RelativeLayout>
+    <!-- <TextView
+         android:layout_width="fill_parent"
+         android:layout_height="1dp"
+         android:background="@color/bg_main" />-->
+
+    <TextView
+            android:layout_marginTop="@dimen/dp_10"
+            android:id="@+id/alipay"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/listview_item_click_select"
+            android:gravity="center"
+            android:padding="@dimen/app_text_size_min"
+            android:text="支付宝"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/pop_select_size"/>
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/line"
+            android:background="@color/color_small_gray"/>
+
+    <TextView
+            android:id="@+id/wxPay"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/listview_item_click_select"
+            android:gravity="center"
+            android:padding="@dimen/app_text_size_min"
+            android:text="余额"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/pop_select_size"/>
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/line"
+            android:background="@color/color_small_gray"/>
+
+    <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@drawable/listview_item_click_select"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:text="取消"
+            android:textColor="@color/login_normal"
+            android:textSize="@dimen/pop_select_size"/>
+</LinearLayout>
 
 </RelativeLayout>

@@ -13,7 +13,8 @@ public class HomeInfo {
 
     private String servicePhone;
     private ArrayList<HomePagerBanner> topAdList;
-
+    private String alipay;
+    private String realName;
     public ArrayList<HomePagerBanner> getTopAdList() {
         return topAdList;
     }
@@ -29,5 +30,21 @@ public class HomeInfo {
 
     public void setServicePhone(String servicePhone) {
         this.servicePhone = servicePhone;
+    }
+
+    public String getAlipay() {
+        return alipay;
+    }
+
+    public void setAlipay(String alipay) {
+        this.alipay = alipay;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }

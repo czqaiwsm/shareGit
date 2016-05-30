@@ -36,7 +36,7 @@ public class URLConstants {
     public static final String TEACHER_UPLOAD = "http://120.25.171.4:80/learn-teach/teach/upload.action";
 
     static {
-        AlipayConstant.NOTIFY_URL = "http://120.25.171.4/learn-interface/alipayOrderServlet";
+        AlipayConstant.NOTIFY_URL = "http://120.76.47.196:8080/learn-interface/alipayOrderServlet";
         AlipayConstant.SELLER = "1138088601@qq.com";
         AlipayConstant.RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALLE1FNSf0l4IF1c\n" +
                 "cBAsu4cKvp4mIzLTsuHtJSHLHwV3fpH1ReYIoNCCqMKx7CWMnFuQEeq2xlop9LHf\n" +
