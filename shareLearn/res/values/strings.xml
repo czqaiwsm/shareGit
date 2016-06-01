@@ -76,7 +76,7 @@
     <string name="choose">筛选</string>
     <string name="sure">确定</string>
     <string name="maping">定位中...</string>
-    <string name="price">￥%1$s/小时</string>
+    <string name="price">￥%1$s/2小时</string>
     <string name="balance_has">￥%1$s</string>
 
     <!-- 个人资料 -->
@@ -142,6 +142,7 @@
 
     <!--年级star-->
     <string-array name="jonior_id">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -156,6 +157,7 @@
         <item>12</item>
     </string-array>
     <string-array name="jonior">
+        <item>全部</item>
         <item>一年级</item>
         <item>二年级</item>
         <item>三年级</item>

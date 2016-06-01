@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
 
     private TextView name;
     private TextView jonior;
+    private LinearLayout reg_log;
     private TextView account_customname;
     private RelativeLayout wallet_layout;
     private RelativeLayout order_layout;
@@ -102,6 +104,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
         setting_layout = (RelativeLayout) v.findViewById(R.id.set_layout);
         name = (TextView)v.findViewById(R.id.name);
         jonior = (TextView)v.findViewById(R.id.jonior);
+        reg_log = (LinearLayout)v.findViewById(R.id.reg_log);
         account_customname = (TextView)v.findViewById(R.id.account_customname);
 
         pcenter_avatar_layout.setOnClickListener(this);
@@ -152,6 +155,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
             userInfo = mUserInfo = BaseApplication.getUserInfo();
         }
         if(userInfo != null){
+            reg_log.setVisibility(View.GONE);
             ImageLoader.getInstance().displayImage(userInfo.getHeadImg(), mHeadImg, ImageLoaderUtil.mHallIconLoaderOptions);
             name.setText(userInfo.getNickName());
             jonior.setText(String.format(getResources().getString(R.string.pohone),userInfo.getMobile()));
@@ -159,7 +163,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
             ImageLoader.getInstance().displayImage("", mHeadImg, ImageLoaderUtil.mHallIconLoaderOptions);
             name.setText("");
             jonior.setText("");
-
+            reg_log.setVisibility(View.VISIBLE);
 
         }
 

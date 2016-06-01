@@ -46,9 +46,9 @@ public class PayPopupwidow implements View.OnClickListener{
         this.payInfo = news;
         if(mSortPop != null){
             if(BaseApplication.getUserInfo() != null){
-                if(payInfo != null && payInfo.getPrice().compareTo(BaseApplication.getUserInfo().getBalance())>1){
-                    view.findViewById(R.id.wxPay).setVisibility(View.GONE);
-                }
+//                if(payInfo != null && payInfo.getPrice().compareTo(BaseApplication.getUserInfo().getBalance())>1){
+//                    this.view.findViewById(R.id.wxPay).setVisibility(View.GONE);
+//                }
             }
             mSortPop.showAtLocation(view, Gravity.BOTTOM,0,0);
         }else {
@@ -62,7 +62,7 @@ public class PayPopupwidow implements View.OnClickListener{
     private void setmSortPop(){
         LayoutInflater inflater = LayoutInflater.from(activity);
         // 引入窗口配置文件
-        final View view = inflater
+         view = inflater
                 .inflate(R.layout.pay_selector, null);
         // 创建PopupWindow对象
         mSortPop = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,
@@ -94,11 +94,11 @@ public class PayPopupwidow implements View.OnClickListener{
                 dimiss();
             }
         });
-        if(BaseApplication.getUserInfo() != null){
-            if(payInfo != null && payInfo.getPrice().compareTo(BaseApplication.getUserInfo().getBalance())>1){
-                view.findViewById(R.id.wxPay).setVisibility(View.GONE);
-            }
-        }
+//        if(BaseApplication.getUserInfo() != null){
+//            if(payInfo != null && payInfo.getPrice().compareTo(BaseApplication.getUserInfo().getBalance())>1){
+//                view.findViewById(R.id.wxPay).setVisibility(View.GONE);
+//            }
+//        }
     }
 
     @Override

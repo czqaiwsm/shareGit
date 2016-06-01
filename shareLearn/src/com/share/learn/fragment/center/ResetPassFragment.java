@@ -130,7 +130,7 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
 //            BaseApplication.saveUserInfo(null);
 //            BaseApplication.setMt_token("00000000");
 //            BaseApplication.setMt_id("0");
-            SmartToast.showText("密码修改成功!请登录");
+            SmartToast.showText("密码修改成功!");
 //            toasetUtil.showSuccess("密码修改成功!请登录");
             mActivity.finish();
 //            AppManager.getAppManager().finishAllActivity();

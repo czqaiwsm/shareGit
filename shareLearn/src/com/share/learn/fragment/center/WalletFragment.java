@@ -80,6 +80,8 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
     private int withDraw = 0x11;
     int balance = 0;
 
+    String releaName = "";
+    String account   = "";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,6 +151,8 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
             case R.id.withDraw_layout:// 提现
             intent = new Intent(mActivity, WidthDrawActivity.class);
                 intent.putExtra("balance",balance);
+                intent.putExtra("releaName",releaName);
+                intent.putExtra("account",account  );
                 startActivityForResult(intent,withDraw);
             break;
         }
@@ -188,6 +192,8 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
                 JSONObject jsonObject = new JSONObject(json);
                 if(jsonObject != null && jsonObject.has("balance")){
                     balance = jsonObject.optInt("balance");
+                    releaName = jsonObject.optString("realName");
+                    account = jsonObject.optString("alipay");
                         account_balance.setText(String.format(getResources().getString(R.string.balance_has),balance+"") );
                 }
             }

@@ -78,7 +78,7 @@ public class GuideFragment extends Fragment {
 	private PagerAdapter m_obj_adapter = null;
 	private View m_obj_Layoutview = null;
 	private int ids[] = { R.drawable.guide_01, R.drawable.guide_02,
-			R.drawable.guide_03 , R.drawable.guide_02};
+			R.drawable.guide_03 };
 	private int TO_THE_END = 0;// 到达最后一张图片
 	private int LEAVE_FROM_END = 1;// 离开最后一张图片
 
@@ -94,7 +94,7 @@ public class GuideFragment extends Fragment {
 				if(!GuideFragment.this.isDetached() && isAdded()){
 						startActivity(new Intent(getActivity(), MainActivity.class));
 //						startActivity(new Intent(getActivity(), LoginActivity.class));
-//					getActivity().finish();
+					getActivity().finish();
 				}
 			} else if (msg.what == LEAVE_FROM_END) {
 				handler.removeMessages(TO_THE_END);

@@ -111,7 +111,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener,Re
 			showSmartToast(R.string.pass_error2, Toast.LENGTH_LONG);
 			return;
 		}
-		if(!verifyCode.getSmsCode().equalsIgnoreCase(inputCode.getText().toString())){
+		if(verifyCode == null || !verifyCode.getSmsCode().equalsIgnoreCase(inputCode.getText().toString())){
 			toasetUtil.showInfo("请输入正确的验证码!");
 			return;
 		}
@@ -253,7 +253,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener,Re
 				MSG_TOTAL_TIME = -1;
 				JsonParserBase<VerifyCode> jsonParserBase1 = (JsonParserBase<VerifyCode>)obj;
 				verifyCode = jsonParserBase1.getData();
-				toasetUtil.showInfo("信息已发生!");
+				toasetUtil.showInfo("信息已发送!");
 //				inputCode.setText(verifyCode !=null?verifyCode.getSmsCode():"");
 //				AlertDialogUtils.displayMyAlertChoice(mActivity,"验证码",verifyCode.getSmsCode()+"",null,null);
 				break;

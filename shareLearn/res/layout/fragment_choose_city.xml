@@ -18,7 +18,7 @@
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:text="定位到的城市"
-                  android:layout_marginLeft="@dimen/_10dp"
+                  android:layout_marginLeft="5dp"
                   android:textColor="@color/black"
                   android:textSize="@dimen/city_txt_size"
                 />
@@ -38,15 +38,27 @@
               android:layout_height="@dimen/line"
               android:background="@color/color_small_gray"/>
     </LinearLayout>
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="已开通城市"
+              android:layout_below="@+id/centerCity"
+              android:textColor="@color/black"
+              android:textSize="@dimen/city_txt_size"
+              android:layout_marginLeft="5dp"
+              android:layout_marginTop="4dp"
+              android:id="@+id/tv"
+
+    />
     <com.share.learn.view.CustomListView
             android:id="@+id/callListView"
-            android:layout_below="@+id/centerCity"
+            android:layout_below="@+id/tv"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:divider="@null"
             android:dividerHeight="0dip"
             android:scrollbars="none"
-            android:layout_marginTop="@dimen/_10dp"
+            android:layout_marginTop="4dp"
             android:background="@color/white"
             android:listSelector="@drawable/item_click"
             />

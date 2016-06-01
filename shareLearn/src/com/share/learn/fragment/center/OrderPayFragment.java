@@ -276,23 +276,28 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
      * @param teacherInfos
      */
     private void refresh(ArrayList<OrderInfo> teacherInfos){
+
+        list.clear();
+        if(teacherInfos != null){
+            list.addAll(teacherInfos);
+        }
+
         if(teacherInfos==null || teacherInfos.size()==0){//显示无数据
             if(list.size()==0){
                 noData.setVisibility(View.VISIBLE);
             }
         }else {
             noData.setVisibility(View.GONE);
-            list.clear();
-            list.addAll(teacherInfos);
             if(teacherInfos.size()>=pageSize){//有足够的数据,可以下拉刷新
                 customListView.setCanLoadMore(true);
                 customListView.setOnLoadListener(this);
             }else {
                 customListView.setCanLoadMore(false);
             }
-            adapter.notifyDataSetChanged();
 
         }
+        adapter.notifyDataSetChanged();
+
     }
     OrderInfo orderInfo = null;
     @Override
@@ -331,7 +336,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
             case R.id.right_tv:
                 if(flag == 1){//待支付(立即支付)
                     PayInfo payInfo = new PayInfo(orderInfo.getOrderCode(),orderInfo.getPayPrice(),orderInfo.getCourseName(),orderInfo.getTeacherName());
-                    payPopupwidow.payPopShow(v,payInfo);
+                    payPopupwidow.payPopShow(customListView,payInfo);
                 }else if(flag == 2){//已支付(申请退款)
 
                     AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "您正在申请退款", new View.OnClickListener() {
