@@ -57,7 +57,8 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
     @Bind(R.id.register_getCode)
     TextView register_getCode;
 
-
+    private String releaName = "";
+    private String account   = "";
 
     private int MSG_TOTAL_TIME;
     private final int MSG_UPDATE_TIME = 500;
@@ -70,6 +71,8 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
         Intent intent = mActivity.getIntent();
         if(intent != null){
             balance = intent.getIntExtra("balance",0);
+            releaName = intent.getStringExtra("releaName")   ;
+            account   = intent.getStringExtra("account")     ;
         }
     }
 
@@ -89,7 +92,7 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
 
     private void initTitleView() {
         setLeftHeadIcon(0);
-        setTitleText("绑定支付宝");
+        setTitleText("提现");
         setLeftHeadIcon(0);
 
         rechargeQuery.setOnClickListener(this);
@@ -100,6 +103,8 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
             temp = TeacherHomePageFragment.homeInfo.getRealName();
             alipayName.setText(TextUtils.isEmpty(temp)?"":temp);
         }
+        alipayName.setText(releaName);
+        alipayAccount.setText(account);
 
     }
 
@@ -120,7 +125,7 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
                 }else
                 if (TextUtils.isEmpty(register_passCode.getText().toString()) || verifyCode==null) {
                     toasetUtil.showInfo("获取验证码!");
-                }else if(!verifyCode.getSmsCode().equalsIgnoreCase(register_passCode.getText().toString())){
+                }else if(verifyCode == null || !verifyCode.getSmsCode().equalsIgnoreCase(register_passCode.getText().toString())){
                     toasetUtil.showInfo("请输入正确的验证码!");
                 }
                 else if(Integer.valueOf(drawMoney.getText().toString())<=0){
@@ -269,7 +274,7 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
                 MSG_TOTAL_TIME = -1;
                 JsonParserBase<VerifyCode> jsonParserBase1 = (JsonParserBase<VerifyCode>)obj;
                 verifyCode = jsonParserBase1.getData();
-                toasetUtil.showInfo("信息已发生!");
+                toasetUtil.showInfo("信息已发送!");
 //                register_passCode.setText(verifyCode !=null?verifyCode.getSmsCode():"");
                 break;
             

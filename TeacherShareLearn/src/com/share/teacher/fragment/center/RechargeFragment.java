@@ -59,7 +59,7 @@ public class RechargeFragment extends BaseFragment implements OnClickListener ,R
 
     private void initTitleView() {
         setLeftHeadIcon(0);
-        setTitleText(R.string.wallet);
+        setTitleText("充值");
         setLeftHeadIcon(0);
 
     }

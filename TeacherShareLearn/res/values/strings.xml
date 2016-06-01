@@ -74,7 +74,7 @@
     <string name="choose">筛选</string>
     <string name="sure">确定</string>
     <string name="maping">定位中...</string>
-    <string name="price">￥%1$s/小时</string>
+    <string name="price">￥%1$s/2小时</string>
     <string name="balance_has">￥%1$s</string>
 
     <!-- 个人资料 -->

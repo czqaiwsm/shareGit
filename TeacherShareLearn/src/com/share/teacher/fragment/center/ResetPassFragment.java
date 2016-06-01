@@ -132,7 +132,8 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
     public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase jsonParserBase = (JsonParserBase)obj;
         if ((jsonParserBase != null)){
-            toasetUtil.showSuccess("密码修改成功!请登录");
+            SmartToast.showText("密码修改成功!");
+//            toasetUtil.showSuccess("密码修改成功!请登录");
             ResetPassActivity.exit = true;
             AppManager.getAppManager().finishAllActivity();
         }

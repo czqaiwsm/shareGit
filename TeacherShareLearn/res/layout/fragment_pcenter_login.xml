@@ -50,7 +50,6 @@
                     android:background="@android:color/transparent"
                     android:maxLines="1"
                     android:singleLine="true"
-                        android:text="18456593220"
 
             />
 <!--            android:text="18456593220"-->
@@ -95,8 +94,6 @@
                     android:background="@android:color/transparent"
                     android:maxLines="1"
                     android:singleLine="true"
-             android:text="111111"
-
             />
            <!-- android:text="111111"-->
 
