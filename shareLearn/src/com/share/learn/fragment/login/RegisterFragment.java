@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * 注册完成
  * 
- * @author 储
+ * @author
  * 
  */
 

@@ -15,7 +15,7 @@ public class DensityUtils {
 	}
 
 	/**
-	 * dp转px
+	 * dpa转px
 	 * 
 	 * @param context
 	 * @param dpVal
