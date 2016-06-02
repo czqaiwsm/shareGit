@@ -31,11 +31,12 @@ public class URLConstants {
     public static final int ORDERRIGHT = 0X21;
     /********Intent value*************/
 
+//    120.76.47.196:8080
 //    public static final String BASE_URL = "http://120.25.171.4/learn-interface/interface/api.action";//基础URL
 //    public static final String BASE_URL = "http://www.leishangnet.com/learn-teach/teach/api.action";//基础 teacher URL
-    public static final String BASE_URL = "http://120.76.47.196:8080/learn-teach/teach/api.action";//基础 teacher URL
+    public static final String BASE_URL = "http://www.leishangnet.com/learn-teach/teach/api.action";//基础 teacher URL
 
-    public static final String TEACHER_UPLOAD = "http://120.76.47.196:8080/learn-teach/teach/upload.action";
+    public static final String TEACHER_UPLOAD = "http://www.leishangnet.com/learn-teach/teach/upload.action";
 
 //    static {
 //        AlipayConstant.NOTIFY_URL = "http://120.25.171.4/learn-interface/alipayOrderServlet";
