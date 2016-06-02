@@ -177,6 +177,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
             break;
             case R.id.jonior_layout:// 年级
             intent = new Intent(mActivity, ChooseJoinorActivity.class);
+                intent.setFlags(15);
             startActivityForResult(intent,URLConstants.CHOOSE_JOINOR_REQUEST_CODE);
             break;
             case R.id.city_layout:// 城市
@@ -280,14 +281,17 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         switch (requestCode){
             case URLConstants.CHOOSE_JOINOR_REQUEST_CODE://年级选择
                 BaseApplication.getUserInfo().setGrade(requstValue);
+                BaseApplication.saveUserInfo(BaseApplication.getUserInfo());
                 jonior.setText(DataMapConstants.getJoniorMap().get(requstValue));
                 break;
             case MODIFY_GENDER://性别
                 BaseApplication.getUserInfo().setGender(requstValue);
+                BaseApplication.saveUserInfo(BaseApplication.getUserInfo());
                 sexTxt.setText(DataMapConstants.getGender().get(requstValue));
                 break;
             case MODIFY_NAME://姓名
                 BaseApplication.getUserInfo().setNickName(requstValue);
+                BaseApplication.saveUserInfo(BaseApplication.getUserInfo());
                 name.setText(requstValue);
                 break;
 
@@ -355,7 +359,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         m_obj_IconBp = Utils.compressImage(m_obj_IconBp);// 压缩到100kb
         byte[] picByte = BitMap2Byte(m_obj_IconBp);
         try {
-            postUrl = "http://120.25.171.4:80/learn-interface/interface/upload.action";
+            postUrl = URLConstants.STUDENT_UPLOAD;
             String param = new String();
             param = "cmd=UploadHead"  + "&appVersion=" + BaseApplication.getInstance().appVersion+"&clientType=3" +
                     "&accessToken=" + BaseApplication.getMt_token()+"&deviceId=000000"+"&spaceCode=1001";
@@ -440,6 +444,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
 
                         if(!TextUtils.isEmpty(jsonStr.getImgPath())){
                             BaseApplication.getUserInfo().setHeadImg(jsonStr.getImgPath());
+                            BaseApplication.saveUserInfo(BaseApplication.getUserInfo());
                             myHandler.sendEmptyMessage(UPLOAD_OK);
                         }
                     }

@@ -211,23 +211,24 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
      * @param teacherInfos
      */
     private void refresh(ArrayList<TeacherInfo> teacherInfos){
+        list.clear();
+        if(teacherInfos != null){
+            list.addAll(teacherInfos);
+        }
         if(teacherInfos==null || teacherInfos.size()==0){//显示无数据
             if(list.size()==0){
                 noData.setVisibility(View.VISIBLE);
             }
         }else {
             noData.setVisibility(View.GONE);
-            list.clear();
-            list.addAll(teacherInfos);
             if(teacherInfos.size()>=pageSize){//有足够的数据,可以下拉刷新
                 customListView.setCanLoadMore(true);
                 customListView.setOnLoadListener(this);
             }else {
                 customListView.setCanLoadMore(false);
             }
-            adapter.notifyDataSetChanged();
-
         }
+        adapter.notifyDataSetChanged();
     }
 
     @Override

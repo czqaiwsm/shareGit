@@ -1,5 +1,6 @@
 package com.share.learn.fragment.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -229,7 +230,9 @@ public class ForgetPasswordFragment extends BaseFragment implements OnClickListe
 //				AlertDialogUtils.displayMyAlertChoice(mActivity,"验证码",verifyCode.getSmsCode()+"",null,null);
 				break;
 			case 2:
-				toClassActivity(ForgetPasswordFragment.this, LoginActivity.class.getName());
+//				toClassActivity(ForgetPasswordFragment.this, LoginActivity.class.getName());
+				Intent intent = new Intent(mActivity,LoginActivity.class);
+				startActivity(intent);
 				SmartToast.showText(mActivity,"修改成功");
 				mActivity.finish();
 				break;

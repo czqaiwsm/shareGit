@@ -125,6 +125,7 @@
         <activity android:name=".activity.login.RegisterActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.LoginActivity"
+                  android:launchMode="singleTask"
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.ForgetPassActivity"
                   android:screenOrientation="portrait"/>

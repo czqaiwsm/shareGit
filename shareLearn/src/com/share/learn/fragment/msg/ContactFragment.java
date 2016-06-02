@@ -31,6 +31,7 @@ import com.volley.req.net.RequestParam;
 import com.volley.req.parser.JsonParserBase;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -132,7 +133,7 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
         customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                  contactor = list.get(position-1);
+                contactor = list.get(position - 1);
                 AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "是取消关注此老师?", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -224,6 +225,18 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
                 break;
             case  2:
                 toasetUtil.showSuccess("成功取消关注!");
+                Iterator<Contactor> contactorIterator = list.iterator();
+                while (contactorIterator.hasNext()){
+                    Contactor temp = contactorIterator.next();
+                    if(contactor.getTeacberId().equalsIgnoreCase(temp.getTeacberId())){
+                        contactorIterator.remove();
+                        adapter.notifyDataSetChanged();
+                        if(list.isEmpty()){
+                            noData.setVisibility(View.VISIBLE);
+                        }
+                        return;
+                    }
+                }
                 break;
 
         }
@@ -257,6 +270,10 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
      * @param teacherInfos
      */
     private void refresh(ArrayList<Contactor> teacherInfos){
+        list.clear();
+        if(teacherInfos != null){
+            list.addAll(teacherInfos);
+        }
         if(teacherInfos==null || teacherInfos.size()==0){//显示无数据
             if(list.size()==0){
                 noData.setVisibility(View.VISIBLE);
@@ -271,9 +288,8 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
             }else {
                 customListView.setCanLoadMore(false);
             }
-            adapter.notifyDataSetChanged();
-
         }
+        adapter.notifyDataSetChanged();
     }
 
 }

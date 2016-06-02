@@ -71,6 +71,8 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
     TextView discount;
     @Bind(R.id.payPrice)
     TextView payPrice;
+    @Bind(R.id.time)
+    TextView time;
     @Bind(R.id.contact)
     TextView contact;
     @Bind(R.id.buy)
@@ -309,6 +311,7 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
                 break;
             case 4:
                 contact.setVisibility(View.GONE);
+                time.setText("完成时间");
                buy.setText(mActivity.getResources().getString(R.string.assert_now));
 
                 if(TextUtils.equals(orderInfo.getEvaluateStatus(),"0")){

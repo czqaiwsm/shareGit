@@ -46,6 +46,9 @@ public class ChooseJoinorFragment extends BaseFragment {
                 case 11:
                     joniorType = JoniorType.JONIOR;
                     break;
+                case 15:
+                    joniorType = JoniorType.PERSON_INFO;
+                    break;
             }
         }
     }
@@ -84,6 +87,10 @@ public class ChooseJoinorFragment extends BaseFragment {
                 map = DataMapConstants.getJoniorMap();
                 ids = mActivity.getResources().getStringArray(R.array.jonior_id);
                 break;
+            case PERSON_INFO:
+                map = DataMapConstants.getPCenterJoniorMap();
+                ids = mActivity.getResources().getStringArray(R.array.pc_jonior_id);
+                break;
         }
         for(int i=0;i<ids.length;i++){
             idInfo = new IdInfo();
@@ -99,11 +106,11 @@ public class ChooseJoinorFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 Intent intent = new Intent();
                 idInfo  = (IdInfo) arg0.getItemAtPosition(arg2);
-                switch (joniorType){
-                    case JONIOR:
+//                switch (joniorType){
+//                    case JONIOR:
                         intent.putExtra(URLConstants.CHOOSE, idInfo.getIdCode());
-                        break;
-                }
+//                        break;
+//                }
                 mActivity.setResult(Activity.RESULT_OK,intent);
                 mActivity.finish();
 
@@ -117,6 +124,7 @@ public class ChooseJoinorFragment extends BaseFragment {
 
     public enum JoniorType{
         JONIOR,//年级选择
+        PERSON_INFO,//
         DEGREE,//学历
         MAJOR,//专业
         TEACH_AGE,//老师学历

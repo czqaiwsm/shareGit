@@ -30,7 +30,6 @@
                 android:textColor="@color/color_small_gray"
                 android:textSize="@dimen/app_text_size_first"
                 android:background="@drawable/recharge_shape"
-                android:inputType="phone"
                 android:maxLines="1"
                 android:hint="请输入支付宝账号"
                 android:layout_gravity="left"

@@ -17,6 +17,7 @@ public class DataMapConstants {
 
     private static Map<String,String> coursesMap ;
     private static Map<String,String> joniorMap;
+    private static Map<String,String> pc_joniorMap;
     private static Map<String,String> gender;
     private static Map<String,String> degree;//学历
 
@@ -53,6 +54,23 @@ public class DataMapConstants {
             }
         }
         return joniorMap;
+
+    }
+    /**
+     * 个人信息的年级
+     * @return
+     */
+    public static Map<String,String> getPCenterJoniorMap(){
+        if(pc_joniorMap == null){
+            pc_joniorMap = new HashMap<String, String>();
+            Context context = BaseApplication.getInstance().getApplicationContext();
+            String[] joniorIds = context.getResources().getStringArray(R.array.pc_jonior_id);
+            String[] joniorS = context.getResources().getStringArray(R.array.pc_jonior);
+            for(int i=0;i<joniorIds.length;i++){
+                pc_joniorMap.put(joniorIds[i],joniorS[i]);
+            }
+        }
+        return pc_joniorMap;
 
     }
 

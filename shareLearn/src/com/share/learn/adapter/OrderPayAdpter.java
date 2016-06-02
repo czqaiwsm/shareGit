@@ -126,7 +126,7 @@ public class OrderPayAdpter extends BaseAdapter {
                 case 4:
                     statuStr = "已完成";
                     holder.right_tv.setText(mContext.getResources().getString(R.string.assert_now));
-
+                    holder.time.setText("完成时间");
                        if(TextUtils.equals(message.getEvaluateStatus(),"0")){
                            holder.right_tv.setVisibility(View.VISIBLE);
                        }else {
@@ -151,6 +151,8 @@ public class OrderPayAdpter extends BaseAdapter {
         TextView courseName;
         @Bind(R.id.price)
         TextView price;
+        @Bind(R.id.time)
+        TextView time;
         @Bind(R.id.view)
         View view;
         @Bind(R.id.timeDetail)
