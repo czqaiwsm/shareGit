@@ -28,9 +28,9 @@ public class URLConstants {
     public static final int ORDERLEFT = 0X20;
     public static final int ORDERRIGHT = 0X21;
     /********Intent value*************/
-
-    public static final String BASE_URL = "http://120.76.47.196:8080/learn-interface/interface/api.action";//测试URL
-//    public static final String BASE_URL = "http://www.leishangnet.com/learn-interface/interface/api.action";//基础URL
+//    www.leishangnet.com
+//    public static final String BASE_URL = "http://120.76.47.196:8080/learn-interface/interface/api.action";//测试URL
+    public static final String BASE_URL = "http://120.76.47.196:8080/learn-interface/interface/api.action";//基础URL
     public static final String STUDENT_UPLOAD = "http://120.76.47.196:8080/learn-interface/interface/upload.action";
 
     public static final String TEACHER_UPLOAD = "";

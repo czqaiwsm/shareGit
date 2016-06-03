@@ -96,13 +96,14 @@ public class ChatMsgViewAdapter extends BaseAdapter {
             viewHolder.comtime.setText(entity.getCreateTime());
             viewHolder.comChatcontent.setText(entity.getContent());
             viewHolder.comUsername.setText(entity.getTeacherName());
+            viewHolder.comUsername.setVisibility(View.GONE);
             ImageLoader.getInstance().displayImage(entity.getTeacherImg(),viewHolder.comhead,ImageLoaderUtil.mHallIconLoaderOptions);
         }else {
             viewHolder.sendMsgLL.setVisibility(View.VISIBLE);
             viewHolder.comMsgLL.setVisibility(View.GONE);
             viewHolder.sendtime.setText(entity.getCreateTime());
             viewHolder.sendcontent.setText(entity.getContent());
-
+            viewHolder.send_username.setVisibility(View.GONE);
             if(BaseApplication.getUserInfo() != null){
                 viewHolder.send_username.setText(BaseApplication.getUserInfo().getNickName());
                 ImageLoader.getInstance().displayImage(entity.getStudentImg(),viewHolder.sendUserHead,ImageLoaderUtil.mHallIconLoaderOptions);

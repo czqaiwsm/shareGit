@@ -68,6 +68,7 @@
                   android:layout_alignParentLeft="true"
                   android:layout_below="@id/comhead"
                   android:text="ajf;dfa;"
+                  android:visibility="gone"
                   android:layout_toLeftOf="@id/com_chatcontent" />
       </RelativeLayout>
       
@@ -148,6 +149,7 @@
                     android:layout_toRightOf="@id/sendcontent"
                     android:textSize="15sp"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:textColor="#818181"/>
 
         </RelativeLayout>
