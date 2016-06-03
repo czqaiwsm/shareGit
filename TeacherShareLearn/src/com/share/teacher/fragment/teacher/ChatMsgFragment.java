@@ -229,13 +229,14 @@ public class ChatMsgFragment extends BaseFragment implements View.OnClickListene
                     mDataArrays.addAll(jsonParserBase.getData());
                 }
                 mAdapter.notifyDataSetChanged();
-                mListView.setSelection(mAdapter.getCount()-1);
+                mListView.setSelection(mAdapter.getCount() - 1);
             }
         }else {
             mDataArrays.add(sendChatMsg);
             mAdapter.notifyDataSetChanged();
             mEditTextContent.setText("");
             sendChatMsg = null;
+            mListView.setSelection(mAdapter.getCount()-1);
         }
 
     }
