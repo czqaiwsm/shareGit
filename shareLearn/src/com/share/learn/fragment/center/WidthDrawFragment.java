@@ -119,20 +119,30 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
             case R.id.recharge_query:
 
                 if (TextUtils.isEmpty(alipayAccount.getText().toString()) || TextUtils.isEmpty(alipayName.getText().toString())) {
-                    toasetUtil.showInfo("请输入账号和姓名!");
+//                    toasetUtil.showInfo("请输入账号和姓名!");
+                    SmartToast.showText("请输入账号和姓名!");
                 }else
                 if (TextUtils.isEmpty(drawMoney.getText().toString())) {
-                    toasetUtil.showInfo("提现金额!");
+//                    toasetUtil.showInfo("请输入提现金额!");
+                    SmartToast.showText("请输入提现金额!");
                 }else
                 if (TextUtils.isEmpty(register_passCode.getText().toString()) || verifyCode==null) {
-                    toasetUtil.showInfo("获取验证码!");
+//                    toasetUtil.showInfo("获取验证码!");
+                    SmartToast.showText("获取验证码!");
+
                 }else if(verifyCode == null || !verifyCode.getSmsCode().equalsIgnoreCase(register_passCode.getText().toString())){
-                    toasetUtil.showInfo("请输入正确的验证码!");
+//                    toasetUtil.showInfo("请输入正确的验证码!");
+                    SmartToast.showText("请输入正确的验证码!");
+
                 }
                 else if(Integer.valueOf(drawMoney.getText().toString())<=0){
-                    toasetUtil.showInfo("提现金额不能小于0");
+//                    toasetUtil.showInfo("提现金额不能小于0");
+                    SmartToast.showText("提现金额不能小于0");
+
                 }else if(Integer.valueOf(drawMoney.getText().toString())> balance){
-                    toasetUtil.showInfo("超出账号余额!");
+//                    toasetUtil.showInfo("超出账号余额!");
+                    SmartToast.showText("超出账号余额!");
+
                 }
                 else {
                     requestTask(1);
