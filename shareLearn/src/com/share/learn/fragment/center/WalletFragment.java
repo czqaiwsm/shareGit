@@ -33,9 +33,11 @@ import com.share.learn.R;
 import com.share.learn.activity.ChooseCityActivity;
 import com.share.learn.activity.center.*;
 import com.share.learn.activity.teacher.ChooseJoinorActivity;
+import com.share.learn.bean.BalanceInfo;
 import com.share.learn.fragment.BaseFragment;
 import com.share.learn.help.RequestHelp;
 import com.share.learn.help.RequsetListener;
+import com.share.learn.parse.BaseInfoParse;
 import com.share.learn.parse.BaseParse;
 import com.share.learn.parse.LoginInfoParse;
 import com.share.learn.utils.*;
@@ -176,7 +178,7 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
         Map postParams = RequestHelp.getBaseParaMap("QueryBalance");
         RequestParam param = new RequestParam();
 //        param.setmParserClassName(BaseParse.class.getName());
-        param.setmParserClassName(new BaseParse());
+        param.setmParserClassName(new BaseInfoParse());
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
@@ -185,21 +187,13 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
 
     @Override
     public void handleRspSuccess(int requestType,Object obj)  {
-        String json = (String)((JsonParserBase)obj).getData().toString();
+        BalanceInfo balanceInfo = (BalanceInfo) ((JsonParserBase)obj).getData();
+        if(balanceInfo == null) return;
+        balance  =  Integer.valueOf(balanceInfo.getBalance());
+        releaName = balanceInfo.getRealName();
+        account = balanceInfo.getAlipay();
+        account_balance.setText(String.format(getResources().getString(R.string.balance_has),balance+"") );
 
-        try {
-            if(!TextUtils.isEmpty(json)){
-                JSONObject jsonObject = new JSONObject(json);
-                if(jsonObject != null && jsonObject.has("balance")){
-                    balance = jsonObject.optInt("balance");
-                    releaName = jsonObject.optString("realName");
-                    account = jsonObject.optString("alipay");
-                        account_balance.setText(String.format(getResources().getString(R.string.balance_has),balance+"") );
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
 

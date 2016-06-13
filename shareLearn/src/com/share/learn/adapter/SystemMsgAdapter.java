@@ -56,11 +56,11 @@ public class SystemMsgAdapter extends BaseAdapter {
             holder.msgContent.setText(map.getContent());
             holder.msgTime.setText(map.getCreateTime());
             holder.delMsg.setTag(map.getId());
-            if(SystemMsgFragment.MsgType == 1){
-                holder.delMsg.setVisibility(View.GONE);
-            }else {
-                holder.delMsg.setVisibility(View.VISIBLE);
-            }
+//            if(SystemMsgFragment.MsgType == 1){
+//                holder.delMsg.setVisibility(View.GONE);
+//            }else {
+//                holder.delMsg.setVisibility(View.VISIBLE);
+//            }
         }
 
         holder.delMsg.setOnClickListener(new View.OnClickListener() {

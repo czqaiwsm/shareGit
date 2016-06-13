@@ -13,12 +13,26 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="sharelibs" level="project" />
-    <orderEntry type="module" module-name="alipay_share" />
     <orderEntry type="module-library">
       <library name="shareV4">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/android-support-v4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module" module-name="alipay_demo" />
+    <orderEntry type="module-library">
+      <library name="shareLibs">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/baidumapapi_v3_5_0.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/butterknife-7.0.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/gson-2.2.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/jpush-android-2.1.5.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/locSDK_6.13.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/universal-image-loader-1.9.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/volley.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -66,7 +66,7 @@ public class ChooseCitytFragment extends BaseFragment implements OnClickListener
     private void initView(View view) {
         cityName = (TextView) view.findViewById(R.id.city_name);
         listView = (CustomListView) view.findViewById(R.id.callListView);
-        cityName.setText(BaseApplication.getInstance().location[0]);
+        cityName.setText("正在定位..");
         list.add("合肥");
 
         listView.setCanLoadMore(false);

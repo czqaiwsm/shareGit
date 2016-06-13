@@ -100,7 +100,8 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
 
         customListView = (CustomListView)view.findViewById(R.id.callListView);
         noData = (TextView)view.findViewById(R.id.noData);
-        customListView.setCanRefresh(true);
+        customListView.setCanRefresh(false);
+        customListView.setCanLoadMore(false);
         adapter = new ChooseTeacherAdpter(mActivity, list);
         customListView.setAdapter(adapter);
 
@@ -113,14 +114,14 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
             }
         });
 
-        customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                status = PullRefreshStatus.PULL_REFRESH;
-                pageNo = 1;
-                requestData(0);
-            }
-        });
+//        customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                status = PullRefreshStatus.PULL_REFRESH;
+//                pageNo = 1;
+//                requestData(0);
+//            }
+//        });
     }
 
     @Override
@@ -137,7 +138,7 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
         url.setmBaseUrl(URLConstants.BASE_URL);
         Map postParams = RequestHelp.getBaseParaMap("TeacherList");
         postParams.put("cityName", cityName);
-        postParams.put("pageNo",pageNo);
+//        postParams.put("pageNo",pageNo);
         postParams.put("courseId",courseId);
         postParams.put("grade",joniorId);
         RequestParam param = new RequestParam();
@@ -151,12 +152,12 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
 
     @Override
     public void handleRspSuccess(int requestType,Object obj) {
-        JsonParserBase<ChooseTeachBean> jsonParserBase = (JsonParserBase<ChooseTeachBean>)obj;
-        ChooseTeachBean chooseTeachBean = jsonParserBase.getData();
-        if(chooseTeachBean != null){
-            pageCount = chooseTeachBean.getTotalPages();
-            pageSize = chooseTeachBean.getPageSize();
-            ArrayList<TeacherInfo> teacherInfos = chooseTeachBean.getElements();
+        JsonParserBase<ArrayList<TeacherInfo>> jsonParserBase = (JsonParserBase<ArrayList<TeacherInfo>>)obj;
+        ArrayList<TeacherInfo> teacherInfos = jsonParserBase.getData();
+        if(teacherInfos != null){
+//            pageCount = chooseTeachBean.getTotalPages();
+//            pageSize = chooseTeachBean.getPageSize();
+//            ArrayList<TeacherInfo> teacherInfos = chooseTeachBean.getElements();
 
             switch (status){
                 case NORMAL:
@@ -187,17 +188,17 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
     @Override
     protected void failRespone() {
         super.failRespone();
-        switch (status) {
-            case PULL_REFRESH:
-                customListView.onRefreshComplete();
-                break;
-            case LOAD_MORE:
-                pageNo--;
-                customListView.onLoadMoreComplete(CustomListView.ENDINT_MANUAL_LOAD_DONE);
-                break;
-            default:
-                break;
-        }
+//        switch (status) {
+//            case PULL_REFRESH:
+//                customListView.onRefreshComplete();
+//                break;
+//            case LOAD_MORE:
+//                pageNo--;
+//                customListView.onLoadMoreComplete(CustomListView.ENDINT_MANUAL_LOAD_DONE);
+//                break;
+//            default:
+//                break;
+//        }
     }
 
     @Override
@@ -221,12 +222,12 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
             }
         }else {
             noData.setVisibility(View.GONE);
-            if(teacherInfos.size()>=pageSize){//有足够的数据,可以下拉刷新
-                customListView.setCanLoadMore(true);
-                customListView.setOnLoadListener(this);
-            }else {
-                customListView.setCanLoadMore(false);
-            }
+//            if(teacherInfos.size()>=pageSize){//有足够的数据,可以下拉刷新
+//                customListView.setCanLoadMore(true);
+//                customListView.setOnLoadListener(this);
+//            }else {
+//                customListView.setCanLoadMore(false);
+//            }
         }
         adapter.notifyDataSetChanged();
     }

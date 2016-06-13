@@ -59,7 +59,7 @@ public class BaseApplication extends Application {
 //        WriteLog.getInstance().init(); // 初始化日志
         SDKInitializer.initialize(getApplicationContext());
 
-        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+//        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         if(getUserInfo() != null){
             JPushInterface.setAlias(BaseApplication.getInstance(), "s_" + getUserInfo().getId(), new TagAliasCallback() {
                 @Override
