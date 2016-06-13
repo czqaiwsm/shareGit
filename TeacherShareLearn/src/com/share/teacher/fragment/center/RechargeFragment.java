@@ -120,9 +120,9 @@ public class RechargeFragment extends BaseFragment implements OnClickListener ,R
             LinkedTreeMap <String,String> treeMap = (LinkedTreeMap<String, String>) jsonParserBase.getData();
              String order = treeMap.get("orderCode");
 //            PayUtil.alipay(mActivity,new PayInfo(order,rechargePrice.getText().toString(),"充值","充值"),this);
-//            BaseApplication.getInstance().userInfo = jsonParserBase.getData().getUserInfo();
+//            BaseApplication.getUserInfo() = jsonParserBase.getData().getUserInfo();
 //            BaseApplication.getInstance().accessToken = jsonParserBase.getData().getToken();
-//            BaseApplication.getInstance().userId = BaseApplication.getInstance().userInfo.getId();
+//            BaseApplication.getInstance().userId = BaseApplication.getUserInfo().getId();
 //            toClassActivity(LoginFramgent.this, MainActivity.class.getName());//学生
 //            toClassActivity(LoginFramgent.this, TeacherMainActivity.class.getName());//老师
 

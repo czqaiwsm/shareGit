@@ -71,8 +71,8 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
         initView(view);
         initTitle();
         cityName = BaseApplication.getInstance().location[0];
-//        joniorId = BaseApplication.getInstance().userInfo!=null
-//        ?BaseApplication.getInstance().userInfo.getGrade():"";
+//        joniorId = BaseApplication.getUserInfo()!=null
+//        ?BaseApplication.getUserInfo().getGrade():"";
         setLoadingDilog(WaitLayer.DialogType.NOT_NOMAL);
         requestTask();
     }

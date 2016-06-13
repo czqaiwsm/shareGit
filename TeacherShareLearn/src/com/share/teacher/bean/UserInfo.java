@@ -17,6 +17,7 @@ public class UserInfo implements Serializable {
     private String experience	;//荣誉经历
     private String introduction	;//简介
     private String gender	    ;//性别
+    private String city	    ;//城市
 
 
 
@@ -82,5 +83,13 @@ public class UserInfo implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

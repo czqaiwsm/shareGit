@@ -153,7 +153,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         city_layout.setOnClickListener(this);
         city.setText(SharePreferenceUtils.getInstance(BaseApplication.getInstance()).getCityName());
 
-        setData(BaseApplication.getInstance().userInfo);
+        setData(BaseApplication.getUserInfo());
     }
 
     private void setData(UserInfo userInfo) {
@@ -164,6 +164,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
             signature.setText(userInfo.getSignature());
             indure.setText(userInfo.getIntroduction());
             reputation.setText(userInfo.getExperience());
+            city.setText(userInfo.getCity());
         }
 
 //        if (!Utility.isEmpty(userInfo.getNickname())) {// 昵称
@@ -347,27 +348,27 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
     public void handleRspSuccess(int requestType,Object obj) {
         switch (requestCode){
             case URLConstants.CHOOSE_JOINOR_REQUEST_CODE://年级选择
-//                BaseApplication.getInstance().userInfo.setGrade(requstValue);
+//                BaseApplication.getUserInfo().setGrade(requstValue);
                 jonior.setText(DataMapConstants.getJoniorMap().get(requstValue));
                 break;
             case MODIFY_GENDER://性别
-                BaseApplication.getInstance().userInfo.setGender(requstValue);
+                BaseApplication.getUserInfo().setGender(requstValue);
                 sexTxt.setText(DataMapConstants.getGender().get(requstValue));
                 break;
             case MODIFY_NAME://姓名
-                BaseApplication.getInstance().userInfo.setNickName(requstValue);
+                BaseApplication.getUserInfo().setNickName(requstValue);
                 name.setText(requstValue);
                 break;
             case MODIFY_SIGN://签名
-                BaseApplication.getInstance().userInfo.setSignature(requstValue);
+                BaseApplication.getUserInfo().setSignature(requstValue);
                 signature.setText(requstValue);
                 break;
             case MODIFY_BRIEF://简介
-                BaseApplication.getInstance().userInfo.setIntroduction(requstValue);
+                BaseApplication.getUserInfo().setIntroduction(requstValue);
                 indure.setText(requstValue);
                 break;
             case MODIFY_REPUT://进来
-                BaseApplication.getInstance().userInfo.setExperience(requstValue);
+                BaseApplication.getUserInfo().setExperience(requstValue);
                 reputation.setText(requstValue);
                 break;
 
@@ -439,7 +440,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
             postUrl = URLConstants.TEACHER_UPLOAD;
             String param = new String();
             param = "cmd=UploadHead"  + "&appVersion=" + BaseApplication.getInstance().appVersion+"&clientType=3" +
-                    "&accessToken=" + BaseApplication.getInstance().accessToken+"&deviceId="+BaseApplication.diviceId+"&spaceCode=1005";
+                    "&accessToken=" + BaseApplication.getMt_token()+"&deviceId="+BaseApplication.diviceId+"&spaceCode=1005";
 
             postUrl = postUrl+"?"+param;
             URL url = new URL(postUrl);
@@ -520,7 +521,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
                     if(jsonStr != null){
 
                         if(!TextUtils.isEmpty(jsonStr.getImgPath())){
-                            BaseApplication.getInstance().userInfo.setHeadImg(jsonStr.getImgPath());
+                            BaseApplication.getUserInfo().setHeadImg(jsonStr.getImgPath());
                             myHandler.sendEmptyMessage(UPLOAD_OK);
                         }
                     }

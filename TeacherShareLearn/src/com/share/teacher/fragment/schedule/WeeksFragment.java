@@ -9,6 +9,7 @@ import com.share.teacher.R;
 import com.share.teacher.adapter.WeeksAdpter;
 import com.share.teacher.bean.CourseInfo;
 import com.share.teacher.fragment.BaseFragment;
+import com.share.teacher.utils.WeekRefeListener;
 import com.share.teacher.view.CustomListView;
 
 import java.util.ArrayList;
@@ -18,13 +19,15 @@ import java.util.ArrayList;
  * @creator caozhiqing
  * @data 2016/3/10
  */
-public class WeeksFragment extends BaseFragment {
+public class WeeksFragment extends BaseFragment implements WeekRefeListener{
 
     private CustomListView customListView = null;
     private ArrayList<CourseInfo> list = new ArrayList<CourseInfo>();
     private WeeksAdpter adapter;
     private int position;
     private TextView noData ;
+
+    public static ArrayList<WeekRefeListener> weekRefeListeners = new ArrayList<WeekRefeListener>();
 
 //    private String weeks[] = new String[]{"周一","周二","周三","周四","周五","周六","周日"};
 
@@ -43,6 +46,8 @@ public class WeeksFragment extends BaseFragment {
             list = (ArrayList<CourseInfo>) bundle.getSerializable("courList");
             flag = bundle.getInt("position");
         }
+        weekRefeListeners.add(this);
+
     }
 
     @Override
@@ -126,4 +131,13 @@ public class WeeksFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void weekRefeListener() {
+        onLazyLoad();
+    }
 }

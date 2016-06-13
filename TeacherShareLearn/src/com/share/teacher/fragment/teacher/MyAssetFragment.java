@@ -97,7 +97,7 @@ public class MyAssetFragment extends BaseFragment implements RequsetListener,Cus
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(mActivity, ChatMsgActivity.class);
-                UserInfo userInfo = BaseApplication.getInstance().userInfo;
+                UserInfo userInfo = BaseApplication.getUserInfo();
                 intent.putExtra("teacherId",teacherId);
 
                 ChatMsgEntity chatMsgEntity = new ChatMsgEntity();

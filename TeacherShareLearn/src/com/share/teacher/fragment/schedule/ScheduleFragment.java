@@ -21,6 +21,7 @@ import com.share.teacher.service.LocationUitl;
 import com.share.teacher.utils.BaseApplication;
 import com.share.teacher.utils.URLConstants;
 import com.share.teacher.utils.WaitLayer;
+import com.share.teacher.utils.WeekRefeListener;
 import com.share.teacher.view.tab.ScrollingTabContainerView;
 import com.share.teacher.view.tab.TabsActionBar;
 import com.share.teacher.view.tab.TabsAdapter;
@@ -54,6 +55,7 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
         super.onCreate(savedInstanceState);
         // startReqTask(this);
         // mLoadHandler.sendEmptyMessageDelayed(Constant.NET_SUCCESS, 100);// 停止加载框
+        WeeksFragment.weekRefeListeners.clear();
     }
 
     @Override
@@ -183,6 +185,12 @@ public class ScheduleFragment extends BaseFragment implements LocationUitl.Locat
             weekCourseList = jsonParserBase.getData();
         }
             onInitTabConfig();
+
+        if(!WeeksFragment.weekRefeListeners.isEmpty()){
+            for(WeekRefeListener weekRefeListener:WeeksFragment.weekRefeListeners){
+                weekRefeListener.weekRefeListener();
+            }
+        }
     }
 
     @Override

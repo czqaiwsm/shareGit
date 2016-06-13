@@ -277,7 +277,7 @@ public class OrderPayFragment extends BaseFragment implements RequsetListener,Cu
             case R.id.left_tv:
                 if(flag == 1){//待支付(联系老师)
                     intent = new Intent(mActivity, ChatMsgActivity.class);
-                    UserInfo userInfo = BaseApplication.getInstance().userInfo;
+                    UserInfo userInfo = BaseApplication.getUserInfo();
                     intent.putExtra("teacherId",orderInfo.getTeacherId());
 
                     ChatMsgEntity chatMsgEntity = new ChatMsgEntity();

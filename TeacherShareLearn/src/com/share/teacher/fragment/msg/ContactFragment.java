@@ -2,23 +2,21 @@ package com.share.teacher.fragment.msg;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import com.share.teacher.R;
-import com.share.teacher.activity.teacher.ChatMsgActivity;
 import com.share.teacher.activity.teacher.TeacherDetailActivity;
 import com.share.teacher.adapter.ContactAdpter;
-import com.share.teacher.bean.*;
+import com.share.teacher.bean.Contactor;
+import com.share.teacher.bean.ContactorBean;
 import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.help.PullRefreshStatus;
 import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.ContactorBeanParse;
-import com.share.teacher.utils.BaseApplication;
 import com.share.teacher.utils.URLConstants;
 import com.share.teacher.utils.WaitLayer;
 import com.share.teacher.view.CustomListView;
@@ -114,33 +112,6 @@ public class ContactFragment extends BaseFragment implements RequsetListener,Cus
 //                Intent intent = new Intent(mActivity,TeacherDetailActivity.class);
 //                intent.putExtra("teacherId",list.get(i-1).getStudentId());
 //                startActivity(intent);
-
-                Intent intent = new Intent(mActivity, ChatMsgActivity.class);
-                Contactor msgDetail = list.get(i-1);
-                UserInfo userInfo = BaseApplication.getInstance().userInfo;
-                if( userInfo !=  null){
-                    String teacherId = msgDetail.getStudentId();
-//                    if(TextUtils.equals(userInfo.getId(), list.get(i - 1).getReceiverId())){
-//                        teacherId = list.get(i-1).getSenderId();
-//                        intent.putExtra("teacherId",list.get(i-1).getSenderId());
-//                    }else {
-//                        teacherId = list.get(i-1).getReceiverId();
-//                    }
-
-                    intent.putExtra("teacherId",teacherId);
-
-                    ChatMsgEntity chatMsgEntity = new ChatMsgEntity();
-                    chatMsgEntity.setDirection("2");
-                    chatMsgEntity.setReceiverId(teacherId);
-//                    chatMsgEntity.setSenderId(userInfo.getId());
-
-                    chatMsgEntity.setStudentName(msgDetail.getStudentName());
-                    chatMsgEntity.setStudentImg(msgDetail.getHeadImg());
-                    chatMsgEntity.setTeacherImg(userInfo.getHeadImg());
-                    intent.putExtra("bundle",chatMsgEntity);
-                    startActivity(intent);
-                }
-
             }
         });
 

@@ -43,8 +43,8 @@ public class PayPopupwidow implements View.OnClickListener{
         }
         this.payInfo = news;
         if(mSortPop != null){
-//            if(BaseApplication.getInstance().userInfo != null){
-//                if(payInfo != null && payInfo.getPrice().compareTo(BaseApplication.getInstance().userInfo.getBalance())>1){
+//            if(BaseApplication.getUserInfo() != null){
+//                if(payInfo != null && payInfo.getPrice().compareTo(BaseApplication.getUserInfo().getBalance())>1){
 //                    view.findViewById(R.id.wxPay).setVisibility(View.GONE);
 //                }
 //            }
@@ -85,8 +85,8 @@ public class PayPopupwidow implements View.OnClickListener{
         }
         view.findViewById(R.id.alipay).setOnClickListener(onClickListener);
         view.findViewById(R.id.wxPay).setOnClickListener(onClickListener);
-        if(BaseApplication.getInstance().userInfo != null){
-//            if(payInfo != null && payInfo.getPrice().compareTo(BaseApplication.getInstance().userInfo.getBalance())>1){
+        if(BaseApplication.getUserInfo() != null){
+//            if(payInfo != null && payInfo.getPrice().compareTo(BaseApplication.getUserInfo().getBalance())>1){
 //                view.findViewById(R.id.wxPay).setVisibility(View.GONE);
 //            }
         }

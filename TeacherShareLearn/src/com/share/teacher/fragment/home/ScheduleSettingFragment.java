@@ -160,7 +160,8 @@ public class ScheduleSettingFragment extends BaseFragment implements View.OnClic
                     singelPickerView.setCurrent(nameSelect);
                     singelPickerView.pickShow();
                 }else {
-                    toasetUtil.showInfo("无相关类容!");
+//                    toasetUtil.showInfo("无相关类容!");
+                    SmartToast.showText("无相关类容!");
                 }
                 break;
             case R.id.subjectRL:
@@ -170,7 +171,9 @@ public class ScheduleSettingFragment extends BaseFragment implements View.OnClic
                     singelPickerView.setCurrent(courseSelect);
                     singelPickerView.pickShow();
                 }else {
-                    toasetUtil.showInfo("无相关类容!");
+                    SmartToast.showText("无相关类容!");
+
+//                    toasetUtil.showInfo("无相关类容!");
                 }
                 break;
             case R.id.frequencyRl:
@@ -183,21 +186,21 @@ public class ScheduleSettingFragment extends BaseFragment implements View.OnClic
                 break;
             case R.id.sure:
                 if(names == null || names.isEmpty()){
-//                    SmartToast.showText("数据不完整!");
-                    toasetUtil.showInfo("数据不完整");
+                    SmartToast.showText("数据不完整!");
+//                    toasetUtil.showInfo("数据不完整");
 
                     return;
                 }
 
                  if(TextUtils.isEmpty(getFreId())){
-//                     SmartToast.showText("请选择课程!");
-                     toasetUtil.showInfo("请选择课程");
+                     SmartToast.showText("请选择课程!");
+//                     toasetUtil.showInfo("请选择课程");
                      return;
                  }
 
                 if(TextUtils.isEmpty(time.getText())){
-                    toasetUtil.showInfo("请设置时间");
-//                    SmartToast.showText("请设置时间!");
+//                    toasetUtil.showInfo("请设置时间");
+                    SmartToast.showText("请设置时间!");
                     return;
                 }
 

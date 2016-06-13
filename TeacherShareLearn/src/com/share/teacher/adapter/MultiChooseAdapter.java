@@ -30,7 +30,7 @@ public class MultiChooseAdapter extends BaseAdapter {
     public MultiChooseAdapter(Context context, List<IdInfo> items) {
         this.mContext = context;
         this.mItemList = items;
-//        joniorId = BaseApplication.getInstance().userInfo.getGrade();
+//        joniorId = BaseApplication.getUserInfo().getGrade();
 
     }
     public MultiChooseAdapter(Context context, List<IdInfo> items, ArrayList<String> selectList) {

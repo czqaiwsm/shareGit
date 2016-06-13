@@ -51,7 +51,7 @@ public class EditFragment extends BaseFragment implements OnClickListener{
         Intent fromIn = mActivity.getIntent();
         String title = "";
         String content = "";
-        UserInfo userInfo = BaseApplication.getInstance().userInfo;
+        UserInfo userInfo = BaseApplication.getUserInfo();
         if(fromIn != null ){
             switch (fromIn.getFlags()){
                 case  40:  //签名

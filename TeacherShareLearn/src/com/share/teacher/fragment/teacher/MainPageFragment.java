@@ -109,7 +109,7 @@ public class MainPageFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ask_rl:
-                UserInfo userInfo = BaseApplication.getInstance().userInfo;
+                UserInfo userInfo = BaseApplication.getUserInfo();
                 Intent intent = new Intent(mActivity, ChatMsgActivity.class);
 
                 intent.putExtra("teacherId",teacherDetailInfo.getId());

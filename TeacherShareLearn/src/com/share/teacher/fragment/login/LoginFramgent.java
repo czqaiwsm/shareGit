@@ -133,12 +133,15 @@ public class LoginFramgent extends BaseFragment implements View.OnClickListener,
     public void handleRspSuccess(int requestType,Object obj) {
         JsonParserBase<LoginInfo> jsonParserBase = (JsonParserBase<LoginInfo>)obj;
         if ((jsonParserBase != null)){
-            BaseApplication.getInstance().userInfo = jsonParserBase.getData().getUserInfo();
-            BaseApplication.getInstance().accessToken = jsonParserBase.getData().getToken();
+
+            BaseApplication.saveUserInfo(jsonParserBase.getData().getUserInfo());
+            BaseApplication.setMt_token(jsonParserBase.getData().getToken()); ;
+//            BaseApplication.getUserInfo() = jsonParserBase.getData().getUserInfo();
+//            BaseApplication.getInstance().accessToken = jsonParserBase.getData().getToken();
             toClassActivity(LoginFramgent.this, TeacherMainActivity.class.getName());//老师
-//            BaseApplication.getInstance().userId = BaseApplication.getInstance().userInfo.getId();
+//            BaseApplication.getInstance().userId = BaseApplication.getUserInfo().getId();
 //            toClassActivity(LoginFramgent.this, MainActivity.class.getName());//学生
-            JPushInterface.setAlias(BaseApplication.getInstance(),"t_"+BaseApplication.getInstance().userInfo.getId(),null);
+            JPushInterface.setAlias(BaseApplication.getInstance(),"t_"+BaseApplication.getUserInfo().getId(),null);
             mActivity.finish();
         }
     }

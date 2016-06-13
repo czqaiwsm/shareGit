@@ -55,7 +55,7 @@ public class PCenterInfoFragment extends BaseFragment implements OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserInfo = BaseApplication.getInstance().userInfo;
+        mUserInfo = BaseApplication.getUserInfo();
     }
 
     @Override

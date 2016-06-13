@@ -29,7 +29,7 @@ public class ChooseJoinorAdapter extends BaseAdapter {
     public ChooseJoinorAdapter(Context context, List<IdInfo> items) {
         this.mContext = context;
         this.mItemList = items;
-//        joniorId = BaseApplication.getInstance().userInfo.getGrade();
+//        joniorId = BaseApplication.getUserInfo().getGrade();
 
     }
     public ChooseJoinorAdapter(Context context, List<IdInfo> items,String selectId) {

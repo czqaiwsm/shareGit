@@ -161,12 +161,10 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
                         }
                     }, "upPic1").start();
                 } else {
-                    toasetUtil.showInfo("网络连接出错,无法上传头像");
+                    toasetUtil.showInfo("网络连接出错,无法照片");
                 }
 
-                Intent intent = new Intent();
-                mActivity.setResult(Activity.RESULT_OK, intent);
-                mActivity.finish();
+
             }
         });
     }
@@ -317,7 +315,7 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
             postUrl = URLConstants.TEACHER_UPLOAD;
             String param = new String();
             param = "cmd=UploadIDCard" + "&appVersion=" + BaseApplication.getInstance().appVersion + "&clientType=3" +
-                    "&accessToken=" + BaseApplication.getInstance().accessToken + "&deviceId="+BaseApplication.diviceId+ "&spaceCode=1002"+
+                    "&accessToken=" + BaseApplication.getMt_token() + "&deviceId="+BaseApplication.diviceId+ "&spaceCode=1002"+
                     "&realName="+URLEncoder.encode(nameEdit.getText().toString(),encode)+"&idcard="+URLEncoder.encode(idCardEdit.getText().toString(),encode);
 //            postUrl = URLEncoder.encode(postUrl + "?" + param,encode) ;
             postUrl = postUrl + "?" + param;
@@ -399,7 +397,10 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
 //                    idImg.setImageBitmap(m_obj_IconBp);// 上传成功设置头像
                     idImg.setVisibility(View.VISIBLE);
 //                    ImageLoader.getInstance().displayImage(linkedTreeMap.get("url").toString(), idImg, ImageLoaderUtil.mHallIconLoaderOptions);
-                    toasetUtil.showSuccess(R.string.upload_success);
+//                    toasetUtil.showSuccess(R.string.upload_success);
+                    SmartToast.showText("身份认证提交成功!");
+                    mActivity.setResult(Activity.RESULT_OK);
+                    mActivity.finish();
                 } else {
                     toasetUtil.showInfo(result.getRespDesc());
                 }

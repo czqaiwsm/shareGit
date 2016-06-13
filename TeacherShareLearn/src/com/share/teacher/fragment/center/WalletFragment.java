@@ -14,9 +14,11 @@ import com.share.teacher.R;
 import com.share.teacher.activity.center.DetailActivity;
 import com.share.teacher.activity.center.RechargeActivity;
 import com.share.teacher.activity.center.WidthDrawActivity;
+import com.share.teacher.bean.BalanceInfo;
 import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
+import com.share.teacher.parse.BaseInfoParse;
 import com.share.teacher.parse.BaseParse;
 import com.share.teacher.utils.BaseApplication;
 import com.share.teacher.utils.URLConstants;
@@ -148,7 +150,7 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
         Map postParams = RequestHelp.getBaseParaMap("QueryBalance");
         RequestParam param = new RequestParam();
 //        param.setmParserClassName(BaseParse.class.getName());
-        param.setmParserClassName(new BaseParse());
+        param.setmParserClassName(new BaseInfoParse());
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
@@ -158,21 +160,12 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
     int balance = 0;
     @Override
     public void handleRspSuccess(int requestType,Object obj)  {
-        String json = (String)((JsonParserBase)obj).getData().toString();
-
-        try {
-            if(!TextUtils.isEmpty(json)){
-                JSONObject jsonObject = new JSONObject(json);
-                if(jsonObject != null && jsonObject.has("balance")){
-                    balance  = jsonObject.optInt("balance");
-                    releaName = jsonObject.optString("realName");
-                    account = jsonObject.optString("alipay");
-                    account_balance.setText(String.format(getResources().getString(R.string.balance_has),balance+"") );
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        BalanceInfo balanceInfo = (BalanceInfo) ((JsonParserBase)obj).getData();
+        if(balanceInfo == null) return;
+        balance  =  Integer.valueOf(balanceInfo.getBalance());
+        releaName = balanceInfo.getRealName();
+        account = balanceInfo.getAlipay();
+        account_balance.setText(String.format(getResources().getString(R.string.balance_has),balance+"") );
     }
 
 

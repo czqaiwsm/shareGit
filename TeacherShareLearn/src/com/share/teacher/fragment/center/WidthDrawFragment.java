@@ -64,7 +64,7 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
     private final int MSG_UPDATE_TIME = 500;
     private VerifyCode verifyCode;
     private int balance;
-    UserInfo userInfo = BaseApplication.getInstance().userInfo;
+    UserInfo userInfo = BaseApplication.getUserInfo();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,8 +180,8 @@ public class WidthDrawFragment extends BaseFragment implements OnClickListener, 
                 param.setmParserClassName(new VerifyCodeParse());
                 break;
         }
-//        postParams.put("price", BaseApplication.getInstance().userInfo != null?
-//                BaseApplication.getInstance().userInfo.getBalance():"");
+//        postParams.put("price", BaseApplication.getUserInfo() != null?
+//                BaseApplication.getUserInfo().getBalance():"");
         param.setmHttpURL(url);
         param.setPostRequestMethod();
         RequestManager.getRequestData(getActivity(), createReqSuccessListener(requestType), createMyReqErrorListener(), param);

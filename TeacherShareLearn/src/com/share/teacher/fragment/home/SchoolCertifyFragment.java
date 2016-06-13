@@ -173,12 +173,12 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
                         }
                     }, "upPic1").start();
                 } else {
-                    toasetUtil.showInfo("网络连接出错,无法上传头像");
+                    toasetUtil.showInfo("网络连接出错,无法上传图片");
                 }
 
-                Intent intent = new Intent();
-                mActivity.setResult(Activity.RESULT_OK, intent);
-                mActivity.finish();
+//                Intent intent = new Intent();
+//                mActivity.setResult(Activity.RESULT_OK, intent);
+//                mActivity.finish();
             }
         });
     }
@@ -340,7 +340,7 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
 //                    "&accessToken=" + BaseApplication.getInstance().accessToken + "&deviceId="+BaseApplication.diviceId+ "&spaceCode=1003"
 //               +"&education="+requstValue+"&profession="+majorName.getText().toString()+"&college="+schoolName.getText().toString();
             param = "cmd=UploadEdu" + "&appVersion=" + BaseApplication.getInstance().appVersion + "&clientType=3" +
-                    "&accessToken=" + BaseApplication.getInstance().accessToken + "&deviceId="+BaseApplication.diviceId+ "&spaceCode=1003"
+                    "&accessToken=" + BaseApplication.getMt_token() + "&deviceId="+BaseApplication.diviceId+ "&spaceCode=1003"
                +"&education="+requstValue+"&profession="+URLEncoder.encode(majorName.getText().toString(),encode)+"&college="+URLEncoder.encode(schoolName.getText().toString(),encode);
 
             postUrl = postUrl + "?" + param;
@@ -423,7 +423,8 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
 //                    schoolCertifyImg.setImageBitmap(m_obj_IconBp);// 上传成功设置头像
                     schoolCertifyImg.setVisibility(View.VISIBLE);
 //                    ImageLoader.getInstance().displayImage(linkedTreeMap.get("url").toString(),schoolCertifyImg, ImageLoaderUtil.mHallIconLoaderOptions);
-                    toasetUtil.showSuccess(R.string.upload_success);
+//                    toasetUtil.showSuccess(R.string.upload_success);
+                    SmartToast.showText("学历认证提交成功!");
                     mActivity.setResult(Activity.RESULT_OK);
                     mActivity.finish();
                 } else {

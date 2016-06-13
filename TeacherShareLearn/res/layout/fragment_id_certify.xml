@@ -100,7 +100,7 @@
                           android:layout_centerVertical="true"
                           android:gravity="center_vertical"
                           android:textColor="@color/certify_txt"
-                          android:text="身份证名"/>
+                          android:text="身份证号"/>
                 <EditText android:id="@+id/idCardEdit"
                           android:layout_width="match_parent"
                           android:layout_height="match_parent"

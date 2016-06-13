@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Context;
 import android.os.Vibrator;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import cn.jpush.android.api.JPushInterface;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.SDKInitializer;
@@ -34,11 +35,12 @@ public class BaseApplication extends Application {
     public BDLocation mapLocation;
     public Vibrator mVibrator;
 
-    public UserInfo userInfo;
+    private static UserInfo userInfo;
 
-    public String userId = "0" ;//用户Id,默认为0；
+//    public String userId = "0" ;//用户Id,默认为0；
     public String appVersion = "";//版本
-    public String accessToken = "00000000";//校验
+    private static String accessToken = "";//校验
+//    public String accessToken = "00000000";//校验
     public String address = "";//
     public LocationUitl locationUitl = new LocationUitl();
 
@@ -56,7 +58,7 @@ public class BaseApplication extends Application {
 //        WriteLog.getInstance().init(); // 初始化日志
         SDKInitializer.initialize(getApplicationContext());
 
-        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+//        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
 
         initImageLoader();
@@ -66,12 +68,49 @@ public class BaseApplication extends Application {
         URLConstants.SCREENH = ScreenUtils.getScreenHeight(this);
         locationUitl.startLocation();
         location[0] = "合肥市";
-        diviceId = ((TelephonyManager) this.getSystemService( Context.TELEPHONY_SERVICE )).getDeviceId();
+        diviceId = ((TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE )).getDeviceId();
     }
 
 
     public static BaseApplication getInstance(){
         return instance;
+    }
+
+
+    public static UserInfo getUserInfo(){
+        if(userInfo == null){
+            userInfo = ContextUtils.getObjFromSp(BaseApplication.getInstance(),"userInfo");
+        }
+        return  userInfo;
+    }
+
+    public static void saveUserInfo(UserInfo userInfo){
+        BaseApplication.userInfo = userInfo;
+        ContextUtils.saveObj2SP(BaseApplication.getInstance(),userInfo,"userInfo");
+    }
+
+    public static String getMt_token() {
+        if(TextUtils.isEmpty(accessToken)){
+            accessToken =  BaseApplication.getInstance().getApplicationContext()
+                    .getSharedPreferences("accessToken", Context.MODE_PRIVATE).getString("accessToken","");
+        }
+        if(TextUtils.isEmpty(accessToken)){
+            accessToken = "00000000";
+        }
+        return accessToken;
+    }
+
+    public static void setMt_token(String accessToken) {
+        BaseApplication.getInstance().getApplicationContext()
+                .getSharedPreferences("accessToken", Context.MODE_PRIVATE).edit().putString("accessToken",accessToken).commit();
+        BaseApplication.accessToken = accessToken;
+    }
+
+    public static boolean isLogin(){
+        if(getUserInfo() != null && !TextUtils.isEmpty(userInfo.getId())){
+            return true;
+        }
+        return false;
     }
 
     private void initImageLoader() {

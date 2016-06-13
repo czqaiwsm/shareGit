@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import com.share.teacher.R;
 import com.share.teacher.adapter.DetailAdapter;
@@ -21,6 +22,7 @@ import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.BaseParse;
 import com.share.teacher.parse.CommentParse;
 import com.share.teacher.parse.SystemMsgParse;
+import com.share.teacher.utils.AlertDialogUtils;
 import com.share.teacher.utils.BaseApplication;
 import com.share.teacher.utils.URLConstants;
 import com.share.teacher.view.CustomListView;
@@ -94,6 +96,20 @@ public class SystemMsgFragment extends BaseFragment implements RequsetListener ,
         adapter = new SystemMsgAdapter(mActivity, list,SystemMsgFragment.this);
         customListView.setAdapter(adapter);
 
+        if(MsgType == 2){
+            customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view,final int i, long l) {
+                    AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "您确定删除信息?", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            delMsgReq(list.get(i-1).getId().toString());
+                        }
+                    },null);
+                    return false;
+                }
+            });
+        }
         customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
             @Override
             public void onRefresh() {

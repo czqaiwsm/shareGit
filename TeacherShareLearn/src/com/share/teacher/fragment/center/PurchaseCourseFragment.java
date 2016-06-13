@@ -203,7 +203,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
         Map postParams = RequestHelp.getBaseParaMap("PayCourseOrder");
         postParams.put("payType", payType);
-        postParams.put("studentName", BaseApplication.getInstance().userInfo.getNickName());
+        postParams.put("studentName", BaseApplication.getUserInfo().getNickName());
         postParams.put("teacherId", courseInfo.getTeacherId());
         postParams.put("teacherName", courseInfo.getTeacherName());
         postParams.put("courseId", courseInfo.getCourseId());

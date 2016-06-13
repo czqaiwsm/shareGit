@@ -13,8 +13,10 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
+import cn.jpush.android.api.JPushInterface;
 import com.share.teacher.R;
 import com.share.teacher.activity.login.LoginActivity;
+import com.share.teacher.utils.BaseApplication;
 import com.share.teacher.utils.NetUtils;
 
 import java.io.File;
@@ -96,8 +98,17 @@ public class SplashActivity extends BaseActivity {
 		aa.setAnimationListener(new AnimationListener() {
 			@Override
 			public void onAnimationEnd(Animation arg0) {
-				SplashActivity.this.startActivity(new Intent(
-						SplashActivity.this, LoginActivity.class));
+
+				if(BaseApplication.isLogin()){
+					Intent intent = new Intent(SplashActivity.this,TeacherMainActivity.class);
+					startActivity(intent);
+//            BaseApplication.getInstance().userId = BaseApplication.getUserInfo().getId();
+//            toClassActivity(LoginFramgent.this, MainActivity.class.getName());//学生
+					JPushInterface.setAlias(BaseApplication.getInstance(),"t_"+BaseApplication.getUserInfo().getId(),null);
+				}else {
+					SplashActivity.this.startActivity(new Intent(
+							SplashActivity.this, LoginActivity.class));
+				}
 //				if (!isFirst()) {//是否是第一次登录
 //					SplashActivity.this.startActivity(new Intent(
 //							SplashActivity.this, LoginActivity.class));

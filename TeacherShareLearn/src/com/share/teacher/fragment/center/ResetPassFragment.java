@@ -17,6 +17,7 @@ import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.BaseParse;
 import com.share.teacher.utils.AppManager;
+import com.share.teacher.utils.BaseApplication;
 import com.share.teacher.utils.SmartToast;
 import com.share.teacher.utils.URLConstants;
 import com.volley.req.net.HttpURL;
@@ -134,6 +135,10 @@ public class ResetPassFragment extends BaseFragment implements OnClickListener,R
         if ((jsonParserBase != null)){
             SmartToast.showText("密码修改成功!");
 //            toasetUtil.showSuccess("密码修改成功!请登录");
+            if(BaseApplication.isLogin()){
+                BaseApplication.saveUserInfo(null);
+                BaseApplication.setMt_token("");
+            }
             ResetPassActivity.exit = true;
             AppManager.getAppManager().finishAllActivity();
         }

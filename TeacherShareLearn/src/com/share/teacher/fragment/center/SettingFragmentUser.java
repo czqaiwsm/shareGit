@@ -1,5 +1,6 @@
 package com.share.teacher.fragment.center;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -158,6 +159,10 @@ public class SettingFragmentUser extends BaseFragment implements OnClickListener
                 break;
             case R.id.exitLogin:// 退出登录
 
+                if(BaseApplication.isLogin()){
+                    BaseApplication.saveUserInfo(null);
+                    BaseApplication.setMt_token("");
+                }
                 SettingActivity.exit = true;
                 AppManager.getAppManager().finishAllActivity();
             break;
