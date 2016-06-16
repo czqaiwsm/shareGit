@@ -137,6 +137,44 @@
                           android:layout_gravity="center"
                           android:gravity="center_vertical"
                           android:textColor="@color/teach_txt_color"
+                          android:text="院        系"/>
+                <EditText android:id="@+id/faculty_name"
+                          android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:textSize="@dimen/teach_font_size"
+                          android:layout_gravity="right"
+                          android:gravity="right"
+                          android:textColor="@color/teach_txt_color2"
+                          android:drawableRight="@drawable/arrow_right"
+                          android:layout_alignParentRight="true"
+                          android:drawablePadding="@dimen/choose_padd"
+                          android:background="@null"
+                          android:singleLine="true"
+                          android:hint="请输入院系名称"
+                />
+
+            </RelativeLayout>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_small_gray"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"/>
+            <RelativeLayout
+                    android:id="@+id/facultyRl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/page_certify"
+                    android:paddingBottom="@dimen/page_certify"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:background="@drawable/item_click">
+                <TextView android:layout_width="@dimen/teach_txt_size"
+                          android:layout_height="match_parent"
+                          android:textSize="@dimen/teach_font_size"
+                          android:layout_gravity="center"
+                          android:gravity="center_vertical"
+                          android:textColor="@color/teach_txt_color"
                           android:text="专        业"/>
                 <EditText android:id="@+id/major_name"
                           android:layout_width="wrap_content"

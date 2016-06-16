@@ -398,9 +398,16 @@ public class IDCardCertifyFragment extends BaseFragment implements View.OnClickL
                     idImg.setVisibility(View.VISIBLE);
 //                    ImageLoader.getInstance().displayImage(linkedTreeMap.get("url").toString(), idImg, ImageLoaderUtil.mHallIconLoaderOptions);
 //                    toasetUtil.showSuccess(R.string.upload_success);
-                    SmartToast.showText("身份认证提交成功!");
-                    mActivity.setResult(Activity.RESULT_OK);
-                    mActivity.finish();
+                    AlertDialogUtils.displaySingle(mActivity, getString(R.string.submit_accertify_title),
+                            getString(R.string.submit_accertify_info), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mActivity.setResult(Activity.RESULT_OK);
+                                    mActivity.finish();
+                                }
+                            });
+//                    SmartToast.showText("身份认证提交成功!");
+
                 } else {
                     toasetUtil.showInfo(result.getRespDesc());
                 }

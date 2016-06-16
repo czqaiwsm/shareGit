@@ -49,6 +49,7 @@
             android:textColor="#1ABB9B" />
 
         <ImageView
+                android:id="@+id/cutLine"
             android:layout_width="1px"
             android:layout_height="match_parent"
             android:background="#1ABB9B" />

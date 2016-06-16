@@ -60,6 +60,10 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
     TextView contact;
     @Bind(R.id.buy)
     TextView buy;
+    @Bind(R.id.address)
+    TextView address;
+    @Bind(R.id.grade)
+    TextView grade;
 
     private String orderId = "";
     private String orderStatus = "";
@@ -142,7 +146,8 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
                         orderPrice.setText(String.format(getResources().getString(R.string.balance_has,orderDetailInfo.getOrderPrice())) );
                         discount.setText(String.format(getResources().getString(R.string.balance_has,orderDetailInfo.getDiscountPrice())) );
                         payPrice.setText(getResources().getString(R.string.balance_has,orderDetailInfo.getPayPrice()));;
-
+                        address.setText(orderDetailInfo.getRemark());
+                        grade.setText(orderDetailInfo.getGradeName());
                         contact.setOnClickListener(this);
                         buy.setOnClickListener(this);
                     }

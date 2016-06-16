@@ -1,25 +1,39 @@
 package com.share.teacher.fragment.schedule;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import com.share.teacher.R;
 import com.share.teacher.adapter.WeeksAdpter;
 import com.share.teacher.bean.CourseInfo;
+import com.share.teacher.bean.CourseInfo;
 import com.share.teacher.fragment.BaseFragment;
+import com.share.teacher.help.RequestHelp;
+import com.share.teacher.help.RequsetListener;
+import com.share.teacher.parse.BaseParse;
+import com.share.teacher.parse.CourseListParse;
+import com.share.teacher.utils.AlertDialogUtils;
+import com.share.teacher.utils.URLConstants;
 import com.share.teacher.utils.WeekRefeListener;
 import com.share.teacher.view.CustomListView;
+import com.volley.req.net.HttpURL;
+import com.volley.req.net.RequestManager;
+import com.volley.req.net.RequestParam;
+import com.volley.req.parser.JsonParserBase;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * @desc 课程-->每天的课程
  * @creator caozhiqing
  * @data 2016/3/10
  */
-public class WeeksFragment extends BaseFragment implements WeekRefeListener{
+public class WeeksFragment extends BaseFragment implements WeekRefeListener,RequsetListener{
 
     private CustomListView customListView = null;
     private ArrayList<CourseInfo> list = new ArrayList<CourseInfo>();
@@ -34,6 +48,7 @@ public class WeeksFragment extends BaseFragment implements WeekRefeListener{
     View view;
     private boolean isPrepare = false;
     private boolean isVisible = false;
+    private String id = "";
 
     int flag = 0;
     @Override
@@ -109,11 +124,60 @@ public class WeeksFragment extends BaseFragment implements WeekRefeListener{
             customListView.setVisibility(View.GONE);
             noData.setVisibility(View.VISIBLE);
         }
+
+        customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view,final int i, long l) {
+                AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "是否删除此课程安排?", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        id = list.get(i-1).getId();
+                        requestTask(2);
+                    }
+                }, null);
+            }
+        });
+    }
+
+    @Override
+    protected void requestData(int requestType) {
+        HttpURL url = new HttpURL();
+        url.setmBaseUrl(URLConstants.BASE_URL);
+        RequestParam param = new RequestParam();
+        Map postParams = null;
+        postParams = RequestHelp.getBaseParaMap("ScheduleDel");
+        postParams.put("id",id);
+        param.setmParserClassName(new BaseParse());
+        param.setmPostarams(postParams);
+        param.setmHttpURL(url);
+        param.setPostRequestMethod();
+        RequestManager.getRequestData(getActivity(), createReqSuccessListener(requestType), createMyReqErrorListener(), param);
+    }
+
+    @Override
+    public void handleRspSuccess(int requestType,Object obj) {
+
+                CourseInfo selectMsg = null;
+                for (CourseInfo msgDetail : list) {
+                    if (TextUtils.equals(id, msgDetail.getId())) {
+                        selectMsg = msgDetail;
+                        break;
+                    }
+                }
+
+                if (selectMsg != null && ScheduleFragment.weekCourseList != null) {
+                    ScheduleFragment.weekCourseList.get(flag).remove(selectMsg);
+//                    list.remove(selectMsg);
+                    notifyData(ScheduleFragment.weekCourseList.get(flag));
+                }
+//                adapter.notifyDataSetInvalidated();
+//                adapter.notifyDataSetChanged();
+                toasetUtil.showSuccess("删除成功!");
+
     }
 
 
-
-    public void notifyData(ArrayList<CourseInfo> list){
+    private void notifyData(ArrayList<CourseInfo> list){
         this.list = new ArrayList<CourseInfo>();
         if(list != null){
            this.list.addAll(list);

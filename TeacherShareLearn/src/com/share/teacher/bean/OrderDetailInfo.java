@@ -16,7 +16,24 @@ public class OrderDetailInfo {
     private String discountPrice;//	优惠金额
     private String payPrice	    ;//实际支付金额
     private String payCount	    ;//购买次数
+    private String remark  ;
+    private String gradeName  ;
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getGradeName() {
+        return gradeName;
+    }
+
+    public void setGradeName(String gradeName) {
+        this.gradeName = gradeName;
+    }
 
     public String getStudentId() {
         return studentId;

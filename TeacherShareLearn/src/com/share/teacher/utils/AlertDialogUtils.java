@@ -13,6 +13,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Handler;
 import android.view.*;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.share.teacher.R;
 
@@ -336,4 +337,48 @@ public class AlertDialogUtils {
         return builder;
     }
 
+
+    /**
+     *
+     * @param context
+     * @param title
+     * @param message
+     * @param positionOnclick
+     * @return
+     */
+    public static Dialog displaySingle(Context context, String title, String message,  final View.OnClickListener positionOnclick) {
+
+        final Dialog builder = new Dialog(context, R.style.MyDialog);
+        builder.setCancelable(false);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_style, null);
+        builder.setContentView(view);
+        TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
+        TextView mContent = (TextView) view.findViewById(R.id.dialog_content);
+        Button mConfirm = (Button) view.findViewById(R.id.dialog_confirm);
+        view.findViewById(R.id.dialog_cancel).setVisibility(View.GONE);
+        view.findViewById(R.id.cutLine).setVisibility(View.GONE);
+
+        mTitle.setText(title);
+        mContent.setText(message);
+        mConfirm.setOnClickListener( new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+
+                builder.dismiss();
+                if(positionOnclick != null){
+                    positionOnclick.onClick(v);
+                }
+            }
+        });
+        Window dialogWindow = builder.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        dialogWindow.setGravity(Gravity.CENTER_VERTICAL);
+        lp.width =URLConstants.SCREENW / 5 * 4;
+        dialogWindow.setAttributes(lp);
+        dialogWindow.setWindowAnimations(R.style.dialogWindowAnim);
+        builder.show();
+        return builder;
+    }
 }

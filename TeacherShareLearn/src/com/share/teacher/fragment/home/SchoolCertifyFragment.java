@@ -66,6 +66,8 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
     RelativeLayout schoolRl;
     @Bind(R.id.major_name)
     EditText majorName;
+    @Bind(R.id.faculty_name)
+    EditText faculty_name;
     @Bind(R.id.majorRl)
     RelativeLayout majorRl;
     @Bind(R.id.uploadLL)
@@ -424,9 +426,17 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
                     schoolCertifyImg.setVisibility(View.VISIBLE);
 //                    ImageLoader.getInstance().displayImage(linkedTreeMap.get("url").toString(),schoolCertifyImg, ImageLoaderUtil.mHallIconLoaderOptions);
 //                    toasetUtil.showSuccess(R.string.upload_success);
-                    SmartToast.showText("学历认证提交成功!");
-                    mActivity.setResult(Activity.RESULT_OK);
-                    mActivity.finish();
+                    AlertDialogUtils.displaySingle(mActivity, getString(R.string.submit_accertify_title),
+                            getString(R.string.submit_accertify_info), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mActivity.setResult(Activity.RESULT_OK);
+                                    mActivity.finish();
+                                }
+                            });
+//                    SmartToast.showText("学历认证提交成功!");
+//                    mActivity.setResult(Activity.RESULT_OK);
+//                    mActivity.finish();
                 } else {
                     toasetUtil.showInfo(result.getRespDesc());
                 }
