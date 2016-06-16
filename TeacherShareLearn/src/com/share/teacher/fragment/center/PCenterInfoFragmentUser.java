@@ -32,6 +32,7 @@ import com.share.teacher.activity.ChooseCityActivity;
 import com.share.teacher.activity.center.EditActivity;
 import com.share.teacher.activity.center.PCenterModifyInfoActivity;
 import com.share.teacher.activity.teacher.ChooseJoinorActivity;
+import com.share.teacher.bean.BalanceInfo;
 import com.share.teacher.bean.DataMapConstants;
 import com.share.teacher.bean.UploadBean;
 import com.share.teacher.bean.UserInfo;
@@ -71,6 +72,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
     private RelativeLayout signature_layout ;
     private RelativeLayout indure_layout    ;
     private RelativeLayout reputation_layout;
+    private RelativeLayout advice_layout;
 
     private TextView name;
     private TextView sexTxt;
@@ -135,6 +137,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         signature_layout  = (RelativeLayout) v.findViewById(R.id.signature_layout );
         indure_layout     = (RelativeLayout) v.findViewById(R.id.indure_layout    );
         reputation_layout = (RelativeLayout) v.findViewById(R.id.reputation_layout);
+        advice_layout = (RelativeLayout) v.findViewById(R.id.advice_layout);
         name = (TextView)v.findViewById(R.id.nick_name);
         sexTxt = (TextView)v.findViewById(R.id.account_sexname);
         jonior = (TextView)v.findViewById(R.id.account_joniorname);
@@ -167,21 +170,11 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
             city.setText(userInfo.getCity());
         }
 
-//        if (!Utility.isEmpty(userInfo.getNickname())) {// 昵称
-//            account_nickname.setText(userInfo.getNickname());
-//        }
-//        if (!Utility.isEmpty(userInfo.getQq())) {// qq
-//            account_qq.setText(userInfo.getQq());
-//        }
-//        if (!Utility.isEmpty(userInfo.getEmail())) {
-//            account_email.setText(userInfo.getEmail());
-//        }
-//        if (!Utility.isEmpty(userInfo.getUsername())) {
-//            account_phone.setText(userInfo.getUsername());
-//        }
-//        if (!Utility.isEmpty(userInfo.getSex())) {
-//            account_sex.setText(userInfo.getSex().equals("0") ? "男" : "女");
-//        }
+        advice_layout.setVisibility(View.GONE);
+
+        if(TextUtils.isEmpty(city.getText().toString()) || TextUtils.isEmpty(indure.getText().toString())){
+            advice_layout.setVisibility(View.VISIBLE);
+        }
 
         ArrayMap map = null;
 
@@ -230,6 +223,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
             startActivityForResult(intent,MODIFY_REPUT);
             break;
         }
+
     }
 
     @Override
@@ -371,8 +365,12 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
                 BaseApplication.getUserInfo().setExperience(requstValue);
                 reputation.setText(requstValue);
                 break;
+        }
 
-
+        advice_layout.setVisibility(View.GONE);
+        BaseApplication.saveUserInfo(BaseApplication.getUserInfo());
+        if(TextUtils.isEmpty(city.getText().toString()) || TextUtils.isEmpty(indure.getText().toString())){
+            advice_layout.setVisibility(View.VISIBLE);
         }
     }
 
