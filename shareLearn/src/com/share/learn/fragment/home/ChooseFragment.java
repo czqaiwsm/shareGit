@@ -38,8 +38,14 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(BaseApplication.getUserInfo() != null){
-            joniorId = BaseApplication.getUserInfo().getGrade();
+//        if(BaseApplication.getUserInfo() != null){
+//            joniorId = BaseApplication.getUserInfo().getGrade();
+//        }
+
+        Intent intent = getActivity().getIntent();
+        if(intent != null){
+            joniorId = intent.hasExtra("grade")?intent.getStringExtra("grade"):"0";
+            cityId = intent.hasExtra("cityId")?intent.getStringExtra("cityId"):"";
         }
     }
 
@@ -64,10 +70,11 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
         school = (TextView)view.findViewById(R.id.school);
         chooseCityRl.setOnClickListener(this);
         chooseJoniorRl.setOnClickListener(this);
-        if(BaseApplication.getUserInfo() != null){
-            joniorId =BaseApplication.getUserInfo().getGrade();
-            cityId = BaseApplication.getInstance().location[0];
-        }
+
+//        if(BaseApplication.getUserInfo() != null){
+//            joniorId = BaseApplication.getUserInfo().getGrade();
+//            cityId = BaseApplication.getInstance().location[0];
+//        }
         setData();
     }
 

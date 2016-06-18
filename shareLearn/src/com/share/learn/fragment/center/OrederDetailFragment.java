@@ -61,6 +61,10 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
     RelativeLayout sexLayout;
     @Bind(R.id.date_time)
     TextView dateTime;
+    @Bind(R.id.address)
+    TextView address;
+    @Bind(R.id.grade)
+    TextView grade;
     @Bind(R.id.jonior_layout)
     RelativeLayout joniorLayout;
     @Bind(R.id.orderPrice)
@@ -81,6 +85,7 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
     FlowScrollView scrollview;
     @Bind(R.id.container)
     LinearLayout container;
+
 
 //    private String orderId = "";
 //    private String orderStatus = "";
@@ -184,6 +189,8 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
                         discount.setText(String.format(getResources().getString(R.string.balance_has,orderDetailInfo.getDiscountPrice())) );
                         payPrice.setText(getResources().getString(R.string.balance_has,orderDetailInfo.getPayPrice()));;
                         accountDuration.setText((orderDetailInfo.getPayCount()*2)+"");
+                        address.setText(orderDetailInfo.getRemark());
+                        grade.setText(orderDetailInfo.getGradeName());
                         contact.setOnClickListener(this);
                         buy.setOnClickListener(this);
                         setStatue();

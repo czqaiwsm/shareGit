@@ -2,6 +2,7 @@ package com.share.learn.fragment.teacher;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Interpolator;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,8 +79,9 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
         initView(view);
         initTitle();
         cityName = BaseApplication.getInstance().location[0];
-        joniorId = BaseApplication.getUserInfo()!=null
-        ?BaseApplication.getUserInfo().getGrade():"";
+        joniorId = "0";
+//        joniorId = BaseApplication.getUserInfo()!=null
+//                ?BaseApplication.getUserInfo().getGrade():"";
         setLoadingDilog(WaitLayer.DialogType.NOT_NOMAL);
         requestTask();
     }
@@ -91,7 +93,11 @@ public class ChooseTeacherFragment extends BaseFragment implements RequsetListen
 
             @Override
             public void onClick(View v) {
-                toClassActivity(ChooseTeacherFragment.this, ChooseActivity.class.getName());
+                Intent intent = new Intent(BaseApplication.getInstance(),ChooseActivity.class);
+                intent.putExtra("cityId",cityName);
+                intent.putExtra("grade",joniorId);
+                startActivityForResult(intent, 111);
+//                toClassActivity(ChooseTeacherFragment.this, ChooseActivity.class.getName());
             }
         });
     }

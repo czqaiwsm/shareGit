@@ -18,6 +18,25 @@ public class OrderDetailInfo {
     private String grade         ;
     private int payPrice        ;
     private String evaluateStatus  ;
+    private String remark  ;
+    private String gradeName  ;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getGradeName() {
+        return gradeName;
+    }
+
+    public void setGradeName(String gradeName) {
+        this.gradeName = gradeName;
+    }
+
     public String getTeacherId() {
         return teacherId;
     }

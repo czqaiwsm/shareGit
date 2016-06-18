@@ -52,13 +52,13 @@
                     android:text="&#032;&#032;&#032;&#032;待支付&#032;&#032;&#032;&#032;"
                     android:onClick="@null"
                     android:clickable="false"
-                    />
+                    android:layout_marginBottom="@dimen/_10dp"
+            />
             <ImageView android:id="@+id/waitPayImg"
                        android:layout_width="match_parent"
                        android:layout_height="@dimen/line"
                        android:layout_below="@+id/waitPayTxt"
                        android:background="@drawable/order_item_select"
-                       android:layout_marginTop="@dimen/_10dp"
                     />
         </RelativeLayout>
         <RelativeLayout
@@ -84,13 +84,13 @@
                     android:layout_centerHorizontal="true"
                     android:onClick="@null"
                     android:clickable="false"
-                    />
+                    android:layout_marginBottom="@dimen/_10dp"
+            />
             <ImageView android:id="@+id/hasPayImg"
                        android:layout_width="match_parent"
                        android:layout_height="@dimen/line"
                        android:layout_below="@+id/hasPayTxt"
                        android:background="@drawable/order_item_select"
-                       android:layout_marginTop="@dimen/_10dp"
                     />
         </RelativeLayout>
         <RelativeLayout
@@ -116,13 +116,13 @@
                     android:text="&#032;&#032;&#032;&#032;已取消&#032;&#032;&#032;&#032;"
                     android:onClick="@null"
                     android:clickable="false"
-                    />
+                    android:layout_marginBottom="@dimen/_10dp"
+            />
             <ImageView android:id="@+id/hasCancelImg"
                        android:layout_width="match_parent"
                        android:layout_height="@dimen/line"
                        android:layout_below="@+id/hasCancelTxt"
                        android:background="@drawable/order_item_select"
-                       android:layout_marginTop="@dimen/_10dp"
                     />
         </RelativeLayout>
         <RelativeLayout
@@ -148,13 +148,13 @@
                     android:text="@string/hasPay"
                     android:onClick="@null"
                     android:clickable="false"
-                    />
+                    android:layout_marginBottom="@dimen/_10dp"
+            />
             <ImageView android:id="@+id/donePayImg"
                       android:layout_width="match_parent"
                       android:layout_height="@dimen/line"
                       android:layout_below="@+id/donePayTxt"
                       android:background="@drawable/order_item_select"
-                      android:layout_marginTop="@dimen/_10dp"
                     />
         </RelativeLayout>
     </LinearLayout>
