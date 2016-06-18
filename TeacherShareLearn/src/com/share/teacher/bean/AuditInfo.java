@@ -13,6 +13,7 @@ public class AuditInfo  implements Serializable{
     private String college	  ;//学校
     private String profession;//	专业
     private String imgUrl	  ;// 证书图片
+    private String faculty	  ;// 院系
 
     public String getEducation() {
         return education;
@@ -44,5 +45,13 @@ public class AuditInfo  implements Serializable{
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
 }

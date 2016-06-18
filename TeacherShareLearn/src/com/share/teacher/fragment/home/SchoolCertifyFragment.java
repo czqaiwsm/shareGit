@@ -112,6 +112,7 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
             degreeName.setText(DataMapConstants.getDegree().get(auditInfo.getEducation()));
             schoolName.setText(auditInfo.getCollege());
             majorName.setText(auditInfo.getProfession());
+            faculty_name.setText(auditInfo.getFaculty());
 //            ImageLoader.getInstance().displayImage(auditInfo.getImgUrl(),schoolCertifyImg,ImageLoaderUtil.mHallIconLoaderOptions);
             ImageLoader.getInstance().loadImage(auditInfo.getImgUrl(), ImageLoaderUtil.mHallIconLoaderOptions, new ImageLoadingListener() {
                 @Override
@@ -155,6 +156,10 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
                 }
                 if (TextUtils.isEmpty(majorName.getText().toString())) {
                     toasetUtil.showInfo("请输入专业");
+                    return;
+                }
+                if (TextUtils.isEmpty(faculty_name.getText().toString())) {
+                    toasetUtil.showInfo("请输入院系");
                     return;
                 }
 
@@ -343,7 +348,8 @@ public class SchoolCertifyFragment extends BaseFragment implements View.OnClickL
 //               +"&education="+requstValue+"&profession="+majorName.getText().toString()+"&college="+schoolName.getText().toString();
             param = "cmd=UploadEdu" + "&appVersion=" + BaseApplication.getInstance().appVersion + "&clientType=3" +
                     "&accessToken=" + BaseApplication.getMt_token() + "&deviceId="+BaseApplication.diviceId+ "&spaceCode=1003"
-               +"&education="+requstValue+"&profession="+URLEncoder.encode(majorName.getText().toString(),encode)+"&college="+URLEncoder.encode(schoolName.getText().toString(),encode);
+               +"&education="+requstValue+"&profession="+URLEncoder.encode(majorName.getText().toString(),encode)+"&college="+URLEncoder.encode(schoolName.getText().toString(),encode)
+                    +"&faculty="+URLEncoder.encode(faculty_name.getText().toString(),encode);
 
             postUrl = postUrl + "?" + param;
             URL url = new URL(postUrl);
