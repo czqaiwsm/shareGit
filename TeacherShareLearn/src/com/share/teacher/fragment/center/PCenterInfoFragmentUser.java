@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.*;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.view.Gravity;
@@ -81,6 +82,8 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
     private TextView signature  ;
     private TextView indure     ;
     private TextView reputation;
+    private TextView cityTX;
+    private TextView brifeTX;
 
     private String requstValue = "";//请求的id
     private int requestCode;
@@ -145,6 +148,8 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         signature  = (TextView)v.findViewById(R.id.signature );
         indure     = (TextView)v.findViewById(R.id.indure    );
         reputation = (TextView)v.findViewById(R.id.reputation);
+        cityTX = (TextView)v.findViewById(R.id.cityTX);
+        brifeTX = (TextView)v.findViewById(R.id.brifeTX);
 
         photo_layout.setOnClickListener(this);
         name_layout.setOnClickListener(this);
@@ -157,6 +162,10 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         city.setText(SharePreferenceUtils.getInstance(BaseApplication.getInstance()).getCityName());
 
         setData(BaseApplication.getUserInfo());
+        String cityTxt = "<font color=#969596 >城市</font><font color='red' size=14px>[必填]</font>";
+        cityTX.setText(Html.fromHtml(cityTxt));
+        cityTxt = "<font color=#969596 >简介</font><font color='red' size=14px>[必填]</font>";
+        brifeTX.setText(Html.fromHtml(cityTxt));
     }
 
     private void setData(UserInfo userInfo) {
