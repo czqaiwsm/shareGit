@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import com.google.gson.reflect.TypeToken;
@@ -84,11 +85,14 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
     private RelativeLayout sex_layout;
     private RelativeLayout jonior_layout;
     private RelativeLayout city_layout;
+    private RelativeLayout advice_layout;
+
 
     private TextView name;
     private TextView sexTxt;
     private TextView jonior;
     private TextView city;
+    private TextView joniorTV;
 
     private int requestType = 1;//姓名1  性别2  所在地3    年级4
     private String requstValue = "";//请求的id
@@ -139,10 +143,12 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
         sex_layout = (RelativeLayout) v.findViewById(R.id.sex_layout);
         jonior_layout = (RelativeLayout) v.findViewById(R.id.jonior_layout);
         city_layout = (RelativeLayout) v.findViewById(R.id.city_layout);
+        advice_layout = (RelativeLayout) v.findViewById(R.id.advice_layout);
         name = (TextView)v.findViewById(R.id.nick_name);
         sexTxt = (TextView)v.findViewById(R.id.account_sexname);
         jonior = (TextView)v.findViewById(R.id.account_joniorname);
         city = (TextView)v.findViewById(R.id.account_cityname);
+        joniorTV = (TextView)v.findViewById(R.id.joniorTV);
 
         photo_layout.setOnClickListener(this);
         name_layout.setOnClickListener(this);
@@ -151,7 +157,14 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
 
         name.setText(BaseApplication.getUserInfo().getNickName());
         sexTxt.setText(DataMapConstants.getGender().get(BaseApplication.getUserInfo().getGender()));
-        jonior.setText(DataMapConstants.getJoniorMap().get(BaseApplication.getUserInfo().getGrade()));
+        jonior.setText(DataMapConstants.getPCenterJoniorMap().get(BaseApplication.getUserInfo().getGrade()));
+
+        String cityTxt = "<font color=#969596 >年级</font><font color='red' size=14px>[必填]</font>";
+        joniorTV.setText(Html.fromHtml(cityTxt));
+        advice_layout.setVisibility(View.VISIBLE);
+        if(!TextUtils.isEmpty(jonior.getText())){
+            advice_layout.setVisibility(View.GONE);
+        }
         ImageLoader.getInstance().displayImage(BaseApplication.getUserInfo().getHeadImg(), mHeadImg, ImageLoaderUtil.mHallIconLoaderOptions);
     }
 
@@ -283,6 +296,12 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
                 BaseApplication.getUserInfo().setGrade(requstValue);
                 BaseApplication.saveUserInfo(BaseApplication.getUserInfo());
                 jonior.setText(DataMapConstants.getJoniorMap().get(requstValue));
+                advice_layout.setVisibility(View.VISIBLE);
+                if(!TextUtils.isEmpty(jonior.getText())){
+                    advice_layout.setVisibility(View.GONE);
+                }else {
+                    advice_layout.setVisibility(View.VISIBLE);
+                }
                 break;
             case MODIFY_GENDER://性别
                 BaseApplication.getUserInfo().setGender(requstValue);
