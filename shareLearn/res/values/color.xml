@@ -24,6 +24,8 @@
     <color name="home_line">#66272636</color>
     <color name="home_bottom_text_normal">#272636</color>
     <color name="home_focus">#FFE9E9E9</color>
+    <color name="light_red">#88E96493</color>
+    <color name="line_red">#FFE96493</color>
 
     <!-- gray  主大字体的颜色 -->
     <color name="color_gray">#4C4C4C</color>

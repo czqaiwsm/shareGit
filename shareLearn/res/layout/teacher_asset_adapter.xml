@@ -6,16 +6,21 @@
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white">
-        <com.share.learn.view.RoundImageView
-                android:id="@+id/head_photo"
-                android:layout_width="@dimen/round_img_size"
-                android:layout_height="@dimen/round_img_size"
-                android:layout_margin="@dimen/msg_margin"
-                android:src="@drawable/default_user_portrait"
-        />
+
+        <FrameLayout   android:layout_width="@dimen/round_img_size"
+                       android:layout_height="@dimen/round_img_size"
+                       android:layout_margin="@dimen/msg_margin"
+                      android:id="@+id/img_frame">
+            <com.share.learn.view.RoundImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/head_photo"
+                    android:src="@drawable/default_user_portrait"
+            />
+        </FrameLayout>
             <TextView android:id="@+id/Name"
-                      android:layout_toRightOf="@+id/head_photo"
-                      android:layout_alignTop="@+id/head_photo"
+                      android:layout_toRightOf="@+id/img_frame"
+                      android:layout_alignTop="@+id/img_frame"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textColor="@color/black"
@@ -31,7 +36,7 @@
                       android:layout_alignParentRight="true"
                       android:layout_marginRight="@dimen/msg_margin"
                       android:textSize="@dimen/msg_time"
-                      android:layout_alignTop="@+id/head_photo"
+                      android:layout_alignTop="@+id/img_frame"
                       android:layout_marginTop="6dp"
             />
         <RatingBar
@@ -39,7 +44,7 @@
                 style="@style/CustomRatingBarSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/head_photo"
+                android:layout_toRightOf="@+id/img_frame"
                 android:layout_marginTop="@dimen/_10dp"
                 android:numStars="5"
                 android:rating="2"
@@ -56,14 +61,14 @@
                   android:text="最近怎么样?学习!最近怎么样?!最近怎么样?学习!"
                   android:layout_marginBottom="4dp"
                   android:textSize="@dimen/msg_time"
-                  android:layout_below="@+id/head_photo"
-                  android:layout_alignLeft="@+id/head_photo"
+                  android:layout_below="@+id/img_frame"
+                  android:layout_alignLeft="@+id/img_frame"
         />
         <View android:layout_width="match_parent"
               android:layout_height="@dimen/line"
               android:background="@color/color_small_gray"
               android:layout_below="@+id/msg_content"
-              android:layout_alignLeft="@+id/head_photo"
+              android:layout_alignLeft="@+id/img_frame"
               android:layout_marginRight="@dimen/msg_margin"
               android:layout_marginTop="5dp"
         />

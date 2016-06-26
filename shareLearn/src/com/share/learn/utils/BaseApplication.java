@@ -19,6 +19,7 @@ import com.share.learn.service.LocationService;
 import com.share.learn.service.LocationUitl;
 import com.share.learn.service.WriteLog;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -60,6 +61,7 @@ public class BaseApplication extends Application {
         SDKInitializer.initialize(getApplicationContext());
 
 //        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);     		// 初始化 JPush
         if(getUserInfo() != null){
             JPushInterface.setAlias(BaseApplication.getInstance(), "s_" + getUserInfo().getId(), new TagAliasCallback() {
                 @Override
@@ -67,9 +69,16 @@ public class BaseApplication extends Application {
                     AppLog.Logi("jpush alias:"+s+"   "+(set!=null?set.toString():""));
                 }
             });
+            Set<String> set = new HashSet<String>();
+            set.add("suser-学生");
+            JPushInterface.setTags(BaseApplication.getInstance(),set,new TagAliasCallback() {
+                @Override
+                public void gotResult(int i, String s, Set<String> set) {
+                    AppLog.Logi("jpush alias:"+s+"   "+(set!=null?set.toString():""));
+                }
+            });
             ;
         }
-        JPushInterface.init(this);     		// 初始化 JPush
 
 
         initImageLoader();

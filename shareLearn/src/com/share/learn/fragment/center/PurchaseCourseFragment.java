@@ -3,9 +3,12 @@ package com.share.learn.fragment.center;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.view.*;
 import android.view.View.OnClickListener;
@@ -123,6 +126,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
 
 
+        setTxtPaint(favourable);
         buy_layout = (RelativeLayout)v.findViewById(R.id.buy_layout);
 
 //        payPopupwidow = new PayPopupwidow(mActivity,this);
@@ -131,6 +135,14 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
         buy_layout.setOnClickListener(this);
     }
 
+    private void setTxtPaint(TextView tv){
+        TextPaint paint = tv.getPaint();
+        paint.setARGB(255,233,94,166);
+        paint.setColor(getResources().getColor(R.color.light_red));
+        paint.setFlags(Paint.STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
+        tv.setPaintFlags(paint.getFlags());
+
+    }
 
     private void iniData(){
         if(courseInfo == null) return;
@@ -144,7 +156,9 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
         address.setText(BaseApplication.getInstance().location[0]);
 
-        favourable.setText(String.format(getResources().getString(R.string.balance_has,getDiscontPrice((Integer)account.getTag()))));
+//        favourable.setText( String.format(getResources().getString(R.string.balance_has,getDiscontPrice((Integer)account.getTag()))));
+        favourable.setText( String.format(getResources().getString(R.string.balance_has,priceMoney*((Integer)account.getTag()))));
+        setTxtPaint(favourable);
         trueMoey = priceMoney*((Integer)account.getTag()) - getDiscontPrice((Integer)account.getTag());
         truePay.setText(String.format(getResources().getString(R.string.balance_has,trueMoey)));
 
@@ -153,7 +167,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
     private int getDiscontPrice(int buyCount){
         int  cheapMone = 0;
-        if (2<=buyCount && buyCount<10) {
+        if (5<=buyCount && buyCount<10) {
             cheapMone = 20;
         }
         else if (10<=buyCount &&buyCount<30)
@@ -340,7 +354,8 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
                     orderPay = priceMoney * datas.get(i-1);
                     trueMoey = orderPay - getDiscontPrice(datas.get(i-1));
-                    favourable.setText(String.format(getResources().getString(R.string.balance_has,getDiscontPrice(datas.get(i-1)))));
+                    favourable.setText(String.format(getResources().getString(R.string.balance_has,orderPay)));
+                    setTxtPaint(favourable);
                     truePay.setText(String.format(getResources().getString(R.string.balance_has,trueMoey)));
                     dismiss();
                 }

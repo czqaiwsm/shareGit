@@ -128,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="优惠金额"
+                        android:text="应付金额"
                         android:textColor="@color/color_small_gray"
                         android:textSize="@dimen/purchase_txt_size"/>
 
@@ -174,7 +174,7 @@
                         android:drawablePadding="@dimen/app_text_size_min"
                         android:gravity="center_vertical|right"
                         android:singleLine="true"
-                        android:textColor="@color/login_normal"
+                        android:textColor="@color/light_red"
                         android:textSize="@dimen/purchase_txt_size"
                         android:text="￥90"
                 />

@@ -295,7 +295,7 @@ public class PCenterInfoFragmentUser extends BaseFragment implements OnClickList
             case URLConstants.CHOOSE_JOINOR_REQUEST_CODE://年级选择
                 BaseApplication.getUserInfo().setGrade(requstValue);
                 BaseApplication.saveUserInfo(BaseApplication.getUserInfo());
-                jonior.setText(DataMapConstants.getJoniorMap().get(requstValue));
+                jonior.setText(DataMapConstants.getPCenterJoniorMap().get(requstValue));
                 advice_layout.setVisibility(View.VISIBLE);
                 if(!TextUtils.isEmpty(jonior.getText())){
                     advice_layout.setVisibility(View.GONE);

@@ -36,6 +36,9 @@ public class SVProgressDefaultView extends LinearLayout {
         LayoutInflater.from(getContext()).inflate(R.layout.view_svprogressdefault, this, true);
         ivBigLoading = (ImageView) findViewById(R.id.ivBigLoading);
         ivSmallLoading = (ImageView) findViewById(R.id.ivSmallLoading);
+
+
+
         circleProgressBar = (SVCircleProgressBar) findViewById(R.id.circleProgressBar);
         tvMsg = (TextView) findViewById(R.id.tvMsg);
     }

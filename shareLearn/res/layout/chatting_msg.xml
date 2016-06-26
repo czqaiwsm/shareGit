@@ -31,7 +31,7 @@
               android:layout_marginTop="5dp" >
 
           <!--<ImageView
-                  android:id="@+id/comhead"
+                  android:id="@+id/img_frame"
                   android:layout_width="52dp"
                   android:layout_height="52dp"
                   android:layout_alignParentLeft="true"
@@ -39,16 +39,22 @@
                   android:background="@drawable/abaose"
                   android:clickable="true"
           />-->
-          <com.share.learn.view.RoundImageView
-                  android:id="@+id/comhead"
-                  android:layout_width="52dp"
-                  android:layout_height="52dp"
-                  android:layout_alignParentLeft="true"
-                  android:layout_alignParentTop="true"
-                  android:clickable="true"
-                  android:layout_centerVertical="true"
-                  android:src="@drawable/aot"
-                  android:adjustViewBounds="true" />
+
+          <FrameLayout android:layout_width="52dp"
+                       android:layout_height="52dp"
+                       android:layout_alignParentLeft="true"
+                       android:layout_alignParentTop="true"
+                       android:layout_centerVertical="true"
+                       android:layout_toLeftOf="@+id/img"
+                       android:id="@+id/img_frame">
+              <com.share.learn.view.RoundImageView
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:id="@+id/comhead"
+                      android:clickable="true"
+                      android:src="@drawable/aot"
+                      android:adjustViewBounds="true" />
+          </FrameLayout>
 
           <TextView
                   android:id="@+id/com_chatcontent"
@@ -56,7 +62,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="10dp"
-                  android:layout_toRightOf="@id/comhead"
+                  android:layout_toRightOf="@id/img_frame"
                   android:background="@drawable/chatfrom_bg" />
 
 
@@ -66,7 +72,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_alignParentLeft="true"
-                  android:layout_below="@id/comhead"
+                  android:layout_below="@id/img_frame"
                   android:text="ajf;dfa;"
                   android:visibility="gone"
                   android:layout_toLeftOf="@id/com_chatcontent" />
@@ -104,7 +110,7 @@
 
 
            <!-- <ImageView
-                    android:id="@+id/sendUserHead"
+                    android:id="@+id/img_frame1"
                     android:layout_width="52dp"
                     android:layout_height="52dp"
                     android:focusable="false"
@@ -112,20 +118,27 @@
                     android:layout_alignParentTop="true"
                     android:background="@drawable/shuaige"/>
 -->
+            <FrameLayout android:layout_width="52dp"
+                         android:layout_height="52dp"
+                         android:layout_alignParentRight="true"
+                         android:layout_alignParentTop="true"
+                         android:layout_centerVertical="true"
+                         android:id="@+id/img_frame1">
+                <com.share.learn.view.RoundImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/sendUserHead"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:src="@drawable/aot"
+                        android:adjustViewBounds="true"/>
+            </FrameLayout>
+            
             <com.share.learn.view.RoundImageView
-                    android:id="@+id/sendUserHead"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/aot"
-                    android:adjustViewBounds="true" />
+                     />
             <TextView
                     android:id="@+id/sendcontent"
-                    android:layout_toLeftOf="@id/sendUserHead"
+                    android:layout_toLeftOf="@id/img_frame1"
                     android:layout_marginRight="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -144,7 +157,7 @@
                     android:id="@+id/send_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/sendUserHead"
+                    android:layout_below="@id/img_frame1"
                     android:layout_alignParentRight="true"
                     android:layout_toRightOf="@id/sendcontent"
                     android:textSize="15sp"

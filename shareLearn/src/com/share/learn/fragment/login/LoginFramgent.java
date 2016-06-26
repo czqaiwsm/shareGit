@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import com.android.volley.Response;
 import com.share.learn.R;
 import com.share.learn.activity.MainActivity;
@@ -36,7 +37,9 @@ import com.volley.req.net.RequestParam;
 import com.volley.req.parser.JsonParserBase;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @desc 请用一句话描述此文件
@@ -137,6 +140,14 @@ public class LoginFramgent extends BaseFragment implements View.OnClickListener,
 //            toClassActivity(LoginFramgent.this, MainActivity.class.getName());//学生
 //            toClassActivity(LoginFramgent.this, TeacherMainActivity.class.getName());//老师
             JPushInterface.setAlias(BaseApplication.getInstance(),"s_"+BaseApplication.getMt_id(),null);
+            Set<String> set = new HashSet<String>();
+            set.add("suser-学生");
+            JPushInterface.setTags(BaseApplication.getInstance(),set,new TagAliasCallback() {
+                @Override
+                public void gotResult(int i, String s, Set<String> set) {
+                    AppLog.Logi("jpush alias:"+s+"   "+(set!=null?set.toString():""));
+                }
+            });
             mActivity.setResult(Activity.RESULT_OK);
             mActivity.finish();
         }

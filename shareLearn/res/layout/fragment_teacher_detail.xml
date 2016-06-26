@@ -14,23 +14,26 @@
         <RelativeLayout android:layout_width="match_parent"
                         android:layout_height="match_parent"
                        >
-            <com.share.learn.view.RoundImageView
-                    android:id="@+id/head_photo"
-                    android:layout_width="@dimen/round_img_size"
-                    android:layout_height="@dimen/round_img_size"
-                    android:minHeight="@dimen/round_img_size"
-                    android:minWidth="@dimen/round_img_size"
-                    android:layout_margin="@dimen/msg_margin"
-                    android:src="@drawable/default_user_portrait"
-                    />
+            <FrameLayout   android:layout_width="@dimen/round_img_size"
+                           android:layout_height="@dimen/round_img_size"
+                           android:minHeight="@dimen/round_img_size"
+                           android:minWidth="@dimen/round_img_size"
+                           android:layout_margin="@dimen/msg_margin"
+                           android:id="@+id/img_frame">
+                <com.share.learn.view.RoundImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/head_photo"
+                        android:src="@drawable/default_user_portrait"/>
+            </FrameLayout>
 
             <TextView android:id="@+id/Name"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textColor="@color/black"
-                      android:layout_toRightOf="@+id/head_photo"
+                      android:layout_toRightOf="@+id/img_frame"
                       android:textSize="@dimen/msg_name"
-                      android:layout_alignTop="@+id/head_photo"
+                      android:layout_alignTop="@+id/img_frame"
                       android:layout_marginTop="@dimen/_10dp"
                     />
             <TextView android:id="@+id/phone"
@@ -48,7 +51,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textColor="@color/color_gray"
-                      android:layout_toRightOf="@+id/head_photo"
+                      android:layout_toRightOf="@+id/img_frame"
                       android:layout_marginBottom="5dp"
                       android:layout_marginTop="@dimen/_10dp"
                       android:textSize="@dimen/msg_time"
