@@ -31,17 +31,22 @@
               android:layout_marginLeft="5dp"
               android:layout_marginTop="5dp" >
 
-          <com.share.teacher.view.RoundImageView
-                  android:id="@+id/comhead"
-                  android:layout_width="52dp"
-                  android:layout_height="52dp"
-                  android:layout_centerVertical="true"
-                  android:src="@drawable/aot"
-                  android:layout_toLeftOf="@+id/img"
-                  android:layout_alignParentLeft="true"
-                  android:layout_alignParentTop="true"
-                  android:clickable="true"
-                  android:adjustViewBounds="true" />
+
+          <FrameLayout android:layout_width="52dp"
+                       android:layout_height="52dp"
+                       android:layout_centerVertical="true"
+                       android:layout_alignParentLeft="true"
+                       android:layout_alignParentTop="true"
+                       android:layout_toLeftOf="@+id/img"
+                       android:id="@+id/img_frame">
+              <com.share.teacher.view.RoundImageView
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:id="@+id/comhead"
+                      android:src="@drawable/aot"
+                      android:clickable="true"
+                      android:adjustViewBounds="true" />
+          </FrameLayout>
 
           <TextView
                   android:id="@+id/com_chatcontent"
@@ -49,7 +54,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="10dp"
-                  android:layout_toRightOf="@id/comhead"
+                  android:layout_toRightOf="@id/img_frame"
                   android:background="@drawable/chatfrom_bg" />
 
 
@@ -59,7 +64,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_alignParentLeft="true"
-                  android:layout_below="@id/comhead"
+                  android:layout_below="@id/img_frame"
                   android:layout_toLeftOf="@id/com_chatcontent" />
       </RelativeLayout>
       
@@ -94,22 +99,25 @@
                 android:layout_marginRight="5dp" >
 
 
-            <com.share.teacher.view.RoundImageView
-                    android:id="@+id/sendUserHead"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/aot"
-                    android:layout_toLeftOf="@+id/img"
-                    android:clickable="true"
-                    android:adjustViewBounds="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    />
+            <FrameLayout android:layout_width="52dp"
+                         android:layout_height="52dp"
+                         android:layout_alignParentRight="true"
+                         android:layout_alignParentTop="true"
+                         android:layout_centerVertical="true"
+                         android:layout_toLeftOf="@+id/img"
+                         android:id="@+id/img_frame1">
+                <com.share.teacher.view.RoundImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/sendUserHead"
+                        android:src="@drawable/aot"
+                        android:clickable="true"
+                        android:adjustViewBounds="true" />
+            </FrameLayout>
 
             <TextView
                     android:id="@+id/sendcontent"
-                    android:layout_toLeftOf="@id/sendUserHead"
+                    android:layout_toLeftOf="@id/img_frame1"
                     android:layout_marginRight="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,7 +136,7 @@
                     android:id="@+id/send_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/sendUserHead"
+                    android:layout_below="@id/img_frame1"
                     android:layout_alignParentRight="true"
                     android:layout_toRightOf="@id/sendcontent"
                     android:textSize="15sp"

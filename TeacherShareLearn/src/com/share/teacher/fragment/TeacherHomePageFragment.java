@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.google.gson.reflect.TypeToken;
 import com.share.teacher.R;
 import com.share.teacher.activity.center.OrderActivity;
 import com.share.teacher.activity.center.WalletActivity;
@@ -18,6 +19,7 @@ import com.share.teacher.activity.home.TeacherCertifyActivity;
 import com.share.teacher.activity.teacher.CourseListActivity;
 import com.share.teacher.adapter.GuideViewPagerAdapter;
 import com.share.teacher.bean.BannerImgInfo;
+import com.share.teacher.bean.CertifyStatus;
 import com.share.teacher.bean.HomeInfo;
 import com.share.teacher.bean.HomePagerBanner;
 import com.share.teacher.fragment.home.ScheduleSettingFragment;
@@ -25,13 +27,17 @@ import com.share.teacher.fragment.home.TeacherCourseSettingFragment;
 import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.HomePageBannerParse;
+import com.share.teacher.utils.AlertDialogUtils;
 import com.share.teacher.utils.AppLog;
 import com.share.teacher.utils.DensityUtils;
 import com.share.teacher.utils.URLConstants;
 import com.volley.req.net.HttpURL;
 import com.volley.req.net.RequestManager;
 import com.volley.req.net.RequestParam;
+import com.volley.req.net.inferface.IParser;
 import com.volley.req.parser.JsonParserBase;
+import com.volley.req.parser.ParserUtil;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -42,7 +48,7 @@ import java.util.Map;
  * @data 2016/3/10
  * 13637055938    111111
  */
-public class TeacherHomePageFragment extends BaseFragment implements View.OnClickListener, RequsetListener {
+public class TeacherHomePageFragment extends BaseFragment implements View.OnClickListener,RequsetListener,IParser {
 
     @Bind(R.id.courseSettingImg)
     ImageView courseSettingImg;
@@ -98,7 +104,8 @@ public class TeacherHomePageFragment extends BaseFragment implements View.OnClic
 //        homeSearch.setOnClickListener(this);
 //        head_seach_txt.setOnClickListener(this);
 //        initGuidBanner(view);
-        requestTask();
+        requestTask(1);
+        requestData(2);
     }
 
     /**
@@ -146,38 +153,71 @@ public class TeacherHomePageFragment extends BaseFragment implements View.OnClic
     protected void requestData(int requestType) {
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
-
-        Map postParams = RequestHelp.getBaseParaMap("Home");
-        postParams.put("cityName", "合肥市");
         RequestParam param = new RequestParam();
+        Map postParams = null;
+        switch (requestType){
+            case 1:
+                postParams = RequestHelp.getBaseParaMap("Home");
+                postParams.put("cityName", "合肥市");
+                param.setmParserClassName(new HomePageBannerParse());
+                break;
+            case 2:
+                postParams = RequestHelp.getBaseParaMap("QueryCertifi") ;
+                param.setmParserClassName(this);
+                break;
+        }
 //        param.setmParserClassName(HomePageBannerParse.class.getName());
-        param.setmParserClassName(new HomePageBannerParse());
         param.setmPostarams(postParams);
         param.setmHttpURL(url);
         param.setPostRequestMethod();
-        RequestManager.getRequestData(getActivity(), createReqSuccessListener(), createMyReqErrorListener(), param);
+        RequestManager.getRequestData(getActivity(), createReqSuccessListener(requestType), createMyReqErrorListener(), param);
     }
 
     @Override
     public void handleRspSuccess(int requestType,Object obj) {
-        JsonParserBase<HomeInfo> jsonParserBase = (JsonParserBase<HomeInfo>) obj;
-        if (jsonParserBase != null) {
-            homeInfo = jsonParserBase.getData();
-            ArrayList<HomePagerBanner> pagerBanners = homeInfo.getTopAdList();
-            BannerImgInfo imgInfo = null;
-            bannerImgInfos.clear();
-            if (pagerBanners != null && pagerBanners.size() > 0) {
-                for (HomePagerBanner banner : pagerBanners) {
-                    imgInfo = new BannerImgInfo();
-                    imgInfo.setId(banner.getId());
-                    imgInfo.setUrl(banner.getIconPath());
-                    imgInfo.setRedirect(banner.getRedirect());
-                    imgInfo.setTitle(imgInfo.getTitle());
-                    bannerImgInfos.add(imgInfo);
+        switch (requestType){
+
+            case 1:
+                JsonParserBase<HomeInfo> jsonParserBase = (JsonParserBase<HomeInfo>) obj;
+                if (jsonParserBase != null) {
+                    homeInfo = jsonParserBase.getData();
+                    ArrayList<HomePagerBanner> pagerBanners = homeInfo.getTopAdList();
+                    BannerImgInfo imgInfo = null;
+                    bannerImgInfos.clear();
+                    if (pagerBanners != null && pagerBanners.size() > 0) {
+                        for (HomePagerBanner banner : pagerBanners) {
+                            imgInfo = new BannerImgInfo();
+                            imgInfo.setId(banner.getId());
+                            imgInfo.setUrl(banner.getIconPath());
+                            imgInfo.setRedirect(banner.getRedirect());
+                            imgInfo.setTitle(imgInfo.getTitle());
+                            bannerImgInfos.add(imgInfo);
+                        }
+                        initGuidBanner(converView);
+                    }
                 }
-                initGuidBanner(converView);
-            }
+
+                break;
+            case 2:
+                JsonParserBase<CertifyStatus> jsonParserBase1 = (JsonParserBase<CertifyStatus>)obj;
+                CertifyStatus certifyStatus = jsonParserBase1.getData();
+//        idcardStatus;//	身份认证状态	是	Int	0.未认证 1.认证审核中 2.认证通过 3.认证不通过
+//        auditStatus;//	学历认证状态	是	Int	0.未认证 1.认证审核中 2.认证通过 3.认证不通过
+                String satus = certifyStatus.getIdcardStatus();
+                if("0".equalsIgnoreCase(satus) || "0".equalsIgnoreCase(satus)){
+                    AlertDialogUtils.displaySingle(mActivity, "认证提示", "您还未认证,请及时认证!", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            toClassActivity(TeacherHomePageFragment.this, TeacherCertifyActivity.class.getName());
+                        }
+                    });
+                }
+                break;
+
+
+
         }
+
     }
 
     @Override
@@ -224,5 +264,21 @@ public class TeacherHomePageFragment extends BaseFragment implements View.OnClic
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public Object fromJson(JSONObject object) {
+        return null;
+    }
+
+    @Override
+    public Object fromJson(String json) {
+        JsonParserBase result = ParserUtil.fromJsonBase(json, new TypeToken<JsonParserBase>() {
+        }.getType());
+        if(URLConstants.SUCCESS_CODE.equals(result.getRespCode())){
+            return ParserUtil.fromJsonBase(json, new TypeToken<JsonParserBase<CertifyStatus>>() {
+            }.getType());
+        }
+        return result;
     }
 }

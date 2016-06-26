@@ -25,6 +25,7 @@
                       android:layout_height="match_parent"
                       android:orientation="vertical"
                       android:layout_below="@+id/guide"
+                     android:layout_margin="20dp"
                       android:weightSum="2">
 
             <!--一排-->
@@ -33,7 +34,7 @@
                            android:layout_height="0dp"
                            android:weightSum="2"
                            android:orientation="horizontal"
-                           android:layout_marginTop="@dimen/_10dp"
+
                            android:layout_weight="1">
 
                  <LinearLayout
@@ -162,7 +163,6 @@
                     android:layout_height="0dp"
                     android:weightSum="2"
                     android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/_10dp"
                     android:layout_weight="1">
 
                 <LinearLayout

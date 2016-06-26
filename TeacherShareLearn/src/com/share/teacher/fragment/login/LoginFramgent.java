@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import com.share.teacher.R;
 import com.share.teacher.activity.TeacherMainActivity;
 import com.share.teacher.activity.login.ForgetPassActivity;
@@ -17,10 +18,7 @@ import com.share.teacher.fragment.BaseFragment;
 import com.share.teacher.help.RequestHelp;
 import com.share.teacher.help.RequsetListener;
 import com.share.teacher.parse.LoginInfoParse;
-import com.share.teacher.utils.BaseApplication;
-import com.share.teacher.utils.PhoneUitl;
-import com.share.teacher.utils.URLConstants;
-import com.share.teacher.utils.WaitLayer;
+import com.share.teacher.utils.*;
 import com.volley.req.net.HttpURL;
 import com.volley.req.net.RequestManager;
 import com.volley.req.net.RequestParam;
@@ -28,7 +26,9 @@ import com.volley.req.parser.JsonParserBase;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @desc 请用一句话描述此文件
@@ -142,6 +142,14 @@ public class LoginFramgent extends BaseFragment implements View.OnClickListener,
 //            BaseApplication.getInstance().userId = BaseApplication.getUserInfo().getId();
 //            toClassActivity(LoginFramgent.this, MainActivity.class.getName());//学生
             JPushInterface.setAlias(BaseApplication.getInstance(),"t_"+BaseApplication.getUserInfo().getId(),null);
+            Set<String> set = new HashSet<String>();
+            set.add("tuser-老师");
+            JPushInterface.setTags(BaseApplication.getInstance(),set,new TagAliasCallback() {
+                @Override
+                public void gotResult(int i, String s, Set<String> set) {
+                    AppLog.Logi("jpush alias:"+s+"   "+(set!=null?set.toString():""));
+                }
+            });
             mActivity.finish();
         }
     }

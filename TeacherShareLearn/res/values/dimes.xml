@@ -59,6 +59,6 @@
     <dimen name="no_data_txt">14sp</dimen>
 
     <!--teacher-->
-    <dimen name="home_tea_img_size">105dp</dimen>
+    <dimen name="home_tea_img_size">90dp</dimen>
 
 </resources>

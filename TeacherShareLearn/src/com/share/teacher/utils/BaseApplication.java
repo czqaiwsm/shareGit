@@ -7,6 +7,7 @@ import android.os.Vibrator;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.SDKInitializer;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -19,6 +20,9 @@ import com.share.teacher.service.LocationUitl;
 import com.share.teacher.service.WriteLog;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author czq
@@ -60,6 +64,24 @@ public class BaseApplication extends Application {
 
 //        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
+
+        if(getUserInfo() != null){
+            JPushInterface.setAlias(BaseApplication.getInstance(), "t_" + getUserInfo().getId(), new TagAliasCallback() {
+                @Override
+                public void gotResult(int i, String s, Set<String> set) {
+                    AppLog.Logi("jpush alias:"+s+"   "+(set!=null?set.toString():""));
+                }
+            });
+            Set<String> set = new HashSet<String>();
+            set.add("tuser-老师");
+            JPushInterface.setTags(BaseApplication.getInstance(),set,new TagAliasCallback() {
+                @Override
+                public void gotResult(int i, String s, Set<String> set) {
+                    AppLog.Logi("jpush alias:"+s+"   "+(set!=null?set.toString():""));
+                }
+            });
+            ;
+        }
 
         initImageLoader();
         appVersion = AppManager.getVersion(this);

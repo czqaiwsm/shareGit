@@ -32,11 +32,14 @@ public class URLConstants {
     /********Intent value*************/
 
 //    120.76.47.196:8080
+    //    www.leishangnet.com//正式
+    //    http://www.ienjoystudy.cn:8080/测试域名
+
 //    public static final String BASE_URL = "http://120.25.171.4/learn-interface/interface/api.action";//基础URL
 //    public static final String BASE_URL = "http://www.leishangnet.com/learn-teach/teach/api.action";//基础 teacher URL
-    public static final String BASE_URL = "http://120.76.47.196:8080/learn-teach/teach/api.action";//基础 teacher URL
+    public static final String BASE_URL = "http://www.ienjoystudy.cn:8080/learn-teach/teach/api.action";//基础 teacher URL
 
-    public static final String TEACHER_UPLOAD = "http://120.76.47.196:8080/learn-teach/teach/upload.action";
+    public static final String TEACHER_UPLOAD = "http://www.ienjoystudy.cn:8080/learn-teach/teach/upload.action";
 
 //    static {
 //        AlipayConstant.NOTIFY_URL = "http://120.25.171.4/learn-interface/alipayOrderServlet";
