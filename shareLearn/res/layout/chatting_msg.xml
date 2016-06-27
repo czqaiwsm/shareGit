@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-              android:background="@color/white"
+    android:background="@color/white"
      >
   <LinearLayout  android:id="@+id/comMsgLL"
                  android:layout_width="fill_parent"
@@ -29,16 +29,6 @@
               android:layout_height="wrap_content"
               android:layout_marginLeft="5dp"
               android:layout_marginTop="5dp" >
-
-          <!--<ImageView
-                  android:id="@+id/img_frame"
-                  android:layout_width="52dp"
-                  android:layout_height="52dp"
-                  android:layout_alignParentLeft="true"
-                  android:layout_alignParentTop="true"
-                  android:background="@drawable/abaose"
-                  android:clickable="true"
-          />-->
 
           <FrameLayout android:layout_width="52dp"
                        android:layout_height="52dp"
@@ -133,9 +123,6 @@
                         android:src="@drawable/aot"
                         android:adjustViewBounds="true"/>
             </FrameLayout>
-            
-            <com.share.learn.view.RoundImageView
-                     />
             <TextView
                     android:id="@+id/sendcontent"
                     android:layout_toLeftOf="@id/img_frame1"
