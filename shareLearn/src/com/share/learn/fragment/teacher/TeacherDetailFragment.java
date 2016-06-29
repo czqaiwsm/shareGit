@@ -164,7 +164,7 @@ public class TeacherDetailFragment extends BaseFragment implements RequsetListen
             ImageLoader.getInstance().displayImage(teacherDetailInfo.getHeadImg(),headPhoto, ImageLoaderUtil.mHallIconLoaderOptions);
 
             teacherDetailInfo.setIsCheck(jsonParserBase.getData().getIsCheck());
-            phone.setVisibility(View.VISIBLE);
+//            phone.setVisibility(View.VISIBLE);
             onInitTabConfig();
         }
     }
