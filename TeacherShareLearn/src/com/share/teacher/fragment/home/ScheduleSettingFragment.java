@@ -227,7 +227,7 @@ public class ScheduleSettingFragment extends BaseFragment implements View.OnClic
                 postParams.put("courseId",courseIdList.get(courseSelect));   //课程id
                 postParams.put("studentId",queryStudentInfos.get(nameSelect).getStudentId());  //学生id
                 postParams.put("studentName",queryStudentInfos.get(nameSelect).getStudentName());//学生姓名
-                postParams.put("grade",queryStudentInfos.get(nameSelect).getGrade());      // 年级
+//                postParams.put("grade",queryStudentInfos.get(nameSelect).getGrade());      // 年级
                 postParams.put("weeks",getFreId());      // 上课周
                 postParams.put("startTime",time.getText().toString());  //开始时间
                 param.setmParserClassName(new BaseParse());

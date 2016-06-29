@@ -125,16 +125,17 @@ public class WeeksFragment extends BaseFragment implements WeekRefeListener,Requ
             noData.setVisibility(View.VISIBLE);
         }
 
-        customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view,final int i, long l) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view,final int position, long id) {
                 AlertDialogUtils.displayMyAlertChoice(mActivity, "提示", "是否删除此课程安排?", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        id = list.get(i-1).getId();
+                       WeeksFragment.this.id = list.get(position-1).getId();
                         requestTask(2);
                     }
                 }, null);
+                return false;
             }
         });
     }

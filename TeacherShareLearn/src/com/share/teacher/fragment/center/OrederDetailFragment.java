@@ -2,6 +2,7 @@ package com.share.teacher.fragment.center;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -64,6 +65,10 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
     TextView address;
     @Bind(R.id.grade)
     TextView grade;
+    @Bind(R.id.mobile)
+    TextView mobile;
+    @Bind(R.id.mobile_layout)
+    RelativeLayout mobile_layout;
 
     private String orderId = "";
     private String orderStatus = "";
@@ -148,8 +153,10 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
                         payPrice.setText(getResources().getString(R.string.balance_has,orderDetailInfo.getPayPrice()));;
                         address.setText(orderDetailInfo.getRemark());
                         grade.setText(orderDetailInfo.getGradeName());
+                        mobile.setText(orderDetailInfo.getMobile());
                         contact.setOnClickListener(this);
                         buy.setOnClickListener(this);
+                        mobile_layout.setOnClickListener(this);
                     }
                 }
 
@@ -178,6 +185,10 @@ public class OrederDetailFragment extends BaseFragment implements RequsetListene
 
                 }else if(flag==4){//已完成(立即评价)
                 }
+                break;
+            case R.id.mobile_layout:
+                intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+mobile.getText().toString()));
+                startActivity(intent);
                 break;
 
         }

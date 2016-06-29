@@ -18,6 +18,15 @@ public class OrderDetailInfo {
     private String payCount	    ;//购买次数
     private String remark  ;
     private String gradeName  ;
+    private String mobile  ;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public String getRemark() {
         return remark;
