@@ -184,7 +184,7 @@ public class ForgetPasswordFragment extends BaseFragment implements OnClickListe
 
 
 	@Override
-	public void requestData(int requestType) {
+	public void requestData(int questType) {
 		RequestParam param = null;
 		switch (requetType){
 			case 1:
@@ -221,7 +221,7 @@ public class ForgetPasswordFragment extends BaseFragment implements OnClickListe
 	private VerifyCode verifyCode = null;//验证码
 
 	@Override
-	public void handleRspSuccess(int requestType,Object obj) {
+	public void handleRspSuccess(int questType,Object obj) {
 		switch (requetType){
 			case 1:
 				MSG_TOTAL_TIME = -1;

@@ -15,6 +15,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.share.teacher.R;
 import com.share.teacher.fragment.BaseFragment;
+import com.share.teacher.utils.BaseApplication;
 
 public class ServiceProtocolFragment extends BaseFragment {
 
@@ -33,7 +34,9 @@ public class ServiceProtocolFragment extends BaseFragment {
             flag = intent.getFlags();
             switch (flag){
                 case 11:
+                    BaseApplication application = BaseApplication.getInstance();
                     title = "我享学";
+                    url = url+"&"+"appVersion="+application.appVersion+"&clientType=3&accessToken="+BaseApplication.getMt_token()+"&deviceId="+BaseApplication.diviceId;
                     break;
             }
         }
