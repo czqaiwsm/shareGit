@@ -29,15 +29,16 @@ public class URLConstants {
     public static final int ORDERRIGHT = 0X21;
     /********Intent value*************/
 //    http://www.leishangnet.com//正式
-//    http://www.ienjoystudy.cn:8080/测试域名
+//    http://120.76.47.196:8080/测试域名
 //    public static final String BASE_URL = "www.leishangnet.com/learn-interface/interface/api.action";//测试URL
-    public static final String BASE_URL = "http://www.ienjoystudy.cn:8080/learn-interface/interface/api.action";//基础URL
-    public static final String STUDENT_UPLOAD = "http://www.ienjoystudy.cn:8080/learn-interface/interface/upload.action";
+    public static final String BASE_DOMAIN = "http://120.76.47.196:8080";
+    public static final String BASE_URL = BASE_DOMAIN+"/learn-interface/interface/api.action";//基础URL
+    public static final String STUDENT_UPLOAD = BASE_DOMAIN+"/learn-interface/interface/upload.action";
 
     public static final String TEACHER_UPLOAD = "";
 
     static {
-        AlipayConstant.NOTIFY_URL = "http://www.ienjoystudy.cn:8080/learn-interface/alipayOrderServlet";
+        AlipayConstant.NOTIFY_URL = BASE_DOMAIN+"/learn-interface/alipayOrderServlet";
         AlipayConstant.SELLER = "1138088601@qq.com";
         AlipayConstant.RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALLE1FNSf0l4IF1c\n" +
                 "cBAsu4cKvp4mIzLTsuHtJSHLHwV3fpH1ReYIoNCCqMKx7CWMnFuQEeq2xlop9LHf\n" +

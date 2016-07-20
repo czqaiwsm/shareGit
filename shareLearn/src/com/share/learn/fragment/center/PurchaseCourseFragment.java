@@ -304,7 +304,7 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
 
             customListView.setCanLoadMore(false);
             customListView.setCanRefresh(false);
-            for(int i=2;i<40;i++){
+            for(int i=2;i<=100;i++){
                 datas.add((i));
             }
 
