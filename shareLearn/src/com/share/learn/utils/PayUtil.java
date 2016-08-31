@@ -7,6 +7,7 @@ import com.alipay.sdk.pay.demo.PayCallBack;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
+import com.share.learn.bean.News;
 import com.share.learn.bean.PayInfo;
 import com.share.learn.bean.TeacherDetailBean;
 import com.share.learn.fragment.BaseFragment;
@@ -19,6 +20,7 @@ import com.volley.req.net.RequestManager;
 import com.volley.req.net.RequestParam;
 import com.volley.req.parser.JsonParserBase;
 import com.volley.req.parser.ParserUtil;
+import com.wxutils.WxPayTask;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -28,7 +30,7 @@ import java.util.Map;
  * @desc 请用一句话描述它
  * @date 16/4/22L
  */
-public class PayUtil {
+public class PayUtil { //1-支付宝  2-微信支付 8-余额支付'
 
 
     public static void alipay(Activity mActivity,PayInfo payInfo,PayCallBack payCallBack){
@@ -81,9 +83,11 @@ public class PayUtil {
 
             }
         }, param);
+    }
 
-
-
+    public static void wxPay(PayInfo news, Handler handler){
+        WxPayTask wxPayTask = new WxPayTask(handler);
+        wxPayTask.execute(news);
     }
 
 }

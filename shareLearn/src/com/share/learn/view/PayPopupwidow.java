@@ -66,7 +66,7 @@ public class PayPopupwidow implements View.OnClickListener{
                 .inflate(R.layout.pay_selector, null);
         // 创建PopupWindow对象
         mSortPop = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,
-                activity.getResources().getDimensionPixelSize(R.dimen._150dp), false);
+                ViewGroup.LayoutParams.WRAP_CONTENT, false);
         mSortPop.setAnimationStyle(R.style.popwin_anim_bottom_style);
         // 需要设置一下此参数，点击外边可消失
         mSortPop.setBackgroundDrawable(new BitmapDrawable());
@@ -87,13 +87,14 @@ public class PayPopupwidow implements View.OnClickListener{
         }
         view.findViewById(R.id.alipay).setOnClickListener(onClickListener);
         view.findViewById(R.id.wxPay).setOnClickListener(onClickListener);
+        view.findViewById(R.id.wallet).setOnClickListener(onClickListener);
 
-        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dimiss();
-            }
-        });
+//        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dimiss();
+//            }
+//        });
 //        if(BaseApplication.getUserInfo() != null){
 //            if(payInfo != null && payInfo.getPrice().compareTo(BaseApplication.getUserInfo().getBalance())>1){
 //                view.findViewById(R.id.wxPay).setVisibility(View.GONE);

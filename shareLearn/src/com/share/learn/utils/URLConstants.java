@@ -1,6 +1,7 @@
 package com.share.learn.utils;
 
 import com.alipay.sdk.pay.demo.AlipayConstant;
+import com.wxutils.WxConstants;
 
 /**
  * @author czq
@@ -28,6 +29,7 @@ public class URLConstants {
     public static final int ORDERLEFT = 0X20;
     public static final int ORDERRIGHT = 0X21;
     /********Intent value*************/
+
 //    http://www.leishangnet.com//正式
 //    http://120.76.47.196:8080/测试域名
 //    public static final String BASE_URL = "www.leishangnet.com/learn-interface/interface/api.action";//测试URL
@@ -38,6 +40,9 @@ public class URLConstants {
     public static final String TEACHER_UPLOAD = "";
 
     static {
+//        测试环境：http://www.ienjoystudy.cn:8080/learn-interface/weixinPayServlet
+//        生产环境：http://www.leishangnet.com/learn-interface/weixinPayServlet
+        WxConstants.WX_NOTIFY_URL = BASE_DOMAIN+"/learn-interface/weixinPayServlet";
         AlipayConstant.NOTIFY_URL = BASE_DOMAIN+"/learn-interface/alipayOrderServlet";
         AlipayConstant.SELLER = "1138088601@qq.com";
         AlipayConstant.RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALLE1FNSf0l4IF1c\n" +

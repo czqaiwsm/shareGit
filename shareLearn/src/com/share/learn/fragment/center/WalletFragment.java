@@ -175,6 +175,8 @@ public class WalletFragment extends BaseFragment implements OnClickListener,Requ
     public void requestData(int requestType) {
         HttpURL url = new HttpURL();
         url.setmBaseUrl(URLConstants.BASE_URL);
+
+
         Map postParams = RequestHelp.getBaseParaMap("QueryBalance");
         RequestParam param = new RequestParam();
 //        param.setmParserClassName(BaseParse.class.getName());

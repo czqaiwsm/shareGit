@@ -24,6 +24,7 @@ import com.share.learn.activity.center.DetailActivity;
 import com.share.learn.activity.center.RechargeActivity;
 import com.share.learn.activity.login.LoginActivity;
 import com.share.learn.bean.CourseInfo;
+import com.share.learn.bean.News;
 import com.share.learn.bean.PayCourseInfo;
 import com.share.learn.bean.PayInfo;
 import com.share.learn.fragment.BaseFragment;
@@ -213,7 +214,11 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
                 payType = 1;
                 requestTask();
                 break;
-            case R.id.wxPay://微信支付
+            case R.id.wxPay://余额支付
+                payType = 2;
+                requestTask();
+                break;
+            case R.id.wallet://余额支付
                 payType = 8;
                 requestTask();
                 break;
@@ -262,8 +267,11 @@ public class PurchaseCourseFragment extends BaseFragment implements OnClickListe
         if(payCourseInfo != null){
             if (payType == 1){
                 PayUtil.alipay(mActivity,payInfo,null);
-            }else {
+            }else if(payType == 2){
+                PayUtil.wxPay(payInfo,null);
 
+//                PayUtil.walletPay(mActivity,payInfo,null);
+            }else if(payType == 8){
                 SmartToast.makeText(BaseApplication.getInstance(),"支付成功!",Toast.LENGTH_LONG).show();
 //                PayUtil.walletPay(mActivity,payInfo,null);
             }
